@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contactez l'équipe académique de Vannes">
+    <title>Contact - Équipe Académique de Vannes</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="icon" type="image/png" href="images/logo-acad.png">
+</head>
+
+<body>
+    <!-- HEADER - Chargé dynamiquement -->
+    <div id="header-placeholder"></div>
+
+    <!-- SECTION INTRO -->
+    <section class="page-intro">
+        <div class="container">
+            <h2 class="section-title">Nous Contacter</h2>
+            <p class="section-subtitle">
+                Une question ? Un projet ? Notre équipe est à votre écoute.
+            </p>
+        </div>
+    </section>
+
+    <!-- SECTION CONTACT INFO -->
+    <section class="contact-info-section">
+        <div class="container">
+            <div class="cards-grid">
+                <!-- Adresse -->
+                <div class="card">
+                    <div class="card-icon">📍</div>
+                    <h3 class="card-title">Adresse</h3>
+                    <p class="card-text">
+                        [Adresse complète à compléter]<br>
+                        Code postal Vannes<br>
+                        France
+                    </p>
+                </div>
+
+                <!-- Téléphone -->
+                <div class="card">
+                    <div class="card-icon">📞</div>
+                    <h3 class="card-title">Téléphone</h3>
+                    <p class="card-text">
+                        Standard : 02 XX XX XX XX<br>
+                        Fax : 02 XX XX XX XX
+                    </p>
+                </div>
+
+                <!-- Email -->
+                <div class="card">
+                    <div class="card-icon">📧</div>
+                    <h3 class="card-title">Email</h3>
+                    <p class="card-text">
+                        Contact général :<br>
+                        vannes@ac-rennes.fr
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION FORMULAIRE -->
+    <section class="contact-form-section">
+        <div class="container">
+            <h3 class="section-title">Envoyez-nous un message</h3>
+            
+            <form class="contact-form" id="contactForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nom" class="form-label">Nom et Prénom *</label>
+                        <input type="text" id="nom" name="nom" class="form-input" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email" class="form-label">Adresse email *</label>
+                        <input type="email" id="email" name="email" class="form-input" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="telephone" class="form-label">Téléphone</label>
+                        <input type="tel" id="telephone" name="telephone" class="form-input">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="objet" class="form-label">Objet *</label>
+                        <input type="text" id="objet" name="objet" class="form-input" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="message" class="form-label">Votre message *</label>
+                    <textarea id="message" name="message" class="form-textarea" required></textarea>
+                </div>
+
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="rgpd" name="rgpd" required>
+                    <label for="rgpd" class="checkbox-label">
+                        J'accepte que mes données soient utilisées dans le cadre de ma demande de contact 
+                        conformément à la politique de confidentialité. *
+                    </label>
+                </div>
+
+                <div class="form-group form-submit-group">
+                    <button type="submit" class="btn-submit">Envoyer le message</button>
+                </div>
+
+                <p class="form-note">* Champs obligatoires</p>
+            </form>
+        </div>
+    </section>
+
+    <!-- SECTION HORAIRES -->
+    <section class="horaires-section">
+        <div class="container">
+            <h3 class="section-title">Horaires d'ouverture</h3>
+            <div class="horaires-box">
+                <table class="horaires-table">
+                    <tr>
+                        <td>Lundi - Vendredi</td>
+                        <td class="horaires-time">8h30 - 12h00 | 13h30 - 17h00</td>
+                    </tr>
+                    <tr>
+                        <td>Samedi - Dimanche</td>
+                        <td class="horaires-time">Fermé</td>
+                    </tr>
+                </table>
+                <p class="horaires-note">
+                    Fermé les jours fériés et pendant les vacances scolaires (sur certaines périodes)
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER - Chargé dynamiquement -->
+    <div id="footer-placeholder"></div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

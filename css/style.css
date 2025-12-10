@@ -1,0 +1,722 @@
+/* ========================================
+   FEUILLE DE STYLE PRINCIPALE
+   Site Académie de Rennes - Équipe de Vannes
+   
+   SOMMAIRE :
+   1. Variables CSS
+   2. Reset et styles de base
+   3. Layout général et container
+   4. Header et navigation
+   5. Hero section
+   6. Sections de contenu
+   7. Cartes et composants
+   8. Footer
+   9. Responsive (Media Queries)
+======================================== */
+
+/* ========================================
+   1. VARIABLES CSS
+   Couleurs et espacements réutilisables
+======================================== */
+:root {
+    /* Couleurs de la charte graphique Académie de Rennes */
+    --bleu-france: #000091;
+    --bleu-france-hover: #1212B8;
+    --rouge-marianne: #E1000F;
+    --gris-50: #808080;
+    --gris-85: #262626;
+    --gris-clair: #f8f9fa;
+    --blanc: #FFFFFF;
+    --noir: #000000;
+    
+    /* Espacements */
+    --spacing-xs: 8px;
+    --spacing-sm: 16px;
+    --spacing-md: 24px;
+    --spacing-lg: 40px;
+    --spacing-xl: 60px;
+    
+    /* Typographie */
+    --font-primary: Arial, Helvetica, sans-serif;
+    --font-size-base: 16px;
+    --line-height-base: 1.6;
+    
+    /* Transitions */
+    --transition-speed: 0.3s;
+}
+
+/* ========================================
+   2. RESET ET STYLES DE BASE
+======================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: var(--font-size-base);
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-primary);
+    color: var(--gris-85);
+    line-height: var(--line-height-base);
+    background-color: var(--blanc);
+}
+
+/* Style des liens */
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: color var(--transition-speed);
+}
+
+a:hover {
+    color: var(--bleu-france);
+}
+
+/* Style des images */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Style des listes */
+ul {
+    list-style: none;
+}
+
+/* ========================================
+   3. LAYOUT GÉNÉRAL ET CONTAINER
+======================================== */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+}
+
+/* Container large pour certaines sections */
+.container-wide {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+}
+
+/* ========================================
+   4. HEADER ET NAVIGATION
+======================================== */
+.header {
+    background: var(--blanc);
+    border-bottom: 1px solid #e0e0e0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-sm) 0;
+    gap: var(--spacing-md);
+}
+
+/* Logo et titre */
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.logo-img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+}
+
+.logo-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.logo-title {
+    color: var(--bleu-france);
+    font-size: 1.2em;
+    font-weight: bold;
+    line-height: 1.2;
+}
+
+.logo-subtitle {
+    color: var(--gris-50);
+    font-size: 0.9em;
+}
+
+/* Menu hamburger (mobile) */
+.menu-toggle {
+    display: none; /* Caché sur desktop */
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+}
+
+.menu-toggle span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background: var(--bleu-france);
+    transition: all var(--transition-speed);
+}
+
+/* Animation du menu hamburger quand ouvert */
+.menu-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px);
+}
+
+/* Navigation principale */
+.nav-menu {
+    display: flex;
+    gap: var(--spacing-xs);
+    align-items: center;
+}
+
+.nav-pill {
+    padding: 10px 20px;
+    border-radius: 20px;
+    background: var(--gris-clair);
+    color: var(--gris-85);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+}
+
+.nav-pill:hover {
+    background: var(--bleu-france);
+    color: var(--blanc);
+}
+
+.nav-pill.active {
+    background: var(--bleu-france);
+    color: var(--blanc);
+}
+
+/* ========================================
+   5. HERO SECTION
+======================================== */
+.hero {
+    background: linear-gradient(to right, var(--blanc) 50%, var(--bleu-france) 50%);
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+}
+
+.hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-xl);
+    align-items: center;
+}
+
+/* Partie gauche : Texte */
+.hero-left {
+    padding: var(--spacing-xl) 0;
+}
+
+.hero-title {
+    color: var(--bleu-france);
+    font-size: 2.5em;
+    margin-bottom: var(--spacing-md);
+    line-height: 1.2;
+}
+
+.hero-text {
+    font-size: 1.1em;
+    color: var(--gris-50);
+    line-height: 1.8;
+    margin-bottom: var(--spacing-lg);
+}
+
+/* Bouton principal */
+.btn-primary {
+    display: inline-block;
+    padding: 15px 35px;
+    background: var(--bleu-france);
+    color: var(--blanc);
+    border-radius: 30px;
+    font-weight: bold;
+    transition: all var(--transition-speed);
+    border: 2px solid var(--bleu-france);
+}
+
+.btn-primary:hover {
+    background: var(--blanc);
+    color: var(--bleu-france);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 145, 0.2);
+}
+
+/* Partie droite : Statistiques */
+.hero-right {
+    padding: var(--spacing-xl) var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.stat-box {
+    color: var(--blanc);
+}
+
+.stat-number {
+    font-size: 3.5em;
+    font-weight: bold;
+    line-height: 1;
+    margin-bottom: var(--spacing-xs);
+}
+
+.stat-label {
+    font-size: 1.2em;
+    opacity: 0.95;
+}
+
+/* ========================================
+   6. SECTIONS DE CONTENU
+======================================== */
+section {
+    padding: var(--spacing-xl) 0;
+}
+
+.section-title {
+    color: var(--bleu-france);
+    font-size: 2em;
+    text-align: center;
+    margin-bottom: var(--spacing-sm);
+}
+
+.section-subtitle {
+    text-align: center;
+    color: var(--gris-50);
+    font-size: 1.1em;
+    margin-bottom: var(--spacing-lg);
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Section présentation */
+.presentation {
+    background: var(--gris-clair);
+}
+
+/* ========================================
+   7. CARTES ET COMPOSANTS
+======================================== */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
+}
+
+.card {
+    background: var(--blanc);
+    padding: var(--spacing-lg);
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: all var(--transition-speed);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 0, 145, 0.15);
+}
+
+.card-icon {
+    font-size: 3em;
+    margin-bottom: var(--spacing-sm);
+}
+
+.card-title {
+    color: var(--bleu-france);
+    font-size: 1.4em;
+    margin-bottom: var(--spacing-sm);
+}
+
+.card-text {
+    color: var(--gris-50);
+    line-height: 1.7;
+    flex-grow: 1;
+    margin-bottom: var(--spacing-md);
+}
+
+.card-link {
+    color: var(--bleu-france);
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    transition: all var(--transition-speed);
+}
+
+.card-link:hover {
+    transform: translateX(5px);
+}
+
+/* ========================================
+   SECTION ACTUALITÉS
+======================================== */
+.actualites {
+    background: var(--blanc);
+}
+
+.actualites-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
+}
+
+.actualite-item {
+    padding: var(--spacing-md);
+    border-left: 4px solid var(--bleu-france);
+    background: var(--gris-clair);
+    border-radius: 8px;
+    transition: all var(--transition-speed);
+}
+
+.actualite-item:hover {
+    background: var(--blanc);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.actualite-date {
+    color: var(--bleu-france);
+    font-size: 0.9em;
+    font-weight: bold;
+    margin-bottom: var(--spacing-xs);
+}
+
+.actualite-title {
+    color: var(--gris-85);
+    font-size: 1.2em;
+    margin-bottom: var(--spacing-sm);
+}
+
+.actualite-excerpt {
+    color: var(--gris-50);
+    line-height: 1.6;
+}
+
+/* ========================================
+   PORTFOLIO ÉQUIPE (pour page equipes.html)
+======================================== */
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+}
+
+.member-card {
+    background: var(--blanc);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: all var(--transition-speed);
+}
+
+.member-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 30px rgba(0, 0, 145, 0.2);
+}
+
+.member-photo {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    background: linear-gradient(135deg, var(--bleu-france), var(--bleu-france-hover));
+}
+
+.member-info {
+    padding: var(--spacing-md);
+    text-align: center;
+}
+
+.member-name {
+    color: var(--bleu-france);
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: var(--spacing-xs);
+}
+
+.member-role {
+    color: var(--gris-50);
+    margin-bottom: var(--spacing-sm);
+}
+
+.member-contact {
+    color: var(--gris-50);
+    font-size: 0.9em;
+}
+
+/* ========================================
+   FORMULAIRE DE CONTACT
+======================================== */
+.contact-form {
+    max-width: 700px;
+    margin: var(--spacing-lg) auto;
+    background: var(--gris-clair);
+    padding: var(--spacing-lg);
+    border-radius: 12px;
+}
+
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-label {
+    display: block;
+    color: var(--gris-85);
+    font-weight: bold;
+    margin-bottom: var(--spacing-xs);
+}
+
+.form-input,
+.form-textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-family: var(--font-primary);
+    font-size: 1em;
+    transition: border-color var(--transition-speed);
+}
+
+.form-input:focus,
+.form-textarea:focus {
+    outline: none;
+    border-color: var(--bleu-france);
+}
+
+.form-textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+.btn-submit {
+    background: var(--bleu-france);
+    color: var(--blanc);
+    padding: 15px 40px;
+    border: none;
+    border-radius: 30px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+}
+
+.btn-submit:hover {
+    background: var(--bleu-france-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 145, 0.3);
+}
+
+/* ========================================
+   8. FOOTER
+======================================== */
+.footer {
+    background: var(--gris-85);
+    color: var(--blanc);
+    padding: var(--spacing-xl) 0 var(--spacing-md);
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+}
+
+.footer-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-title {
+    color: var(--blanc);
+    font-size: 1.2em;
+    margin-bottom: var(--spacing-sm);
+}
+
+.footer-text {
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.8;
+    margin-bottom: var(--spacing-xs);
+}
+
+.footer-links {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.footer-links a {
+    color: rgba(255, 255, 255, 0.8);
+    transition: color var(--transition-speed);
+}
+
+.footer-links a:hover {
+    color: var(--blanc);
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-top: var(--spacing-md);
+    text-align: center;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.footer-bottom a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: underline;
+}
+
+.footer-bottom a:hover {
+    color: var(--blanc);
+}
+
+/* ========================================
+   9. RESPONSIVE (MEDIA QUERIES)
+======================================== */
+
+/* Tablettes (max 1024px) */
+@media screen and (max-width: 1024px) {
+    .hero-grid,
+    .cards-grid,
+    .actualites-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .team-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .footer-content {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Tablettes petites et mobiles large (max 768px) */
+@media screen and (max-width: 768px) {
+    /* Header responsive */
+    .menu-toggle {
+        display: flex;
+    }
+    
+    .nav-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--blanc);
+        flex-direction: column;
+        padding: var(--spacing-md);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        display: none;
+    }
+    
+    .nav-menu.active {
+        display: flex;
+    }
+    
+    .nav-pill {
+        width: 100%;
+        text-align: center;
+        border-radius: 8px;
+    }
+    
+    /* Hero section responsive */
+    .hero {
+        background: var(--bleu-france);
+    }
+    
+    .hero-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .hero-left {
+        order: 2;
+        padding: var(--spacing-lg) 0;
+    }
+    
+    .hero-title,
+    .hero-text,
+    .btn-primary {
+        color: var(--blanc);
+    }
+    
+    .btn-primary {
+        background: var(--blanc);
+        color: var(--bleu-france);
+    }
+    
+    .hero-right {
+        order: 1;
+        padding: var(--spacing-lg) 0;
+    }
+    
+    /* Grilles responsive */
+    .cards-grid,
+    .actualites-grid,
+    .team-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Mobiles (max 480px) */
+@media screen and (max-width: 480px) {
+    :root {
+        --font-size-base: 14px;
+    }
+    
+    .hero-title {
+        font-size: 1.8em;
+    }
+    
+    .section-title {
+        font-size: 1.5em;
+    }
+    
+    .stat-number {
+        font-size: 2.5em;
+    }
+    
+    .logo-img {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .logo-title {
+        font-size: 1em;
+    }
+}
