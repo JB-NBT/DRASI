@@ -1,0 +1,377 @@
+/* ========================================
+   STYLES POUR LES MODALS DES MEMBRES
+   À ajouter dans style.css ou dans un fichier séparé
+======================================== */
+
+/* ===== MODAL CONTAINER ===== */
+.member-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.member-modal.active {
+    display: flex;
+}
+
+/* ===== OVERLAY (fond sombre) ===== */
+.modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(5px);
+    animation: fadeIn 0.3s ease;
+}
+
+/* ===== CONTENU DE LA MODAL ===== */
+.modal-content {
+    position: relative;
+    background: var(--blanc);
+    border-radius: 20px;
+    max-width: 700px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: slideUp 0.4s ease;
+    z-index: 10000;
+}
+
+/* ===== BOUTON FERMER ===== */
+.modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: var(--gris-clair);
+    color: var(--gris-85);
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.modal-close:hover {
+    background: var(--rouge-marianne);
+    color: var(--blanc);
+    transform: rotate(90deg);
+}
+
+/* ===== HEADER DE LA MODAL ===== */
+.modal-header {
+    display: flex;
+    gap: 25px;
+    padding: 40px;
+    background: linear-gradient(135deg, var(--bleu-france) 0%, var(--bleu-france-hover) 100%);
+    border-radius: 20px 20px 0 0;
+    align-items: center;
+}
+
+.modal-photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    flex-shrink: 0;
+    background: var(--blanc);
+    padding: 10px;
+}
+
+.modal-header-info {
+    flex: 1;
+    color: var(--blanc);
+}
+
+.modal-name {
+    font-size: 1.8em;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: var(--blanc);
+}
+
+.modal-role {
+    font-size: 1.2em;
+    margin-bottom: 15px;
+    opacity: 0.95;
+    font-weight: 500;
+}
+
+.modal-contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.modal-contact {
+    font-size: 0.95em;
+    opacity: 0.9;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* ===== BODY DE LA MODAL ===== */
+.modal-body {
+    padding: 40px;
+}
+
+.modal-section {
+    margin-bottom: 30px;
+}
+
+.modal-section:last-child {
+    margin-bottom: 0;
+}
+
+.modal-section-title {
+    color: var(--bleu-france);
+    font-size: 1.4em;
+    margin-bottom: 15px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.modal-section-title::before {
+    content: '';
+    width: 4px;
+    height: 24px;
+    background: var(--bleu-france);
+    border-radius: 2px;
+}
+
+.modal-description {
+    color: var(--gris-85);
+    line-height: 1.8;
+    font-size: 1.05em;
+    text-align: justify;
+}
+
+/* ===== LISTE DES MISSIONS ===== */
+.missions-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.mission-item {
+    color: var(--gris-85);
+    line-height: 1.8;
+    font-size: 1.05em;
+    padding: 12px 0;
+    padding-left: 30px;
+    position: relative;
+    border-bottom: 1px solid var(--gris-clair);
+}
+
+.mission-item:last-child {
+    border-bottom: none;
+}
+
+.mission-item::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--bleu-france);
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ===== SCROLLBAR PERSONNALISÉE ===== */
+.modal-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+    background: var(--gris-clair);
+    border-radius: 10px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+    background: var(--bleu-france);
+    border-radius: 10px;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+    background: var(--bleu-france-hover);
+}
+
+/* ===== AMÉLIORATION VISUELLE DES CARTES ===== */
+.member-card {
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.member-card::after {
+    content: 'Voir le profil';
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--bleu-france);
+    color: var(--blanc);
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    font-weight: bold;
+    opacity: 0;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+.member-card:hover::after {
+    opacity: 1;
+    bottom: 25px;
+}
+
+/* ========================================
+   RESPONSIVE - TABLETTES ET MOBILES
+======================================== */
+@media screen and (max-width: 768px) {
+    .member-modal {
+        padding: 10px;
+    }
+    
+    .modal-content {
+        max-height: 90vh;
+        border-radius: 16px;
+    }
+    
+    .modal-close {
+        top: 15px;
+        right: 15px;
+        width: 36px;
+        height: 36px;
+        font-size: 20px;
+    }
+    
+    .modal-header {
+        flex-direction: column;
+        text-align: center;
+        padding: 30px 20px;
+    }
+    
+    .modal-photo {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .modal-name {
+        font-size: 1.5em;
+    }
+    
+    .modal-role {
+        font-size: 1.1em;
+    }
+    
+    .modal-contact {
+        font-size: 0.9em;
+        justify-content: center;
+    }
+    
+    .modal-body {
+        padding: 25px 20px;
+    }
+    
+    .modal-section-title {
+        font-size: 1.2em;
+    }
+    
+    .modal-description,
+    .mission-item {
+        font-size: 0.95em;
+        text-align: left;
+    }
+    
+    .member-card::after {
+        font-size: 0.8em;
+        padding: 6px 16px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .modal-header {
+        padding: 25px 15px;
+    }
+    
+    .modal-photo {
+        width: 90px;
+        height: 90px;
+    }
+    
+    .modal-name {
+        font-size: 1.3em;
+    }
+    
+    .modal-role {
+        font-size: 1em;
+    }
+    
+    .modal-body {
+        padding: 20px 15px;
+    }
+    
+    .modal-section {
+        margin-bottom: 25px;
+    }
+    
+    .modal-section-title {
+        font-size: 1.1em;
+    }
+    
+    .modal-description,
+    .mission-item {
+        font-size: 0.9em;
+    }
+    
+    .mission-item {
+        padding: 10px 0 10px 25px;
+    }
+    
+    .member-card::after {
+        content: '👁️';
+        padding: 6px 12px;
+    }
+}

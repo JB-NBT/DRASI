@@ -19,7 +19,7 @@
 ======================================== */
 :root {
     /* Couleurs de la charte graphique Académie de Rennes */
-    --bleu-france: #000091;
+    --bleu-france: #228BCC;
     --bleu-france-hover: #1212B8;
     --rouge-marianne: #E1000F;
     --gris-50: #808080;
@@ -105,22 +105,23 @@ ul {
 }
 
 /* ========================================
-   4. HEADER ET NAVIGATION
+   4. HEADER ET NAVIGATION - SELON CHARTE GRAPHIQUE
 ======================================== */
 
 /* Header principal avec hauteur fixe */
 .header {
     background: var(--blanc);
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: 3px solid var(--bleu-france);
     position: sticky;
     top: 0;
     z-index: 1000;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    height: 260px;
+    height: 250px;
 }
 
 .header .container {
     height: 100%;
+    max-width: 1400px;
 }
 
 .header-content {
@@ -128,57 +129,56 @@ ul {
     display: flex;
     align-items: center;
     width: 100%;
-    gap: var(--spacing-md);
+    gap: 16px;
     position: relative;
+    justify-content: space-between;
 }
 
-/* ===== LOGO IMAGE : Position absolue, plus à gauche ===== */
+/* ===== LOGO AREA : Logo + texte ACADÉMIE DE RENNES ===== */
 .logo-area {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: -200px; /* Plus près du bord */
     display: flex;
     align-items: center;
-    z-index: 10;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    gap: 16px;
+    flex-shrink: 0;
+    padding: 20px 0;
+    margin-left: -40px;
 }
 
 .logo-img {
-    height: 250px;
+    height: 240px;
     width: auto;
     object-fit: contain;
-    margin-top: 20px;
-    margin-bottom: 20px;
 }
 
-/* ===== TEXTE À DROITE DU LOGO ===== */
+/* ===== TEXTE À DROITE DU LOGO (avec barre verticale) ===== */
 .logo-area-text {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-left: 200px; /* Espace suffisant pour le logo */
-    flex-shrink: 0;
+    align-items: center;
+    gap: 16px;
+    padding-left: 16px;
+    margin-left: 16px;
+    min-height: 100px;
 }
 
 .logo-text {
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
 
 .logo-title {
-    color: var(--bleu-france);
-    font-size: 1.6em;
+    color: var(--noir);
+    font-size: 1.05em;
     font-weight: bold;
-    line-height: 1.2;
-    white-space: nowrap;
+    line-height: 1.3;
+    max-width: 280px;
+    padding-bottom: 15px;
 }
 
 .logo-subtitle {
     color: var(--gris-50);
-    font-size: 1.1em;
-    white-space: nowrap;
+    font-size: 0.95em;
+    line-height: 1.3;
 }
 
 /* Menu hamburger (mobile) */
@@ -197,7 +197,7 @@ ul {
 .menu-toggle span {
     display: block;
     width: 25px;
-    height: 3.3px;
+    height: 3px;
     background: var(--bleu-france);
     transition: all var(--transition-speed);
 }
@@ -215,22 +215,24 @@ ul {
     transform: rotate(-45deg) translate(7px, -7px);
 }
 
-/* Navigation principale - TOUT SUR UNE LIGNE */
+/* Navigation principale */
 .nav-menu {
     display: flex;
-    gap: 6px; /* Gap réduit pour tout tenir */
+    gap: 5px;
     align-items: center;
     margin-left: auto;
-    flex-wrap: nowrap; /* IMPORTANT : pas de retour à la ligne */
+    flex-wrap: wrap;
+    flex-shrink: 0;
+    padding-bottom: 15px;
 }
 
 .nav-pill {
-    padding: 10px 18px; /* Padding légèrement réduit */
+    padding: 9px 14px;
     border-radius: 20px;
     background: var(--gris-clair);
     color: var(--gris-85);
     font-weight: 500;
-    font-size: 0.95em; /* Taille légèrement réduite */
+    font-size: 0.85em;
     cursor: pointer;
     transition: all var(--transition-speed);
     white-space: nowrap;
@@ -545,6 +547,8 @@ section {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     transition: all var(--transition-speed);
     width: 280px;
+    border-style: solid;
+    border-color: var(--bleu-france);
 }
 
 .member-card:hover {
@@ -557,8 +561,8 @@ section {
     height: 250px;
     object-fit: contain;
     object-position: center;
-    background: linear-gradient(135deg, var(--bleu-france), var(--bleu-france-hover));
     padding: 20px;
+    background-color: var(--bleu-france);
 }
 
 .member-info {

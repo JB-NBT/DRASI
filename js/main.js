@@ -4,11 +4,19 @@
 ======================================== */
 
 // ========================================
-// CHARGEMENT DES COMPOSANTS (Header & Footer)
+// CHARGEMENT DES COMPOSANTS (Cookies, Header & Footer)
 // ========================================
 document.addEventListener('DOMContentLoaded', function() {
     
-    // Charger le header
+    // Charger le bandeau cookies
+    fetch('components/cookie-banner.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('cookie-banner-placeholder').innerHTML = data;
+        })
+        .catch(error => console.error('Erreur chargement cookies:', error));
+    
+    // Charger le header (code existant)
     fetch('components/header.html')
         .then(response => response.text())
         .then(data => {
@@ -16,15 +24,15 @@ document.addEventListener('DOMContentLoaded', function() {
             initMenuToggle();
             setActiveNavLink();
         })
-        .catch(error => console.error('Erreur lors du chargement du header:', error));
+        .catch(error => console.error('Erreur chargement header:', error));
     
-    // Charger le footer
+    // Charger le footer (code existant)
     fetch('components/footer.html')
         .then(response => response.text())
         .then(data => {
             document.getElementById('footer-placeholder').innerHTML = data;
         })
-        .catch(error => console.error('Erreur lors du chargement du footer:', error));
+        .catch(error => console.error('Erreur chargement footer:', error));
 });
 
 // ========================================
@@ -218,5 +226,5 @@ window.addEventListener('load', createBackToTopButton);
 // ========================================
 // CONSOLE INFO
 // ========================================
-console.log('%c🎓 Académie de Rennes - Équipe de Vannes', 'font-size: 16px; font-weight: bold; color: #000091;');
-console.log('%cSite web développé avec ❤️', 'font-size: 12px; color: #666;');
+console.log('%cAcadémie de Rennes - Équipe de Vannes', 'font-size: 16px; font-weight: bold; color: #000091;');
+console.log('%cSite web', 'font-size: 12px; color: #666;');

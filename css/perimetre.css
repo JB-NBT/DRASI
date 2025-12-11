@@ -103,6 +103,10 @@
     background: #20B2AA; /* Turquoise */
 }
 
+.legend-marker.sma {
+    background: #e40a39ff; /* Turquoise */
+}
+
 /* SECTION STATISTIQUES */
 .stats-section {
     padding: 60px 0;

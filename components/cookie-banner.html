@@ -1,0 +1,95 @@
+<!-- ========================================
+   BANDEAU DE GESTION DES COOKIES
+   Conforme RGPD pour l'Éducation Nationale
+   À intégrer dans components/cookie-banner.html
+======================================== -->
+
+<div id="cookieBanner" class="cookie-banner">
+    <div class="cookie-banner-content">
+        <div class="cookie-banner-text">
+            <h3 class="cookie-banner-title">🍪 Gestion des cookies</h3>
+            <p class="cookie-banner-description">
+                Ce site utilise des cookies de mesure d'audience pour améliorer votre expérience de navigation. 
+                Ces cookies nous permettent de comptabiliser les visites et d'analyser le trafic de manière anonyme, 
+                conformément aux recommandations de la CNIL.
+            </p>
+            <p class="cookie-banner-info">
+                <strong>Cookies utilisés :</strong> Statistiques de fréquentation (nombre de visiteurs, pages vues, temps de visite)
+            </p>
+        </div>
+        
+        <div class="cookie-banner-actions">
+            <button id="acceptCookies" class="cookie-btn cookie-btn-accept">
+                ✓ Tout accepter
+            </button>
+            <button id="refuseCookies" class="cookie-btn cookie-btn-refuse">
+                ✕ Tout refuser
+            </button>
+            <button id="customizeCookies" class="cookie-btn cookie-btn-customize">
+                ⚙️ Personnaliser
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL DE PERSONNALISATION -->
+<div id="cookieModal" class="cookie-modal">
+    <div class="cookie-modal-overlay"></div>
+    <div class="cookie-modal-content">
+        <button class="cookie-modal-close" id="closeModal" aria-label="Fermer">✕</button>
+        
+        <h3 class="cookie-modal-title">Paramètres des cookies</h3>
+        
+        <div class="cookie-category">
+            <div class="cookie-category-header">
+                <div class="cookie-category-info">
+                    <h4 class="cookie-category-title">🔒 Cookies essentiels</h4>
+                    <p class="cookie-category-description">
+                        Nécessaires au fonctionnement du site. Ces cookies ne peuvent pas être désactivés.
+                    </p>
+                </div>
+                <label class="cookie-toggle cookie-toggle-disabled">
+                    <input type="checkbox" checked disabled>
+                    <span class="cookie-toggle-slider"></span>
+                </label>
+            </div>
+            <div class="cookie-category-details">
+                <p><strong>Durée :</strong> Session</p>
+                <p><strong>Finalité :</strong> Mémorisation de vos choix de cookies</p>
+            </div>
+        </div>
+        
+        <div class="cookie-category">
+            <div class="cookie-category-header">
+                <div class="cookie-category-info">
+                    <h4 class="cookie-category-title">📊 Cookies statistiques</h4>
+                    <p class="cookie-category-description">
+                        Nous permettent de mesurer l'audience du site de manière anonyme (nombre de visiteurs, pages consultées, durée de visite).
+                    </p>
+                </div>
+                <label class="cookie-toggle">
+                    <input type="checkbox" id="analyticsToggle">
+                    <span class="cookie-toggle-slider"></span>
+                </label>
+            </div>
+            <div class="cookie-category-details">
+                <p><strong>Durée :</strong> 13 mois</p>
+                <p><strong>Finalité :</strong> Analyse de fréquentation et amélioration du site</p>
+                <p><strong>Données collectées :</strong> Pages visitées, durée de visite, navigation anonymisée</p>
+            </div>
+        </div>
+        
+        <div class="cookie-modal-footer">
+            <button id="savePreferences" class="cookie-btn cookie-btn-save">
+                💾 Enregistrer mes préférences
+            </button>
+        </div>
+        
+        <div class="cookie-modal-legal">
+            <p>
+                Pour plus d'informations sur notre politique de confidentialité et l'utilisation des cookies, 
+                consultez notre <a href="mentions-legales.html" target="_blank">page Mentions légales</a>.
+            </p>
+        </div>
+    </div>
+</div>
