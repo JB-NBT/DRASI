@@ -536,12 +536,13 @@
 /* ========================================
    AJUSTEMENT SPÉCIFIQUE TRÈS PETITS ÉCRANS (max 380px)
 ======================================== */
-@media screen and (max-width: 380px) {
-    .back-to-top {
-        width: 32px;
-        height: 32px;
-        bottom: 8px;
-        right: 8px;
-        font-size: 13px;
+@media screen and (max-width: 768px) {
+
+    /* Déplace tout le container des contrôles Leaflet */
+    .leaflet-top.leaflet-right {
+        top: 10px !important;
+        right: 0 !important;
+        bottom: auto !important;
+        left: auto !important;
     }
 }
