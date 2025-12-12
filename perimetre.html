@@ -63,12 +63,16 @@
         <div class="container">
             <h3 class="map-title">Services Académiques du Morbihan</h3>
             <p class="map-description">
-                SDJES, DSDEN, CIO et CMS
+                SDJES, DSDEN, IEN, CIO, CMS et SMA
             </p>
             <div class="map-container">
                 <div id="map-services" class="leaflet-map"></div>
             </div>
             <div class="map-legend">
+                <div class="legend-item">
+                    <span class="legend-marker ien"></span>
+                    <span>IEN (11)</span>
+                </div>
                 <div class="legend-item">
                     <span class="legend-marker cms"></span>
                     <span>CMS (8)</span>
@@ -89,7 +93,6 @@
                     <span class="legend-marker sma"></span>
                     <span>SMA</span>
                 </div>
-                </div>
             </div>
         </div>
     </section>
@@ -97,40 +100,55 @@
     <!-- SECTION STATISTIQUES -->
     <section class="stats-section">
         <div class="container">
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-number">41</div>
-                    <div class="stat-label">Collèges publics</div>
+            <h3 class="stats-title">Nos chiffres clés</h3>
+            <p class="stats-subtitle">L'ensemble des établissements et services du Morbihan</p>
+            
+            <div class="stats-category">
+                <h4 class="stats-category-title">Établissements d'enseignement</h4>
+                <div class="stats-grid stats-grid-etablissements">
+                    <div class="stat-card">
+                        <div class="stat-number">41</div>
+                        <div class="stat-label">Collèges publics</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">21</div>
+                        <div class="stat-label">Lycées</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">3</div>
+                        <div class="stat-label">GRETA</div>
+                    </div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-number">21</div>
-                    <div class="stat-label">Lycées</div>
+            </div>
+
+            <div class="stats-category">
+                <h4 class="stats-category-title">Services académiques et d'accompagnement</h4>
+                <div class="stats-grid stats-grid-services">
+                    <div class="stat-card">
+                        <div class="stat-number">11</div>
+                        <div class="stat-label">IEN</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">8</div>
+                        <div class="stat-label">CMS</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">4</div>
+                        <div class="stat-label">CIO</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">1</div>
+                        <div class="stat-label">DSDEN</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">1</div>
+                        <div class="stat-label">SDJES</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">1</div>
+                        <div class="stat-label">SMA</div>
+                    </div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-number">3</div>
-                    <div class="stat-label">GRETA</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">8</div>
-                    <div class="stat-label">CMS</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">4</div>
-                    <div class="stat-label">CIO</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">1</div>
-                    <div class="stat-label">DSDEN</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">1</div>
-                    <div class="stat-label">SDJES</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">1</div>
-                    <div class="stat-label">SMA</div>
-                </div>
-                
             </div>
         </div>
     </section>
@@ -138,10 +156,11 @@
     <!-- FOOTER - Chargé dynamiquement -->
     <div id="footer-placeholder"></div>
 
-    <!-- Leaflet JS -->
+    <!-- JAVASCRIPT -->
+    <script src="js/cookies.js"></script> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
     <script src="js/main.js"></script>
     <script src="js/maps.js"></script>
-    <script src="js/cookies.js"></script> 
+    
 </body>
 </html>

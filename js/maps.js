@@ -80,6 +80,20 @@ const gretas = [
 ];
 
 // Services académiques
+const circonscriptions = [
+  { nom: "IEN Lorient Nord", lat: 47.80, lon: -3.33, type: 'IEN'},
+  { nom: "IEN Pontivy", lat: 48.07, lon: -2.98, type: 'IEN'},
+  { nom: "IEN Ploërmel", lat: 47.93, lon: -2.40, type: 'IEN'},
+  { nom: "IEN Les Rives de Vilaine", lat: 47.63, lon: -2.25, type: 'IEN'},
+  { nom: "IEN Les Landes de Lanvaux", lat: 47.85, lon: -2.60, type: 'IEN'},
+  { nom: "IEN Vannes", lat: 47.66, lon: -2.76, type: 'IEN'},
+  { nom: "IEN Le Golfe", lat: 47.59, lon: -2.83, type: 'IEN'},
+  { nom: "IEN Auray", lat: 47.68, lon: -3.01, type: 'IEN'},
+  { nom: "IEN Hennebont", lat: 47.78, lon: -3.25, type: 'IEN'},
+  { nom: "IEN Lorient", lat: 47.75, lon: -3.36, type: 'IEN'},
+  { nom: "IEN Lorient Sud", lat: 47.72, lon: -3.37, type: 'IEN'}
+];
+
 const services = [
     { name: 'SDJES Vannes', lat: 47.64692, lng: -2.77769, type: 'SDJES' },
     { name: 'DSDEN Vannes', lat: 47.66724, lng: -2.74062, type: 'DSDEN' }
@@ -215,6 +229,10 @@ function initMapServices() {
                     <span>DSDEN</span>
                 </div>
                 <div class="legend-item">
+                    <div class="legend-color ien"></div>
+                    <span>IEN (${circonscriptions.length})</span>
+                </div>
+                <div class="legend-item">
                     <div class="legend-color cio"></div>
                     <span>CIO (${cio.length})</span>
                 </div>
@@ -227,12 +245,23 @@ function initMapServices() {
                     <span>SMA (${sma.length})</span>
                 </div>
                 <div class="legend-total">
-                    <strong>Total : ${services.length + cio.length + cms.length + sma.length} services</strong>
+                    <strong>Total : ${services.length + circonscriptions.length + cio.length + cms.length + sma.length} services</strong>
                 </div>
             `;
             return div;
         };
         legendServices.addTo(map);
+
+        // Ajout des circonscriptions IEN (violet)
+        circonscriptions.forEach(circo => {
+            L.circleMarker([circo.lat, circo.lon], {
+                color: '#6A1B9A',
+                fillColor: '#9C27B0',
+                fillOpacity: 0.8,
+                radius: 7,
+                weight: 2
+            }).bindPopup(`<b>${circo.nom}</b>`).addTo(map);
+        });
 
         // Ajout des CMS
         cms.forEach(centre => {
@@ -244,7 +273,6 @@ function initMapServices() {
                 weight: 2
             }).bindPopup(`<b>${centre.name}</b>`).addTo(map);
         });
-
 
         // Ajout des CIO
         cio.forEach(centre => {

@@ -8,38 +8,58 @@
 // ========================================
 document.addEventListener('DOMContentLoaded', function() {
     
-    // Charger le bandeau cookies
+    console.log('🚀 Initialisation du site...');
+    
+    // Charger le bandeau cookies PUIS initialiser le système
     fetch('components/cookie-banner.html')
         .then(response => response.text())
         .then(data => {
             document.getElementById('cookie-banner-placeholder').innerHTML = data;
+            console.log('✅ HTML cookies chargé');
+            
+            // Initialiser le système de cookies après chargement du HTML
+            if (window.initCookieSystem) {
+                window.initCookieSystem();
+            }
         })
-        .catch(error => console.error('Erreur chargement cookies:', error));
+        .catch(error => console.error('❌ Erreur chargement cookies:', error));
     
-    // Charger le header (code existant)
+    // Charger le header
     fetch('components/header.html')
         .then(response => response.text())
         .then(data => {
             document.getElementById('header-placeholder').innerHTML = data;
+            console.log('✅ Header chargé');
             initMenuToggle();
             setActiveNavLink();
         })
-        .catch(error => console.error('Erreur chargement header:', error));
+        .catch(error => console.error('❌ Erreur chargement header:', error));
     
-    // Charger le footer (code existant)
+    // Charger le footer
     fetch('components/footer.html')
         .then(response => response.text())
         .then(data => {
             document.getElementById('footer-placeholder').innerHTML = data;
+            console.log('✅ Footer chargé');
+            
+            // Attacher l'événement au lien "Gérer les cookies" après chargement du footer
+            setTimeout(() => {
+                const manageCookiesLink = document.getElementById('manageCookiesLink');
+                if (manageCookiesLink && window.CookieConsent) {
+                    manageCookiesLink.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        window.CookieConsent.showBanner();
+                    });
+                }
+            }, 500);
         })
-        .catch(error => console.error('Erreur chargement footer:', error));
+        .catch(error => console.error('❌ Erreur chargement footer:', error));
 });
 
 // ========================================
 // FONCTION : Définir le lien actif dans la navigation
 // ========================================
 function setActiveNavLink() {
-    // Attendre que le header soit chargé
     setTimeout(() => {
         const currentPage = window.location.pathname.split('/').pop() || 'index.html';
         const navLinks = document.querySelectorAll('.nav-pill');
@@ -68,7 +88,6 @@ function initMenuToggle() {
             navMenu.classList.toggle('active');
         });
         
-        // Fermer le menu quand on clique sur un lien
         const navLinks = navMenu.querySelectorAll('.nav-pill');
         navLinks.forEach(link => {
             link.addEventListener('click', function() {
@@ -77,7 +96,6 @@ function initMenuToggle() {
             });
         });
         
-        // Fermer le menu si on clique en dehors
         document.addEventListener('click', function(event) {
             const isClickInsideMenu = navMenu.contains(event.target);
             const isClickOnToggle = menuToggle.contains(event.target);
@@ -98,7 +116,6 @@ if (contactForm) {
     contactForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
-        // Récupération des données du formulaire
         const formData = {
             nom: document.getElementById('nom').value,
             email: document.getElementById('email').value,
@@ -108,7 +125,6 @@ if (contactForm) {
             rgpd: document.getElementById('rgpd').checked
         };
         
-        // Validation
         if (!formData.nom || !formData.email || !formData.objet || !formData.message) {
             alert('Veuillez remplir tous les champs obligatoires.');
             return;
@@ -119,26 +135,20 @@ if (contactForm) {
             return;
         }
         
-        // Validation email basique
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(formData.email)) {
             alert('Veuillez entrer une adresse email valide.');
             return;
         }
         
-        // Simulation d'envoi (à remplacer par votre propre système d'envoi)
         console.log('Données du formulaire:', formData);
-        
-        // Message de confirmation
         alert('Votre message a été envoyé avec succès ! Nous vous répondrons dans les plus brefs délais.');
-        
-        // Réinitialiser le formulaire
         contactForm.reset();
     });
 }
 
 // ========================================
-// ANIMATION AU SCROLL (optionnel)
+// ANIMATION AU SCROLL
 // ========================================
 function initScrollAnimations() {
     const observerOptions = {
@@ -155,7 +165,6 @@ function initScrollAnimations() {
         });
     }, observerOptions);
     
-    // Observer les cartes et sections
     const animatedElements = document.querySelectorAll('.card, .member-card, .actualite-item');
     animatedElements.forEach(el => {
         el.style.opacity = '0';
@@ -165,7 +174,6 @@ function initScrollAnimations() {
     });
 }
 
-// Initialiser les animations au chargement
 window.addEventListener('load', initScrollAnimations);
 
 // ========================================
@@ -175,7 +183,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
         const href = this.getAttribute('href');
         
-        // Ignorer les liens # vides ou sans cible
         if (href === '#' || href === '#!') {
             e.preventDefault();
             return;
@@ -202,7 +209,6 @@ function createBackToTopButton() {
     button.setAttribute('aria-label', 'Retour en haut');
     document.body.appendChild(button);
     
-    // Afficher/masquer le bouton selon le scroll
     window.addEventListener('scroll', function() {
         if (window.pageYOffset > 300) {
             button.classList.add('visible');
@@ -211,7 +217,6 @@ function createBackToTopButton() {
         }
     });
     
-    // Action du bouton
     button.addEventListener('click', function() {
         window.scrollTo({
             top: 0,
@@ -220,7 +225,6 @@ function createBackToTopButton() {
     });
 }
 
-// Créer le bouton au chargement
 window.addEventListener('load', createBackToTopButton);
 
 // ========================================

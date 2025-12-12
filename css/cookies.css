@@ -1,62 +1,188 @@
 /* ========================================
-   STYLES POUR LES MODALS DES MEMBRES
-   À ajouter dans style.css ou dans un fichier séparé
+   STYLES POUR LE BANDEAU DE COOKIES
+   Version avec overlay centré et fond flouté
 ======================================== */
 
-/* ===== MODAL CONTAINER ===== */
-.member-modal {
+/* ===== BANDEAU COOKIES ===== */
+.cookie-banner {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 9999;
+    z-index: 10000;
     display: none;
     justify-content: center;
     align-items: center;
     padding: 20px;
 }
 
-.member-modal.active {
+.cookie-banner.visible {
     display: flex;
+    animation: fadeIn 0.3s ease;
 }
 
-/* ===== OVERLAY (fond sombre) ===== */
-.modal-overlay {
+/* Overlay semi-transparent flouté */
+.cookie-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+    z-index: -1;
+}
+
+/* Contenu du bandeau */
+.cookie-banner-content {
+    background: white;
+    max-width: 700px;
+    width: 100%;
+    border-radius: 16px;
+    padding: 40px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 1;
+    animation: slideUp 0.4s ease;
+}
+
+.cookie-banner-title {
+    color: #000091;
+    font-size: 1.8em;
+    margin-bottom: 16px;
+    font-weight: bold;
+}
+
+.cookie-banner-description {
+    color: #333;
+    line-height: 1.7;
+    margin-bottom: 16px;
+    font-size: 1em;
+}
+
+.cookie-banner-info {
+    background: #f5f5f5;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 24px;
+    border-left: 4px solid #000091;
+}
+
+.cookie-banner-info strong {
+    color: #000091;
+}
+
+.cookie-banner-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* ===== BOUTONS COOKIES ===== */
+.cookie-btn {
+    padding: 14px 28px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+.cookie-btn-accept {
+    background: #228B22;
+    color: white;
+}
+
+.cookie-btn-accept:hover {
+    background: #1a6b1a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(34, 139, 34, 0.3);
+}
+
+.cookie-btn-refuse {
+    background: #E1000F;
+    color: white;
+}
+
+.cookie-btn-refuse:hover {
+    background: #b8000c;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(225, 0, 15, 0.3);
+}
+
+.cookie-btn-customize {
+    background: #f5f5f5;
+    color: #333;
+    border: 2px solid #ddd;
+}
+
+.cookie-btn-customize:hover {
+    background: #e8e8e8;
+    border-color: #000091;
+    color: #000091;
+}
+
+/* ===== MODAL DE PERSONNALISATION ===== */
+.cookie-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10001;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.cookie-modal.visible {
+    display: flex;
+    animation: fadeIn 0.3s ease;
+}
+
+.cookie-modal-overlay {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.75);
-    backdrop-filter: blur(5px);
-    animation: fadeIn 0.3s ease;
+    backdrop-filter: blur(8px);
 }
 
-/* ===== CONTENU DE LA MODAL ===== */
-.modal-content {
-    position: relative;
-    background: var(--blanc);
-    border-radius: 20px;
-    max-width: 700px;
+.cookie-modal-content {
+    background: white;
+    max-width: 800px;
     width: 100%;
-    max-height: 85vh;
+    max-height: 90vh;
     overflow-y: auto;
+    border-radius: 16px;
+    padding: 40px;
+    position: relative;
+    z-index: 1;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     animation: slideUp 0.4s ease;
-    z-index: 10000;
 }
 
-/* ===== BOUTON FERMER ===== */
-.modal-close {
+/* Bouton fermer modal */
+.cookie-modal-close {
     position: absolute;
     top: 20px;
     right: 20px;
     width: 40px;
     height: 40px;
     border: none;
-    background: var(--gris-clair);
-    color: var(--gris-85);
+    background: #f5f5f5;
+    color: #666;
     border-radius: 50%;
     font-size: 24px;
     cursor: pointer;
@@ -64,136 +190,172 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 10;
 }
 
-.modal-close:hover {
-    background: var(--rouge-marianne);
-    color: var(--blanc);
+.cookie-modal-close:hover {
+    background: #E1000F;
+    color: white;
     transform: rotate(90deg);
 }
 
-/* ===== HEADER DE LA MODAL ===== */
-.modal-header {
-    display: flex;
-    gap: 25px;
-    padding: 40px;
-    background: linear-gradient(135deg, var(--bleu-france) 0%, var(--bleu-france-hover) 100%);
-    border-radius: 20px 20px 0 0;
-    align-items: center;
-}
-
-.modal-photo {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 4px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    flex-shrink: 0;
-    background: var(--blanc);
-    padding: 10px;
-}
-
-.modal-header-info {
-    flex: 1;
-    color: var(--blanc);
-}
-
-.modal-name {
+.cookie-modal-title {
+    color: #000091;
     font-size: 1.8em;
-    font-weight: bold;
-    margin-bottom: 8px;
-    color: var(--blanc);
-}
-
-.modal-role {
-    font-size: 1.2em;
-    margin-bottom: 15px;
-    opacity: 0.95;
-    font-weight: 500;
-}
-
-.modal-contact-info {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.modal-contact {
-    font-size: 0.95em;
-    opacity: 0.9;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-/* ===== BODY DE LA MODAL ===== */
-.modal-body {
-    padding: 40px;
-}
-
-.modal-section {
     margin-bottom: 30px;
-}
-
-.modal-section:last-child {
-    margin-bottom: 0;
-}
-
-.modal-section-title {
-    color: var(--bleu-france);
-    font-size: 1.4em;
-    margin-bottom: 15px;
     font-weight: bold;
+}
+
+/* ===== CATÉGORIES DE COOKIES ===== */
+.cookie-category {
+    background: #f9f9f9;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 2px solid #e8e8e8;
+    transition: all 0.3s ease;
+}
+
+.cookie-category:hover {
+    border-color: #000091;
+    background: #f5f8ff;
+}
+
+.cookie-category-header {
     display: flex;
-    align-items: center;
-    gap: 10px;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 15px;
 }
 
-.modal-section-title::before {
-    content: '';
-    width: 4px;
-    height: 24px;
-    background: var(--bleu-france);
-    border-radius: 2px;
+.cookie-category-info {
+    flex: 1;
 }
 
-.modal-description {
-    color: var(--gris-85);
-    line-height: 1.8;
-    font-size: 1.05em;
-    text-align: justify;
-}
-
-/* ===== LISTE DES MISSIONS ===== */
-.missions-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.mission-item {
-    color: var(--gris-85);
-    line-height: 1.8;
-    font-size: 1.05em;
-    padding: 12px 0;
-    padding-left: 30px;
-    position: relative;
-    border-bottom: 1px solid var(--gris-clair);
-}
-
-.mission-item:last-child {
-    border-bottom: none;
-}
-
-.mission-item::before {
-    content: '✓';
-    position: absolute;
-    left: 0;
-    color: var(--bleu-france);
+.cookie-category-title {
+    color: #000091;
+    font-size: 1.3em;
+    margin-bottom: 8px;
     font-weight: bold;
-    font-size: 1.2em;
+}
+
+.cookie-category-description {
+    color: #666;
+    line-height: 1.6;
+    font-size: 0.95em;
+}
+
+.cookie-category-details {
+    padding-left: 20px;
+    border-left: 3px solid #000091;
+    margin-top: 10px;
+}
+
+.cookie-category-details p {
+    margin: 8px 0;
+    color: #666;
+    font-size: 0.9em;
+}
+
+/* ===== TOGGLE SWITCH ===== */
+.cookie-toggle {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 32px;
+    flex-shrink: 0;
+}
+
+.cookie-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.cookie-toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 32px;
+}
+
+.cookie-toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 24px;
+    width: 24px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.cookie-toggle input:checked + .cookie-toggle-slider {
+    background-color: #228B22;
+}
+
+.cookie-toggle input:checked + .cookie-toggle-slider:before {
+    transform: translateX(28px);
+}
+
+.cookie-toggle-disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.cookie-toggle-disabled .cookie-toggle-slider {
+    background-color: #000091;
+    cursor: not-allowed;
+}
+
+/* ===== FOOTER DE LA MODAL ===== */
+.cookie-modal-footer {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.cookie-btn-save {
+    background: #000091;
+    color: white;
+    padding: 16px 40px;
+    font-size: 1.1em;
+}
+
+.cookie-btn-save:hover {
+    background: #0000b8;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 145, 0.3);
+}
+
+/* ===== SECTION LÉGALE ===== */
+.cookie-modal-legal {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 2px solid #e8e8e8;
+    text-align: center;
+}
+
+.cookie-modal-legal p {
+    color: #666;
+    font-size: 0.9em;
+    line-height: 1.6;
+}
+
+.cookie-modal-legal a {
+    color: #000091;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.cookie-modal-legal a:hover {
+    color: #0000b8;
 }
 
 /* ===== ANIMATIONS ===== */
@@ -209,7 +371,7 @@
 @keyframes slideUp {
     from {
         opacity: 0;
-        transform: translateY(50px) scale(0.95);
+        transform: translateY(30px) scale(0.95);
     }
     to {
         opacity: 1;
@@ -217,160 +379,126 @@
     }
 }
 
-/* ===== SCROLLBAR PERSONNALISÉE ===== */
-.modal-content::-webkit-scrollbar {
+/* ===== SCROLLBAR PERSONNALISÉE POUR LA MODAL ===== */
+.cookie-modal-content::-webkit-scrollbar {
     width: 8px;
 }
 
-.modal-content::-webkit-scrollbar-track {
-    background: var(--gris-clair);
+.cookie-modal-content::-webkit-scrollbar-track {
+    background: #f1f1f1;
     border-radius: 10px;
 }
 
-.modal-content::-webkit-scrollbar-thumb {
-    background: var(--bleu-france);
+.cookie-modal-content::-webkit-scrollbar-thumb {
+    background: #000091;
     border-radius: 10px;
 }
 
-.modal-content::-webkit-scrollbar-thumb:hover {
-    background: var(--bleu-france-hover);
-}
-
-/* ===== AMÉLIORATION VISUELLE DES CARTES ===== */
-.member-card {
-    position: relative;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.member-card::after {
-    content: 'Voir le profil';
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--bleu-france);
-    color: var(--blanc);
-    padding: 8px 20px;
-    border-radius: 20px;
-    font-size: 0.9em;
-    font-weight: bold;
-    opacity: 0;
-    transition: all 0.3s ease;
-    pointer-events: none;
-    white-space: nowrap;
-}
-
-.member-card:hover::after {
-    opacity: 1;
-    bottom: 25px;
+.cookie-modal-content::-webkit-scrollbar-thumb:hover {
+    background: #0000b8;
 }
 
 /* ========================================
-   RESPONSIVE - TABLETTES ET MOBILES
+   RESPONSIVE
 ======================================== */
 @media screen and (max-width: 768px) {
-    .member-modal {
-        padding: 10px;
+    .cookie-banner-content {
+        padding: 30px 24px;
+        max-width: 95%;
     }
     
-    .modal-content {
-        max-height: 90vh;
-        border-radius: 16px;
+    .cookie-banner-title {
+        font-size: 1.5em;
     }
     
-    .modal-close {
-        top: 15px;
-        right: 15px;
+    .cookie-banner-description {
+        font-size: 0.95em;
+    }
+    
+    .cookie-banner-actions {
+        flex-direction: column;
+    }
+    
+    .cookie-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .cookie-modal-content {
+        padding: 25px 20px;
+        max-width: 95%;
+    }
+    
+    .cookie-modal-title {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+        padding-right: 40px;
+    }
+    
+    .cookie-modal-close {
         width: 36px;
         height: 36px;
         font-size: 20px;
     }
     
-    .modal-header {
+    .cookie-category {
+        padding: 16px;
+    }
+    
+    .cookie-category-header {
         flex-direction: column;
-        text-align: center;
-        padding: 30px 20px;
+        gap: 15px;
     }
     
-    .modal-photo {
-        width: 100px;
-        height: 100px;
-    }
-    
-    .modal-name {
-        font-size: 1.5em;
-    }
-    
-    .modal-role {
-        font-size: 1.1em;
-    }
-    
-    .modal-contact {
-        font-size: 0.9em;
-        justify-content: center;
-    }
-    
-    .modal-body {
-        padding: 25px 20px;
-    }
-    
-    .modal-section-title {
-        font-size: 1.2em;
-    }
-    
-    .modal-description,
-    .mission-item {
-        font-size: 0.95em;
-        text-align: left;
-    }
-    
-    .member-card::after {
-        font-size: 0.8em;
-        padding: 6px 16px;
+    .cookie-toggle {
+        align-self: flex-start;
     }
 }
 
 @media screen and (max-width: 480px) {
-    .modal-header {
-        padding: 25px 15px;
+    .cookie-banner {
+        padding: 10px;
     }
     
-    .modal-photo {
-        width: 90px;
-        height: 90px;
+    .cookie-banner-content {
+        padding: 24px 16px;
+        border-radius: 12px;
     }
     
-    .modal-name {
+    .cookie-banner-title {
         font-size: 1.3em;
+        margin-bottom: 12px;
     }
     
-    .modal-role {
-        font-size: 1em;
+    .cookie-banner-description {
+        font-size: 0.9em;
+        margin-bottom: 12px;
     }
     
-    .modal-body {
-        padding: 20px 15px;
-    }
-    
-    .modal-section {
-        margin-bottom: 25px;
-    }
-    
-    .modal-section-title {
-        font-size: 1.1em;
-    }
-    
-    .modal-description,
-    .mission-item {
+    .cookie-banner-info {
+        padding: 12px;
         font-size: 0.9em;
     }
     
-    .mission-item {
-        padding: 10px 0 10px 25px;
+    .cookie-btn {
+        padding: 12px 20px;
+        font-size: 0.9em;
     }
     
-    .member-card::after {
-        padding: 6px 12px;
+    .cookie-modal-content {
+        padding: 20px 16px;
+        border-radius: 12px;
+    }
+    
+    .cookie-modal-title {
+        font-size: 1.3em;
+    }
+    
+    .cookie-category-title {
+        font-size: 1.1em;
+    }
+    
+    .cookie-category-description {
+        font-size: 0.9em;
     }
 }

@@ -95,6 +95,10 @@
     background: #FF8C00; /* Orange foncé */
 }
 
+.legend-marker.ien {
+    background: #9C27B0; /* Violet */
+}
+
 .legend-marker.cio {
     background: #4169E1; /* Bleu royal */
 }
@@ -104,7 +108,7 @@
 }
 
 .legend-marker.sma {
-    background: #e40a39ff; /* Turquoise */
+    background: #e40a39ff; /* Rouge */
 }
 
 /* SECTION STATISTIQUES */
@@ -113,12 +117,57 @@
     background: var(--bleu-france, #000091);
 }
 
+.stats-section .container {
+    max-width: 1200px;
+}
+
+.stats-title {
+    text-align: center;
+    color: white;
+    font-size: 2.2em;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.stats-subtitle {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.1em;
+    margin-bottom: 50px;
+}
+
+.stats-category {
+    margin-bottom: 50px;
+}
+
+.stats-category:last-child {
+    margin-bottom: 0;
+}
+
+.stats-category-title {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 1.3em;
+    margin-bottom: 30px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
 .stats-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 30px;
-    max-width: 1000px;
+    gap: 25px;
     margin: 0 auto;
+}
+
+.stats-grid-etablissements {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 900px;
+}
+
+.stats-grid-services {
+    grid-template-columns: repeat(6, 1fr);
+    max-width: 1100px;
 }
 
 .stat-card {
@@ -232,6 +281,10 @@
     background-color: #FF8C00;
 }
 
+.legend-color.ien {
+    background-color: #9C27B0;
+}
+
 .legend-color.cio {
     background-color: #4169E1;
 }
@@ -259,9 +312,29 @@
         font-size: 0.9em;
     }
     
-    .stats-grid {
+    .stats-title {
+        font-size: 1.6em;
+    }
+    
+    .stats-subtitle {
+        font-size: 1em;
+        margin-bottom: 35px;
+    }
+    
+    .stats-category {
+        margin-bottom: 40px;
+    }
+    
+    .stats-category-title {
+        font-size: 1.1em;
+        margin-bottom: 20px;
+    }
+    
+    .stats-grid-etablissements,
+    .stats-grid-services {
         grid-template-columns: repeat(2, 1fr);
         gap: 20px;
+        max-width: 100%;
     }
     
     .stat-card {
@@ -296,7 +369,20 @@
         gap: 12px;
     }
     
-    .stats-grid {
+    .stats-title {
+        font-size: 1.4em;
+    }
+    
+    .stats-subtitle {
+        font-size: 0.9em;
+    }
+    
+    .stats-category-title {
+        font-size: 1em;
+    }
+    
+    .stats-grid-etablissements,
+    .stats-grid-services {
         grid-template-columns: 1fr;
         gap: 15px;
     }

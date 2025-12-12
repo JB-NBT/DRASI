@@ -1,7 +1,7 @@
 /* ========================================
    SYSTÈME DE GESTION DES COOKIES ET ANALYTICS
    Conforme RGPD pour l'Éducation Nationale
-   Fichier: cookies.js
+   Fichier: cookies.js - VERSION CORRIGÉE
 ======================================== */
 
 // ========================================
@@ -26,7 +26,6 @@ class Analytics {
         this.enabled = false;
     }
     
-    // Créer ou récupérer un ID de session anonyme
     getOrCreateSession() {
         let sessionId = sessionStorage.getItem(COOKIE_CONFIG.sessionName);
         if (!sessionId) {
@@ -36,12 +35,10 @@ class Analytics {
         return sessionId;
     }
     
-    // Générer un ID de session anonyme (non identifiant)
     generateSessionId() {
         return 'sess_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
     }
     
-    // Activer le tracking
     enable() {
         this.enabled = true;
         this.trackPageView();
@@ -49,14 +46,12 @@ class Analytics {
         console.log('📊 Analytics activées');
     }
     
-    // Désactiver le tracking
     disable() {
         this.enabled = false;
         this.clearData();
         console.log('🚫 Analytics désactivées');
     }
     
-    // Enregistrer une visite de page
     trackPageView() {
         if (!this.enabled) return;
         
@@ -74,13 +69,11 @@ class Analytics {
         console.log('📄 Page vue enregistrée:', pageData);
     }
     
-    // Suivre le temps passé sur la page
     trackTimeOnPage() {
         if (!this.enabled) return;
         
-        // Enregistrer le temps au changement de page ou fermeture
         window.addEventListener('beforeunload', () => {
-            const timeSpent = Math.round((Date.now() - this.startTime) / 1000); // en secondes
+            const timeSpent = Math.round((Date.now() - this.startTime) / 1000);
             
             const timeData = {
                 url: window.location.pathname,
@@ -94,19 +87,10 @@ class Analytics {
         });
     }
     
-    // Sauvegarder les données (simulation - à remplacer par votre système)
     saveToStorage(data, type = 'pageview') {
-        // IMPORTANT: Ici vous devez remplacer par votre système de stockage
-        // Options possibles:
-        // 1. Envoi vers un serveur interne
-        // 2. Stockage dans une base de données
-        // 3. Service analytics de l'Éducation Nationale
-        
         try {
-            // Récupérer les données existantes
             let analyticsData = JSON.parse(localStorage.getItem(COOKIE_CONFIG.analyticsName) || '{"pageviews": [], "time": []}');
             
-            // Ajouter la nouvelle donnée
             if (type === 'time') {
                 analyticsData.time = analyticsData.time || [];
                 analyticsData.time.push(data);
@@ -115,7 +99,6 @@ class Analytics {
                 analyticsData.pageviews.push(data);
             }
             
-            // Limiter le stockage (garder seulement les 100 dernières entrées)
             if (analyticsData.pageviews.length > 100) {
                 analyticsData.pageviews = analyticsData.pageviews.slice(-100);
             }
@@ -123,41 +106,17 @@ class Analytics {
                 analyticsData.time = analyticsData.time.slice(-100);
             }
             
-            // Sauvegarder
             localStorage.setItem(COOKIE_CONFIG.analyticsName, JSON.stringify(analyticsData));
-            
-            // TODO: Envoyer au serveur
-            // this.sendToServer(data);
             
         } catch (e) {
             console.error('Erreur sauvegarde analytics:', e);
         }
     }
     
-    // Méthode pour envoyer au serveur (à implémenter)
-    async sendToServer(data) {
-        // EXEMPLE - À adapter selon votre infrastructure
-        /*
-        try {
-            await fetch('/api/analytics', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data)
-            });
-        } catch (error) {
-            console.error('Erreur envoi analytics:', error);
-        }
-        */
-    }
-    
-    // Récupérer les statistiques (pour admin)
     getStats() {
         try {
             const data = JSON.parse(localStorage.getItem(COOKIE_CONFIG.analyticsName) || '{"pageviews": [], "time": []}');
             
-            // Calculer des statistiques basiques
             const stats = {
                 totalPageviews: data.pageviews.length,
                 totalSessions: new Set(data.pageviews.map(p => p.sessionId)).size,
@@ -175,7 +134,6 @@ class Analytics {
         }
     }
     
-    // Obtenir les pages les plus visitées
     getMostVisitedPages(pageviews) {
         const counts = {};
         pageviews.forEach(pv => {
@@ -187,7 +145,6 @@ class Analytics {
             .map(([url, count]) => ({ url, count }));
     }
     
-    // Effacer toutes les données
     clearData() {
         localStorage.removeItem(COOKIE_CONFIG.analyticsName);
         sessionStorage.removeItem(COOKIE_CONFIG.sessionName);
@@ -195,7 +152,6 @@ class Analytics {
     }
 }
 
-// Instance globale
 const analytics = new Analytics();
 
 // ========================================
@@ -205,24 +161,48 @@ class CookieConsent {
     constructor() {
         this.banner = null;
         this.modal = null;
+        this.initialized = false;
     }
     
-    // Initialiser le système
+    // Initialiser le système (appelé après chargement du HTML)
     init() {
-        this.createElements();
-        this.attachEventListeners();
-        this.checkConsent();
+        console.log('🍪 Initialisation du système de cookies...');
+        
+        // Attendre que les éléments soient dans le DOM
+        this.waitForElements().then(() => {
+            this.banner = document.getElementById('cookieBanner');
+            this.modal = document.getElementById('cookieModal');
+            
+            if (!this.banner || !this.modal) {
+                console.error('❌ Éléments cookies non trouvés dans le DOM');
+                return;
+            }
+            
+            this.attachEventListeners();
+            this.checkConsent();
+            this.initialized = true;
+            
+            console.log('✅ Système de cookies initialisé');
+        });
     }
     
-    // Créer les éléments DOM
-    createElements() {
-        // Charger le HTML du bandeau et de la modal
-        // (déjà présent dans le HTML via cookie-banner.html)
-        this.banner = document.getElementById('cookieBanner');
-        this.modal = document.getElementById('cookieModal');
+    // Attendre que les éléments HTML soient chargés
+    waitForElements() {
+        return new Promise((resolve) => {
+            const checkElements = () => {
+                const banner = document.getElementById('cookieBanner');
+                const modal = document.getElementById('cookieModal');
+                
+                if (banner && modal) {
+                    resolve();
+                } else {
+                    setTimeout(checkElements, 100);
+                }
+            };
+            checkElements();
+        });
     }
     
-    // Attacher les événements
     attachEventListeners() {
         // Boutons du bandeau
         document.getElementById('acceptCookies')?.addEventListener('click', () => this.acceptAll());
@@ -233,22 +213,30 @@ class CookieConsent {
         document.getElementById('closeModal')?.addEventListener('click', () => this.closeModal());
         document.querySelector('.cookie-modal-overlay')?.addEventListener('click', () => this.closeModal());
         document.getElementById('savePreferences')?.addEventListener('click', () => this.savePreferences());
+        
+        // Lien "Gérer les cookies" dans le footer
+        document.getElementById('manageCookiesLink')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.showBanner();
+        });
+        
+        console.log('✅ Event listeners attachés');
     }
     
-    // Vérifier le consentement existant
     checkConsent() {
         const consent = this.getConsent();
         
         if (consent === null) {
-            // Pas de consentement : afficher le bandeau
+            console.log('ℹ️ Pas de consentement trouvé, affichage du bandeau');
             setTimeout(() => this.showBanner(), 1000);
-        } else if (consent.analytics) {
-            // Consentement accepté : activer analytics
-            analytics.enable();
+        } else {
+            console.log('ℹ️ Consentement trouvé:', consent);
+            if (consent.analytics) {
+                analytics.enable();
+            }
         }
     }
     
-    // Récupérer le consentement stocké
     getConsent() {
         try {
             const consent = localStorage.getItem(COOKIE_CONFIG.consentName);
@@ -258,7 +246,6 @@ class CookieConsent {
         }
     }
     
-    // Sauvegarder le consentement
     saveConsent(preferences) {
         const consent = {
             analytics: preferences.analytics,
@@ -268,69 +255,69 @@ class CookieConsent {
         
         localStorage.setItem(COOKIE_CONFIG.consentName, JSON.stringify(consent));
         
-        // Activer/désactiver analytics selon le choix
         if (consent.analytics) {
             analytics.enable();
         } else {
             analytics.disable();
         }
+        
+        console.log('💾 Consentement sauvegardé:', consent);
     }
     
-    // Accepter tous les cookies
     acceptAll() {
         this.saveConsent({ analytics: true });
         this.hideBanner();
-        console.log('✅ Cookies acceptés');
+        console.log('✅ Tous les cookies acceptés');
     }
     
-    // Refuser tous les cookies
     refuseAll() {
         this.saveConsent({ analytics: false });
         this.hideBanner();
-        console.log('❌ Cookies refusés');
+        console.log('❌ Tous les cookies refusés');
     }
     
-    // Sauvegarder les préférences personnalisées
     savePreferences() {
-        const analyticsEnabled = document.getElementById('analyticsToggle').checked;
+        const analyticsEnabled = document.getElementById('analyticsToggle')?.checked || false;
         this.saveConsent({ analytics: analyticsEnabled });
         this.closeModal();
         this.hideBanner();
-        console.log('💾 Préférences sauvegardées');
+        console.log('💾 Préférences personnalisées sauvegardées');
     }
     
-    // Afficher le bandeau
     showBanner() {
         if (this.banner) {
             this.banner.classList.add('visible');
+            console.log('👀 Bandeau affiché');
         }
     }
     
-    // Masquer le bandeau
     hideBanner() {
         if (this.banner) {
             this.banner.classList.remove('visible');
+            console.log('👋 Bandeau masqué');
         }
     }
     
-    // Ouvrir la modal
     openModal() {
         if (this.modal) {
-            // Pré-remplir l'état du toggle
             const consent = this.getConsent();
             if (consent) {
-                document.getElementById('analyticsToggle').checked = consent.analytics;
+                const toggle = document.getElementById('analyticsToggle');
+                if (toggle) {
+                    toggle.checked = consent.analytics;
+                }
             }
             this.modal.classList.add('visible');
             document.body.style.overflow = 'hidden';
+            console.log('📋 Modal ouverte');
         }
     }
     
-    // Fermer la modal
     closeModal() {
         if (this.modal) {
             this.modal.classList.remove('visible');
             document.body.style.overflow = '';
+            console.log('📋 Modal fermée');
         }
     }
 }
@@ -338,22 +325,35 @@ class CookieConsent {
 // ========================================
 // INITIALISATION
 // ========================================
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('🍪 Système de cookies initialisé');
-    const cookieConsent = new CookieConsent();
+const cookieConsent = new CookieConsent();
+
+// Fonction d'initialisation globale
+window.initCookieSystem = function() {
+    console.log('🔄 Initialisation du système de cookies demandée');
     cookieConsent.init();
-});
+};
+
+// Initialiser automatiquement si le DOM est déjà chargé
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => window.initCookieSystem(), 500);
+    });
+} else {
+    setTimeout(() => window.initCookieSystem(), 500);
+}
 
 // ========================================
 // FONCTION UTILITAIRE POUR ADMINISTRATEUR
 // ========================================
-// Taper dans la console : showAnalyticsStats()
 window.showAnalyticsStats = function() {
     const stats = analytics.getStats();
     console.log('📊 STATISTIQUES DU SITE', stats);
-    console.table(stats.mostVisitedPages);
+    if (stats && stats.mostVisitedPages) {
+        console.table(stats.mostVisitedPages);
+    }
     return stats;
 };
 
-// Export pour utilisation externe si nécessaire
+// Export pour utilisation externe
 window.Analytics = analytics;
+window.CookieConsent = cookieConsent;
