@@ -1,19 +1,12 @@
 /* ========================================
-   RESPONSIVE.CSS - VERSION CORRIGÉE FINALE
+   RESPONSIVE.CSS - VERSION CORRIGÉE
    Gestion du responsive pour tous les écrans
-   À inclure APRÈS style.css
-   
-   SOMMAIRE :
-   1. Tablettes (max 1024px)
-   2. Tablettes petites (max 768px)
-   3. Mobiles (max 480px)
 ======================================== */
 
 /* ========================================
    1. TABLETTES (max 1024px)
 ======================================== */
 @media screen and (max-width: 1024px) {
-    /* Hero section */
     .hero-grid {
         grid-template-columns: 1fr;
         gap: var(--spacing-md);
@@ -24,7 +17,6 @@
         padding: var(--spacing-md);
     }
     
-    /* Grilles de contenu */
     .cards-grid,
     .actualites-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -34,24 +26,10 @@
     .team-grid {
         grid-template-columns: repeat(3, 1fr);
     }
-    
-    /* Footer */
-    .footer-main {
-        grid-template-columns: repeat(2, 1fr);
-        gap: var(--spacing-lg);
-    }
-    
-    .footer-external-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .logo-area-text {
-        display: none !important;
-    }
 }
 
 /* ========================================
-   2. TABLETTES PETITES ET MOBILES LARGE (max 768px)
+   2. TABLETTES PETITES ET MOBILES (max 768px)
 ======================================== */
 @media screen and (max-width: 768px) {
     
@@ -69,81 +47,74 @@
     
     .header-content {
         padding: 0 16px;
-        flex-wrap: nowrap;
+        flex-wrap: wrap;
         align-items: center;
         gap: 16px;
-        justify-content: flex-start;
+        justify-content: space-between;
     }
     
-    /* Logo repositionné sur mobile - OPTIMISÉ */
+    /* Logo sur mobile */
     .logo-area {
-        position: relative;
-        left: 0;
-        height: 70px;
+        height: 60px;
         flex-shrink: 0;
-    }
-    
-    .logo-img {
-        height: 70px;
-        width: auto;
-    }
-    
-    /* Texte du logo sur mobile - TAILLES RÉDUITES */
-    .logo-area-text {
-        flex-shrink: 1;
-        min-width: 0;
-        flex: 1;
         margin-left: 0;
     }
     
-    .logo-title {
-        font-size: 1.1rem;
-        white-space: normal;
-        line-height: 1.3;
-        color: var(--bleu-france);
+    .logo-img {
+        height: 60px;
+        width: auto;
     }
     
-    .logo-subtitle {
-        font-size: 0.9rem;
-        white-space: normal;
-        color: var(--gris-50);
+    /* Texte du logo caché sur mobile */
+    .logo-area-text {
+        display: none !important;
     }
     
     /* Menu hamburger visible */
     .menu-toggle {
-        display: flex;
+        display: flex !important;
         margin-left: auto;
         flex-shrink: 0;
+        order: 3;
     }
     
-    /* Navigation mobile */
+    /* Navigation mobile - CORRECTION ICI */
     .nav-menu {
         position: absolute;
         top: 100%;
         left: 0;
         right: 0;
+        width: 100%;
         background: var(--blanc);
         flex-direction: column;
-        padding: 16px;
+        padding: 0;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        display: none;
+        display: none !important; /* Caché par défaut - IMPORTANT */
         margin-left: 0;
         z-index: 100;
+        order: 4;
+        flex-basis: 100%;
     }
     
+    /* Menu ouvert */
     .nav-menu.active {
-        display: flex;
+        display: flex !important;
     }
     
     .nav-pill {
         width: 100%;
         text-align: center;
-        border-radius: 8px;
-        padding: 12px 16px;
-        font-size: 0.95rem;
+        border-radius: 0;
+        padding: 16px;
+        font-size: 1rem;
+        border-bottom: 1px solid #e0e0e0;
     }
     
-    /* ===== HERO SECTION RESPONSIVE ===== */
+    .nav-pill:last-child {
+        border-bottom: none;
+    }
+    
+    /* ===== HERO SECTION ===== */
     .hero {
         min-height: auto;
         padding: 40px 0;
@@ -158,19 +129,19 @@
     }
     
     .hero-title {
-        font-size: 1.5rem;
-        margin-bottom: 14px;
+        font-size: 1.8rem;
+        margin-bottom: 16px;
     }
     
     .hero-text {
-        font-size: 0.9rem;
-        margin-bottom: 20px;
+        font-size: 1rem;
+        margin-bottom: 24px;
         line-height: 1.6;
     }
     
     .btn-primary {
-        padding: 12px 28px;
-        font-size: 0.9rem;
+        padding: 14px 32px;
+        font-size: 1rem;
     }
     
     .hero-right {
@@ -180,15 +151,15 @@
     }
     
     .stat-box {
-        padding: 24px;
+        padding: 28px;
     }
     
     .stat-number {
-        font-size: 2.2rem;
+        font-size: 2.5rem;
     }
     
     .stat-label {
-        font-size: 0.95rem;
+        font-size: 1rem;
     }
     
     /* ===== SECTIONS ===== */
@@ -197,68 +168,68 @@
     }
     
     .section-title {
-        font-size: 1.5rem;
-        margin-bottom: 12px;
+        font-size: 1.8rem;
+        margin-bottom: 16px;
     }
     
     .section-subtitle {
-        font-size: 0.9rem;
+        font-size: 1rem;
         margin-bottom: 30px;
         padding: 0 16px;
     }
     
-    /* ===== GRILLES RESPONSIVE ===== */
+    /* ===== GRILLES ===== */
     .cards-grid,
     .actualites-grid {
         grid-template-columns: 1fr;
-        gap: 20px;
+        gap: 24px;
         margin-top: 30px;
     }
     
     .card {
-        padding: 24px;
+        padding: 28px;
         min-height: auto;
     }
     
     .card-icon {
-        font-size: 2.2rem;
+        font-size: 2.5rem;
     }
     
     .card-title {
-        font-size: 1.2rem;
+        font-size: 1.3rem;
     }
     
     .card-text {
-        font-size: 0.9rem;
+        font-size: 1rem;
     }
     
     .team-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 16px;
+        gap: 20px;
     }
     
     .member-photo {
-        height: 200px;
+        height: 220px;
     }
     
     /* ===== ACTUALITÉS ===== */
     .actualite-item {
-        padding: 20px;
+        padding: 24px;
     }
     
     .actualite-date {
-        font-size: 0.85rem;
-    }
-    
-    .actualite-title {
-        font-size: 1.1rem;
-    }
-    
-    .actualite-excerpt {
         font-size: 0.9rem;
     }
     
-    /* ===== FORMULAIRE CONTACT RESPONSIVE ===== */
+    .actualite-title {
+        font-size: 1.2rem;
+    }
+    
+    .actualite-excerpt {
+        font-size: 1rem;
+    }
+    
+    /* ===== FORMULAIRE ===== */
     .form-row {
         grid-template-columns: 1fr;
     }
@@ -268,71 +239,33 @@
         margin: 30px 16px;
     }
     
-    .form-input,
-    .form-textarea {
-        font-size: 0.95rem;
-    }
-    
-    /* ===== CTA SECTION ===== */
-    .cta-title {
-        font-size: 1.5rem;
-    }
-    
-    .cta-text {
-        font-size: 0.95rem;
-    }
-    
-    /* ===== FOOTER RESPONSIVE ===== */
+    /* ===== FOOTER ===== */
     .footer {
         padding: 40px 0 0;
     }
     
-    .footer-main {
-        grid-template-columns: 1fr;
-        gap: 30px;
-        padding-bottom: 30px;
-    }
-    
-    .footer-col h4,
-    .footer-title {
-        font-size: 1.2rem;
-    }
-    
-    .footer-text {
-        font-size: 0.9rem;
-    }
-    
-    .footer-external {
-        padding: 30px 0;
-    }
-    
-    .footer-external h4 {
-        font-size: 1.1rem;
-    }
-    
-    .footer-bottom-section {
+    .footer-links-grid {
         grid-template-columns: 1fr;
         gap: 20px;
-        padding: 30px 0;
     }
     
-    .footer-legal-links {
+    .footer-legal-row {
         flex-direction: column;
-        align-items: center;
-        gap: 12px;
+        gap: 20px;
     }
     
     .footer-gar {
-        margin: 0 auto;
+        width: 100%;
+        justify-content: center;
     }
     
-    /* ===== BOUTON RETOUR EN HAUT ===== */
+    /* ===== BOUTON RETOUR ===== */
     .back-to-top {
-        width: 42px;
-        height: 42px;
-        bottom: 16px;
-        right: 16px;
-        font-size: 18px;
+        width: 45px;
+        height: 45px;
+        bottom: 20px;
+        right: 20px;
+        font-size: 20px;
     }
 }
 
@@ -341,100 +274,93 @@
 ======================================== */
 @media screen and (max-width: 480px) {
     
-    /* ===== CONTAINER MOBILE ===== */
+    /* ===== CONTAINER ===== */
     .container {
         padding: 0 12px;
     }
     
-    /* ===== HEADER MOBILE ===== */
+    /* ===== HEADER ===== */
     .header {
         padding: 12px 0;
     }
     
     .header-content {
         padding: 0 12px;
-        gap: 12px;
     }
     
     .logo-area {
-        height: 150px;
+        height: 50px;
     }
     
     .logo-img {
-        height: 150px;
+        height: 50px;
     }
     
-    .logo-title {
-        font-size: 1rem;
+    .menu-toggle {
+        width: 40px;
+        height: 40px;
     }
     
-    .logo-subtitle {
-        font-size: 0.85rem;
+    .menu-toggle span {
+        width: 22px;
+        height: 2px;
     }
     
-    /* ===== HERO SECTION MOBILE ===== */
+    /* ===== HERO ===== */
     .hero {
         padding: 30px 0;
     }
     
     .hero-title {
-        font-size: 1.3rem;
-        margin-bottom: 12px;
+        font-size: 1.5rem;
+        margin-bottom: 14px;
     }
     
     .hero-text {
-        font-size: 0.85rem;
+        font-size: 0.9rem;
         margin-bottom: 20px;
     }
     
     .btn-primary {
-        padding: 11px 24px;
-        font-size: 0.85rem;
+        padding: 12px 28px;
+        font-size: 0.9rem;
     }
     
     .stat-box {
-        padding: 20px;
+        padding: 24px;
     }
     
     .stat-number {
-        font-size: 1.9rem;
+        font-size: 2rem;
     }
     
     .stat-label {
-        font-size: 0.85rem;
+        font-size: 0.9rem;
     }
     
-    /* ===== SECTIONS MOBILE ===== */
+    /* ===== SECTIONS ===== */
     section {
         padding: 30px 0;
     }
     
     .section-title {
-        font-size: 1.3rem;
-        margin-bottom: 10px;
+        font-size: 1.5rem;
+        margin-bottom: 12px;
     }
     
     .section-subtitle {
-        font-size: 0.85rem;
-        margin-bottom: 20px;
-    }
-    
-    .cta-title {
-        font-size: 1.3rem;
-    }
-    
-    .cta-text {
         font-size: 0.9rem;
+        margin-bottom: 24px;
     }
     
-    /* ===== CARTES MOBILE ===== */
+    /* ===== CARTES ===== */
     .cards-grid {
-        gap: 16px;
-        margin-top: 20px;
+        gap: 20px;
+        margin-top: 24px;
     }
     
     .card {
-        padding: 20px;
+        padding: 24px;
     }
     
     .card-icon {
@@ -442,106 +368,91 @@
     }
     
     .card-title {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
     }
     
     .card-text {
-        font-size: 0.85rem;
+        font-size: 0.9rem;
     }
     
-    /* ===== GRILLES MOBILE ===== */
+    /* ===== TEAM ===== */
     .team-grid {
         grid-template-columns: 1fr;
-        gap: 16px;
+        gap: 20px;
     }
     
     .member-photo {
         height: 250px;
     }
     
+    /* ===== ACTUALITÉS ===== */
     .actualites-grid {
-        gap: 16px;
+        gap: 20px;
     }
     
-    /* ===== FORMULAIRE MOBILE ===== */
+    .actualite-item {
+        padding: 20px;
+    }
+    
+    /* ===== FORMULAIRE ===== */
     .contact-form {
-        padding: 20px 16px;
-        margin: 20px 12px;
+        padding: 24px 16px;
+        margin: 24px 12px;
     }
     
     .form-input,
     .form-textarea {
-        padding: 10px 12px;
+        padding: 12px;
         font-size: 0.9rem;
     }
     
     .btn-submit {
-        padding: 12px 28px;
-        font-size: 0.95rem;
+        padding: 14px 32px;
+        font-size: 1rem;
     }
     
-    /* ===== FOOTER MOBILE ===== */
+    /* ===== FOOTER ===== */
     .footer {
         padding: 30px 0 0;
     }
     
-    .footer-main {
-        gap: 25px;
-        padding-bottom: 25px;
-    }
-    
-    .footer-col h4,
-    .footer-title {
-        font-size: 1.1rem;
-        margin-bottom: 15px;
-    }
-    
-    .footer-text,
-    .footer-links a,
-    .footer-external-col a {
-        font-size: 0.85rem;
-    }
-    
-    .footer-external {
-        padding: 25px 0;
-    }
-    
-    .footer-bottom-section {
-        padding: 25px 0;
-    }
-    
+    .footer-links-col a,
     .footer-legal-links a {
-        font-size: 0.85rem;
-    }
-    
-    .gar-logo {
-        width: 100px;
+        font-size: 0.9rem;
     }
     
     .footer-copyright {
-        font-size: 0.8rem;
+        font-size: 0.85rem;
         padding: 20px 0;
     }
     
-    /* ===== BOUTON RETOUR EN HAUT ===== */
+    /* ===== BOUTON RETOUR ===== */
     .back-to-top {
-        width: 35px;
-        height: 35px;
-        bottom: 10px;
-        right: 10px;
-        font-size: 14px;
+        width: 40px;
+        height: 40px;
+        bottom: 15px;
+        right: 15px;
+        font-size: 18px;
     }
 }
 
 /* ========================================
-   AJUSTEMENT SPÉCIFIQUE TRÈS PETITS ÉCRANS (max 380px)
+   4. TRÈS PETITS ÉCRANS (max 360px)
 ======================================== */
-@media screen and (max-width: 380px) {
-    .back-to-top {
-        width: 32px;
-        height: 32px;
-        bottom: 8px;
-        right: 8px;
-        font-size: 13px;
+@media screen and (max-width: 360px) {
+    .hero-title {
+        font-size: 1.3rem;
+    }
+    
+    .hero-text {
+        font-size: 0.85rem;
+    }
+    
+    .section-title {
+        font-size: 1.3rem;
+    }
+    
+    .card-title {
+        font-size: 1.1rem;
     }
 }
