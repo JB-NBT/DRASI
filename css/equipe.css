@@ -1,9 +1,108 @@
 /* ========================================
-   STYLES POUR LES MODALS DES MEMBRES
-   À ajouter dans style.css ou dans un fichier séparé
+   EQUIPES.CSS - Page équipes
+   Styles spécifiques + Modals + Responsive intégré
 ======================================== */
 
-/* ===== MODAL CONTAINER ===== */
+/* ========================================
+   SECTIONS ÉQUIPE - DESKTOP
+======================================== */
+.team-section {
+    padding: 60px 0;
+}
+
+.team-section-alt {
+    background: var(--gris-clair);
+}
+
+.team-section-title {
+    color: var(--bleu-france);
+    font-size: 1.8em;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.team-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+    justify-content: center;
+}
+
+.member-card {
+    background: var(--blanc);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: all var(--transition-speed);
+    width: 280px;
+    border: 3px solid var(--bleu-france);
+    cursor: pointer;
+    position: relative;
+}
+
+.member-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 30px rgba(0, 0, 145, 0.2);
+}
+
+.member-card::after {
+    content: 'Voir le profil';
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--bleu-france);
+    color: var(--blanc);
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    font-weight: bold;
+    opacity: 0;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+.member-card:hover::after {
+    opacity: 1;
+    bottom: 25px;
+}
+
+.member-photo {
+    width: 100%;
+    height: 250px;
+    object-fit: contain;
+    object-position: center;
+    padding: 20px;
+    background-color: var(--bleu-france);
+}
+
+.member-info {
+    padding: var(--spacing-md);
+    text-align: center;
+}
+
+.member-name {
+    color: var(--bleu-france);
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: var(--spacing-xs);
+}
+
+.member-role {
+    color: var(--gris-50);
+    margin-bottom: var(--spacing-sm);
+}
+
+.member-contact {
+    color: var(--gris-50);
+    font-size: 0.9em;
+}
+
+/* ========================================
+   MODALS - DESKTOP
+======================================== */
 .member-modal {
     position: fixed;
     top: 0;
@@ -21,7 +120,6 @@
     display: flex;
 }
 
-/* ===== OVERLAY (fond sombre) ===== */
 .modal-overlay {
     position: absolute;
     top: 0;
@@ -33,7 +131,6 @@
     animation: fadeIn 0.3s ease;
 }
 
-/* ===== CONTENU DE LA MODAL ===== */
 .modal-content {
     position: relative;
     background: var(--blanc);
@@ -47,7 +144,6 @@
     z-index: 10000;
 }
 
-/* ===== BOUTON FERMER ===== */
 .modal-close {
     position: absolute;
     top: 20px;
@@ -73,7 +169,6 @@
     transform: rotate(90deg);
 }
 
-/* ===== HEADER DE LA MODAL ===== */
 .modal-header {
     display: flex;
     gap: 25px;
@@ -128,7 +223,6 @@
     gap: 8px;
 }
 
-/* ===== BODY DE LA MODAL ===== */
 .modal-body {
     padding: 40px;
 }
@@ -166,7 +260,6 @@
     text-align: justify;
 }
 
-/* ===== LISTE DES MISSIONS ===== */
 .missions-list {
     list-style: none;
     padding: 0;
@@ -196,14 +289,10 @@
     font-size: 1.2em;
 }
 
-/* ===== ANIMATIONS ===== */
+/* Animations */
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 @keyframes slideUp {
@@ -217,7 +306,7 @@
     }
 }
 
-/* ===== SCROLLBAR PERSONNALISÉE ===== */
+/* Scrollbar */
 .modal-content::-webkit-scrollbar {
     width: 8px;
 }
@@ -236,40 +325,29 @@
     background: var(--bleu-france-hover);
 }
 
-/* ===== AMÉLIORATION VISUELLE DES CARTES ===== */
-.member-card {
-    position: relative;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.member-card::after {
-    content: 'Voir le profil';
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--bleu-france);
-    color: var(--blanc);
-    padding: 8px 20px;
-    border-radius: 20px;
-    font-size: 0.9em;
-    font-weight: bold;
-    opacity: 0;
-    transition: all 0.3s ease;
-    pointer-events: none;
-    white-space: nowrap;
-}
-
-.member-card:hover::after {
-    opacity: 1;
-    bottom: 25px;
+/* ========================================
+   RESPONSIVE - TABLETTES (max 1024px)
+======================================== */
+@media screen and (max-width: 1024px) {
+    .team-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
 /* ========================================
-   RESPONSIVE - TABLETTES ET MOBILES
+   RESPONSIVE - TABLETTES PETITES (max 768px)
 ======================================== */
 @media screen and (max-width: 768px) {
+    .team-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    
+    .member-photo {
+        height: 220px;
+    }
+    
+    /* MODALS MOBILE */
     .member-modal {
         padding: 10px;
     }
@@ -331,7 +409,20 @@
     }
 }
 
+/* ========================================
+   RESPONSIVE - MOBILES (max 480px)
+======================================== */
 @media screen and (max-width: 480px) {
+    .team-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .member-photo {
+        height: 250px;
+    }
+    
+    /* MODALS MOBILE */
     .modal-header {
         padding: 25px 15px;
     }
