@@ -199,6 +199,54 @@
     font-style: italic;
 }
 
+.recaptcha-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 30px 0;
+}
+
+.g-recaptcha {
+    transform: scale(1);
+    transform-origin: 0 0;
+}
+
+.recaptcha-error {
+    color: var(--rouge-marianne);
+    font-size: 0.9em;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.form-message {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.form-message.success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.form-message.error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* Responsive reCAPTCHA */
+@media screen and (max-width: 480px) {
+    .g-recaptcha {
+        transform: scale(0.85);
+        transform-origin: center;
+    }
+}
+
 /* ========================================
    RESPONSIVE - TABLETTES (max 1024px)
 ======================================== */
