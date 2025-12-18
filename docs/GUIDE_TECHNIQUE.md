@@ -83,7 +83,7 @@ Le site est une **application web statique** construite avec des technologies na
 
 ---
 
-## 💻 Stack technologique {#stack}
+## Stack technologique {#stack}
 
 ### Frontend
 
