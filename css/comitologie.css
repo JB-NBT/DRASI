@@ -1,0 +1,544 @@
+/* ========================================
+   COMITOLOGIE.CSS - Styles pour la page comitologie
+======================================== */
+
+/* ===== SECTION ORGANIGRAMME ===== */
+.organigramme-section {
+    padding: 60px 0;
+    background: linear-gradient(135deg, var(--bleu-france) 0%, #1a7db8 100%);
+}
+
+.intro-box {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+    color: var(--blanc);
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.intro-icon {
+    font-size: 4em;
+    margin-bottom: 20px;
+}
+
+.intro-title {
+    font-size: 2.2em;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.intro-text {
+    font-size: 1.2em;
+    line-height: 1.8;
+}
+
+/* ===== SECTION COMITÉS ===== */
+.comites-section {
+    padding: 80px 0;
+    background: var(--gris-clair);
+}
+
+.comites-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.comite-card {
+    background: var(--blanc);
+    padding: 35px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    border: 3px solid transparent;
+}
+
+.comite-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 0, 145, 0.2);
+}
+
+.comite-icon {
+    font-size: 3em;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.comite-title {
+    color: var(--bleu-france);
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: 700;
+}
+
+.comite-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.comite-membres p:first-child,
+.comite-mission p:first-child {
+    color: var(--bleu-france);
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.comite-membres ul {
+    list-style: none;
+    padding: 0;
+}
+
+.comite-membres li {
+    padding: 8px 0;
+    padding-left: 20px;
+    position: relative;
+    line-height: 1.6;
+}
+
+.comite-membres li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--bleu-france);
+    font-weight: bold;
+}
+
+.comite-mission p:last-child {
+    padding: 15px;
+    background: var(--gris-clair);
+    border-radius: 8px;
+    line-height: 1.6;
+}
+
+/* Variantes de couleurs pour les comités */
+.comite-primary {
+    border-color: var(--bleu-france);
+}
+
+.comite-primary .comite-icon {
+    color: var(--bleu-france);
+}
+
+.comite-secondary {
+    border-color: #5a6f8f;
+}
+
+.comite-secondary .comite-icon {
+    color: #5a6f8f;
+}
+
+.comite-secondary .comite-title,
+.comite-secondary .comite-membres p:first-child,
+.comite-secondary .comite-mission p:first-child {
+    color: #5a6f8f;
+}
+
+.comite-tertiary {
+    border-color: #6A5ACD;
+}
+
+.comite-tertiary .comite-icon {
+    color: #6A5ACD;
+}
+
+.comite-tertiary .comite-title,
+.comite-tertiary .comite-membres p:first-child,
+.comite-tertiary .comite-mission p:first-child {
+    color: #6A5ACD;
+}
+
+.comite-quaternary {
+    border-color: #20B2AA;
+}
+
+.comite-quaternary .comite-icon {
+    color: #20B2AA;
+}
+
+.comite-quaternary .comite-title,
+.comite-quaternary .comite-membres p:first-child,
+.comite-quaternary .comite-mission p:first-child {
+    color: #20B2AA;
+}
+
+.comite-warning {
+    border-color: #FF8C00;
+}
+
+.comite-warning .comite-icon {
+    color: #FF8C00;
+}
+
+.comite-warning .comite-title,
+.comite-warning .comite-membres p:first-child,
+.comite-warning .comite-mission p:first-child {
+    color: #FF8C00;
+}
+
+.comite-security {
+    border-color: var(--rouge-marianne);
+}
+
+.comite-security .comite-icon {
+    color: var(--rouge-marianne);
+}
+
+.comite-security .comite-title,
+.comite-security .comite-membres p:first-child,
+.comite-security .comite-mission p:first-child {
+    color: var(--rouge-marianne);
+}
+
+/* ===== SECTION SCHÉMA ===== */
+.schema-section {
+    padding: 80px 0;
+    background: var(--blanc);
+}
+
+.schema-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 40px;
+    background: var(--gris-clair);
+    border-radius: 20px;
+}
+
+.schema-level {
+    margin: 30px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.schema-arrow {
+    text-align: center;
+    font-size: 3em;
+    color: var(--bleu-france);
+    margin: 10px 0;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(10px);
+    }
+}
+
+.schema-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    width: 100%;
+}
+
+.schema-box {
+    background: var(--blanc);
+    padding: 25px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.schema-box:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+}
+
+.schema-box h4 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.schema-box p {
+    color: var(--gris-50);
+    font-size: 0.95em;
+}
+
+.schema-direction {
+    border: 3px solid var(--bleu-france);
+}
+
+.schema-direction h4 {
+    color: var(--bleu-france);
+}
+
+.schema-proximite {
+    border: 3px solid #5a6f8f;
+}
+
+.schema-proximite h4 {
+    color: #5a6f8f;
+}
+
+.schema-projets {
+    border: 3px solid #6A5ACD;
+}
+
+.schema-projets h4 {
+    color: #6A5ACD;
+}
+
+.schema-chefs {
+    border: 3px solid #20B2AA;
+}
+
+.schema-chefs h4 {
+    color: #20B2AA;
+}
+
+.schema-crise {
+    border: 3px solid #FF8C00;
+}
+
+.schema-crise h4 {
+    color: #FF8C00;
+}
+
+.schema-csn {
+    border: 3px solid var(--rouge-marianne);
+}
+
+.schema-csn h4 {
+    color: var(--rouge-marianne);
+}
+
+.schema-note {
+    margin-top: 40px;
+    padding: 25px;
+    background: #d1ecf1;
+    border-left: 4px solid #0c5460;
+    border-radius: 8px;
+}
+
+.schema-note p {
+    color: #0c5460;
+    line-height: 1.7;
+}
+
+.schema-note strong {
+    font-weight: 700;
+}
+
+/* ===== SECTION COORDINATION ===== */
+.coordination-section {
+    padding: 80px 0;
+    background: var(--gris-clair);
+}
+
+.coordination-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.coordination-card {
+    background: var(--blanc);
+    padding: 35px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 3px solid transparent;
+}
+
+.coordination-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 0, 145, 0.15);
+    border-color: var(--bleu-france);
+}
+
+.coordination-icon {
+    font-size: 3.5em;
+    margin-bottom: 20px;
+    color: var(--bleu-france);
+}
+
+.coordination-title {
+    color: var(--bleu-france);
+    font-size: 1.4em;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.coordination-text {
+    color: var(--gris-50);
+    line-height: 1.7;
+}
+
+/* ===== CTA SECTION ===== */
+.cta-section {
+    padding: 80px 0;
+    background: linear-gradient(135deg, var(--bleu-france) 0%, #1a7db8 100%);
+    text-align: center;
+    color: var(--blanc);
+}
+
+.cta-title {
+    font-size: 2.2em;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.cta-text {
+    font-size: 1.2em;
+    margin-bottom: 35px;
+    opacity: 0.95;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-white {
+    background: var(--blanc);
+    color: var(--bleu-france);
+    padding: 16px 40px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.1em;
+    display: inline-block;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.btn-white:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+    background: var(--gris-clair);
+}
+
+/* ===== RESPONSIVE ===== */
+@media screen and (max-width: 768px) {
+    .intro-box {
+        padding: 30px 20px;
+    }
+    
+    .intro-title {
+        font-size: 1.8em;
+    }
+    
+    .intro-text {
+        font-size: 1.05em;
+    }
+    
+    .comites-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+    
+    .comite-card {
+        padding: 25px 20px;
+    }
+    
+    .comite-title {
+        font-size: 1.3em;
+    }
+    
+    .schema-container {
+        padding: 25px 20px;
+    }
+    
+    .schema-row {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .schema-box {
+        padding: 20px;
+    }
+    
+    .schema-box h4 {
+        font-size: 1.1em;
+    }
+    
+    .schema-arrow {
+        font-size: 2.5em;
+    }
+    
+    .coordination-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .coordination-card {
+        padding: 30px 20px;
+    }
+    
+    .cta-title {
+        font-size: 1.8em;
+    }
+    
+    .cta-text {
+        font-size: 1.05em;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .intro-icon {
+        font-size: 3em;
+    }
+    
+    .intro-title {
+        font-size: 1.5em;
+    }
+    
+    .intro-text {
+        font-size: 1em;
+    }
+    
+    .comite-icon {
+        font-size: 2.5em;
+    }
+    
+    .comite-title {
+        font-size: 1.2em;
+    }
+    
+    .schema-container {
+        padding: 20px 15px;
+    }
+    
+    .schema-arrow {
+        font-size: 2em;
+    }
+    
+    .coordination-icon {
+        font-size: 3em;
+    }
+    
+    .coordination-title {
+        font-size: 1.2em;
+    }
+    
+    .coordination-text {
+        font-size: 0.95em;
+    }
+    
+    .cta-title {
+        font-size: 1.6em;
+    }
+    
+    .cta-text {
+        font-size: 1em;
+    }
+    
+    .btn-white {
+        padding: 14px 32px;
+        font-size: 1em;
+    }
+}

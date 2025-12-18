@@ -1,23 +1,21 @@
 /* ========================================
-   MAIN.JS - Script principal du site
+   MAIN.JS - Script principal du site - VERSION CORRIGÉE
    Académie de Rennes - Équipe de Vannes
 ======================================== */
 
 // ========================================
-// CHARGEMENT DES COMPOSANTS (Cookies, Header & Footer)
+// CHARGEMENT DES COMPOSANTS
 // ========================================
 document.addEventListener('DOMContentLoaded', function() {
     
     console.log('🚀 Initialisation du site...');
     
-    // Charger le bandeau cookies PUIS initialiser le système
+    // Charger le bandeau cookies
     fetch('components/cookie-banner.html')
         .then(response => response.text())
         .then(data => {
             document.getElementById('cookie-banner-placeholder').innerHTML = data;
             console.log('✅ HTML cookies chargé');
-            
-            // Initialiser le système de cookies après chargement du HTML
             if (window.initCookieSystem) {
                 window.initCookieSystem();
             }
@@ -30,8 +28,11 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(data => {
             document.getElementById('header-placeholder').innerHTML = data;
             console.log('✅ Header chargé');
-            initMenuToggle();
-            setActiveNavLink();
+            // Attendre un peu que le DOM soit bien inséré
+            setTimeout(() => {
+                initMenuToggle();
+                setActiveNavLink();
+            }, 100);
         })
         .catch(error => console.error('❌ Erreur chargement header:', error));
     
@@ -42,7 +43,6 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('footer-placeholder').innerHTML = data;
             console.log('✅ Footer chargé');
             
-            // Attacher l'événement au lien "Gérer les cookies" après chargement du footer
             setTimeout(() => {
                 const manageCookiesLink = document.getElementById('manageCookiesLink');
                 if (manageCookiesLink && window.CookieConsent) {
@@ -57,55 +57,87 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ========================================
-// FONCTION : Définir le lien actif dans la navigation
+// FONCTION : Définir le lien actif
 // ========================================
 function setActiveNavLink() {
-    setTimeout(() => {
-        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-        const navLinks = document.querySelectorAll('.nav-pill');
-        
-        navLinks.forEach(link => {
-            const linkPage = link.getAttribute('data-page') + '.html';
-            if (linkPage === currentPage || (currentPage === '' && linkPage === 'index.html')) {
-                link.classList.add('active');
-            } else {
-                link.classList.remove('active');
-            }
-        });
-    }, 100);
+    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    const navLinks = document.querySelectorAll('.nav-pill');
+    
+    navLinks.forEach(link => {
+        const linkPage = link.getAttribute('data-page') + '.html';
+        if (linkPage === currentPage || (currentPage === '' && linkPage === 'index.html')) {
+            link.classList.add('active');
+        } else {
+            link.classList.remove('active');
+        }
+    });
 }
 
 // ========================================
-// FONCTION : Menu hamburger pour mobile
+// FONCTION : Menu hamburger - VERSION CORRIGÉE
 // ========================================
 function initMenuToggle() {
     const menuToggle = document.getElementById('menuToggle');
     const navMenu = document.getElementById('navMenu');
     
-    if (menuToggle && navMenu) {
-        menuToggle.addEventListener('click', function() {
-            this.classList.toggle('active');
-            navMenu.classList.toggle('active');
-        });
-        
-        const navLinks = navMenu.querySelectorAll('.nav-pill');
-        navLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                menuToggle.classList.remove('active');
-                navMenu.classList.remove('active');
-            });
-        });
-        
-        document.addEventListener('click', function(event) {
-            const isClickInsideMenu = navMenu.contains(event.target);
-            const isClickOnToggle = menuToggle.contains(event.target);
-            
-            if (!isClickInsideMenu && !isClickOnToggle && navMenu.classList.contains('active')) {
-                menuToggle.classList.remove('active');
-                navMenu.classList.remove('active');
-            }
-        });
+    if (!menuToggle || !navMenu) {
+        console.error('❌ Éléments menu non trouvés');
+        return;
     }
+    
+    console.log('✅ Menu toggle initialisé');
+    
+    // Toggle du menu
+    menuToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        console.log('🔘 Click sur menu toggle');
+        this.classList.toggle('active');
+        navMenu.classList.toggle('active');
+        
+        // Bloquer le scroll quand le menu est ouvert
+        if (navMenu.classList.contains('active')) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+    });
+    
+    // Fermer le menu quand on clique sur un lien
+    const navLinks = navMenu.querySelectorAll('.nav-pill');
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            console.log('🔗 Click sur lien nav');
+            menuToggle.classList.remove('active');
+            navMenu.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+    });
+    
+    // Fermer le menu en cliquant en dehors
+    document.addEventListener('click', function(event) {
+        const isClickInsideMenu = navMenu.contains(event.target);
+        const isClickOnToggle = menuToggle.contains(event.target);
+        
+        if (!isClickInsideMenu && !isClickOnToggle && navMenu.classList.contains('active')) {
+            console.log('🔘 Click en dehors - fermeture menu');
+            menuToggle.classList.remove('active');
+            navMenu.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+    
+    // Fermer le menu lors du redimensionnement vers desktop
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+            if (window.innerWidth > 768) {
+                menuToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }, 250);
+    });
 }
 
 // ========================================
@@ -177,7 +209,7 @@ function initScrollAnimations() {
 window.addEventListener('load', initScrollAnimations);
 
 // ========================================
-// SMOOTH SCROLL pour les liens d'ancrage
+// SMOOTH SCROLL
 // ========================================
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
@@ -230,5 +262,5 @@ window.addEventListener('load', createBackToTopButton);
 // ========================================
 // CONSOLE INFO
 // ========================================
-console.log('%cAcadémie de Rennes - Équipe de Vannes', 'font-size: 16px; font-weight: bold; color: #000091;');
-console.log('%cSite web', 'font-size: 12px; color: #666;');
+console.log('%cAcadémie de Rennes - Équipe de Vannes', 'font-size: 16px; font-weight: bold; color: #228BCC;');
+console.log('%cSite web responsive', 'font-size: 12px; color: #666;');
