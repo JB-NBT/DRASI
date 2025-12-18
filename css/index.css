@@ -3,9 +3,7 @@
    Styles spécifiques + Responsive intégré
 ======================================== */
 
-/* ========================================
-   HERO SECTION - DESKTOP
-======================================== */
+/* ===== HERO SECTION - DESKTOP ===== */
 .hero {
     background: var(--bleu-france);
     min-height: 600px;
