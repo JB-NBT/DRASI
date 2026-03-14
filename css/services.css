@@ -1,0 +1,473 @@
+/* ========================================
+   SERVICES.CSS - Styles pour la page services opérés
+======================================== */
+
+/* ===== VUE D'ENSEMBLE ===== */
+.vue-ensemble-section {
+    padding: 60px 0;
+    background: linear-gradient(135deg, var(--bleu-france) 0%, #1a7db8 100%);
+}
+
+.vue-box {
+    max-width: 900px;
+    margin: 0 auto 40px;
+    text-align: center;
+    color: var(--blanc);
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.vue-icon {
+    font-size: 4em;
+    margin-bottom: 20px;
+}
+
+.vue-title {
+    font-size: 2.2em;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.vue-text {
+    font-size: 1.2em;
+    line-height: 1.8;
+}
+
+.vue-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.vue-stat-item {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    padding: 30px;
+    border-radius: 16px;
+    text-align: center;
+    color: var(--blanc);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.vue-stat-item:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.vue-stat-number {
+    font-size: 3em;
+    font-weight: bold;
+    line-height: 1;
+    margin-bottom: 10px;
+}
+
+.vue-stat-label {
+    font-size: 1.1em;
+    opacity: 0.95;
+}
+
+/* ===== SERVICES ===== */
+.services-section {
+    padding: 80px 0;
+    background: var(--gris-clair);
+}
+
+.services-alt {
+    background: var(--blanc);
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.service-card {
+    background: var(--blanc);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    border: 3px solid transparent;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 0, 145, 0.15);
+    border-color: var(--bleu-france);
+}
+
+.services-alt .service-card {
+    background: var(--gris-clair);
+}
+
+.services-alt .service-card:hover {
+    background: var(--blanc);
+}
+
+.service-header {
+    background: linear-gradient(135deg, var(--bleu-france) 0%, #1a7db8 100%);
+    padding: 30px;
+    text-align: center;
+    color: var(--blanc);
+}
+
+.service-icon {
+    font-size: 3.5em;
+    margin-bottom: 15px;
+}
+
+.service-title {
+    font-size: 1.4em;
+    font-weight: 700;
+}
+
+.service-content {
+    padding: 30px;
+}
+
+.service-stat {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: var(--bleu-france);
+    margin-bottom: 20px;
+    text-align: center;
+    padding-bottom: 20px;
+    border-bottom: 2px solid var(--gris-clair);
+}
+
+.service-features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.service-features li {
+    padding: 10px 0;
+    padding-left: 30px;
+    position: relative;
+    line-height: 1.6;
+    color: var(--gris-85);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.service-features li:last-child {
+    border-bottom: none;
+}
+
+.service-features li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--bleu-france);
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.service-featured {
+    border: 3px solid var(--rouge-marianne);
+    position: relative;
+}
+
+.service-featured .service-header {
+    background: linear-gradient(135deg, var(--rouge-marianne) 0%, #b8000c 100%);
+}
+
+.service-featured .service-stat {
+    color: var(--rouge-marianne);
+}
+
+.service-featured .service-features li::before {
+    color: var(--rouge-marianne);
+}
+
+.service-pilote {
+    margin-top: 20px;
+    padding: 15px;
+    background: #fff3cd;
+    border-radius: 8px;
+    border-left: 4px solid #ffc107;
+    text-align: center;
+}
+
+.service-pilote strong {
+    color: #856404;
+    font-weight: 700;
+}
+
+/* ===== SUPPORT ===== */
+.support-section {
+    padding: 80px 0;
+    background: var(--blanc);
+}
+
+.support-box {
+    max-width: 900px;
+    margin: 40px auto;
+    background: var(--gris-clair);
+    padding: 50px;
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+}
+
+.support-stat-large {
+    text-align: center;
+    padding-bottom: 40px;
+    margin-bottom: 40px;
+    border-bottom: 3px solid var(--bleu-france);
+}
+
+.support-number {
+    font-size: 5em;
+    font-weight: bold;
+    color: var(--bleu-france);
+    line-height: 1;
+    margin-bottom: 15px;
+}
+
+.support-label {
+    font-size: 1.3em;
+    color: var(--gris-85);
+    font-weight: 600;
+}
+
+.support-details h4 {
+    color: var(--bleu-france);
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.support-details ul {
+    list-style: none;
+    padding: 0;
+}
+
+.support-details li {
+    padding: 12px 0;
+    padding-left: 30px;
+    position: relative;
+    line-height: 1.7;
+    font-size: 1.1em;
+}
+
+.support-details li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--bleu-france);
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.support-details strong {
+    color: var(--bleu-france);
+    font-weight: 700;
+}
+
+/* ===== CTA SECTION ===== */
+.cta-section {
+    padding: 80px 0;
+    background: linear-gradient(135deg, var(--bleu-france) 0%, #1a7db8 100%);
+    text-align: center;
+    color: var(--blanc);
+}
+
+.cta-title {
+    font-size: 2.2em;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.cta-text {
+    font-size: 1.2em;
+    margin-bottom: 35px;
+    opacity: 0.95;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-white {
+    background: var(--blanc);
+    color: var(--bleu-france);
+    padding: 16px 40px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.1em;
+    display: inline-block;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.btn-white:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+    background: var(--gris-clair);
+}
+
+/* ===== RESPONSIVE ===== */
+@media screen and (max-width: 768px) {
+    .vue-box {
+        padding: 30px 20px;
+    }
+    
+    .vue-title {
+        font-size: 1.8em;
+    }
+    
+    .vue-text {
+        font-size: 1.05em;
+    }
+    
+    .vue-stats {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .vue-stat-item {
+        padding: 25px;
+    }
+    
+    .vue-stat-number {
+        font-size: 2.5em;
+    }
+    
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+    
+    .service-header {
+        padding: 25px 20px;
+    }
+    
+    .service-icon {
+        font-size: 3em;
+    }
+    
+    .service-title {
+        font-size: 1.2em;
+    }
+    
+    .service-content {
+        padding: 25px 20px;
+    }
+    
+    .service-stat {
+        font-size: 1.5em;
+    }
+    
+    .support-box {
+        padding: 35px 25px;
+    }
+    
+    .support-number {
+        font-size: 3.5em;
+    }
+    
+    .support-label {
+        font-size: 1.1em;
+    }
+    
+    .support-details h4 {
+        font-size: 1.3em;
+    }
+    
+    .support-details li {
+        font-size: 1em;
+    }
+    
+    .cta-title {
+        font-size: 1.8em;
+    }
+    
+    .cta-text {
+        font-size: 1.05em;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .vue-icon {
+        font-size: 3em;
+    }
+    
+    .vue-title {
+        font-size: 1.5em;
+    }
+    
+    .vue-text {
+        font-size: 1em;
+    }
+    
+    .vue-stat-number {
+        font-size: 2em;
+    }
+    
+    .vue-stat-label {
+        font-size: 1em;
+    }
+    
+    .service-icon {
+        font-size: 2.5em;
+    }
+    
+    .service-title {
+        font-size: 1.1em;
+    }
+    
+    .service-stat {
+        font-size: 1.3em;
+    }
+    
+    .service-features li {
+        font-size: 0.95em;
+        padding: 8px 0 8px 25px;
+    }
+    
+    .support-box {
+        padding: 25px 20px;
+    }
+    
+    .support-number {
+        font-size: 3em;
+    }
+    
+    .support-label {
+        font-size: 1em;
+    }
+    
+    .support-details h4 {
+        font-size: 1.2em;
+    }
+    
+    .support-details li {
+        font-size: 0.95em;
+    }
+    
+    .cta-title {
+        font-size: 1.6em;
+    }
+    
+    .cta-text {
+        font-size: 1em;
+    }
+    
+    .btn-white {
+        padding: 14px 32px;
+        font-size: 1em;
+    }
+}

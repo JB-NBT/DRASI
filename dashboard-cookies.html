@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DRASI – Gestion des Cookies RGPD</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/dashboard-cookies.css"/>
+  <link rel="icon" type="image/png" href="images/logo-acad.png">
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════
+     ÉCRAN DE VERROUILLAGE
+═══════════════════════════════════════ -->
+<div id="lock-screen" role="dialog" aria-modal="true" aria-label="Accès protégé">
+  <div class="lock-box" id="lock-box">
+    <div class="lock-icon">🔒</div>
+    <div class="lock-brand">DRASI<span></div>
+    <h2 class="lock-title">Accès restreint</h2>
+    <p class="lock-sub">Ce tableau de bord est réservé aux administrateurs.<br>
+    Veuillez saisir votre mot de passe.</p>
+    <div class="lock-field-wrap">
+      <input type="password" id="lock-input" class="lock-input"
+        placeholder="Mot de passe…"
+        autocomplete="current-password"
+        onkeydown="if(event.key==='Enter') checkPassword()"/>
+      <button class="lock-eye" id="lock-eye" onclick="toggleEye()" title="Afficher/masquer">👁</button>
+    </div>
+    <div class="lock-error" id="lock-error" aria-live="polite"></div>
+    <button class="lock-btn" onclick="checkPassword()">Accéder au tableau de bord →</button>
+    <p class="lock-hint">Session mémorisée pendant 8 heures</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     CONTENU PRINCIPAL
+═══════════════════════════════════════ -->
+<div id="app-content" style="display:none">
+
+  <div class="topbar">
+    <span class="topbar-logo">DRASI</span>
+  </div>
+
+  <div class="layout">
+
+    <aside class="sidebar">
+      <div class="sidebar-section">Navigation</div>
+      <button class="nav-item active" onclick="switchTab('consentement')">
+        <span class="nav-icon">🛡️</span> Consentement
+      </button>
+      <button class="nav-item" onclick="switchTab('cookies')">
+        <span class="nav-icon">🍪</span> Cookies navigateur
+      </button>
+     <!-- <button class="nav-item" onclick="switchTab('analytics')">
+        <span class="nav-icon">📊</span> Analytics
+      </button>
+      <button class="nav-item" onclick="switchTab('storage')">
+        <span class="nav-icon">💾</span> Stockage local
+      </button>-->
+      <div class="sidebar-section" style="margin-top:auto">Actions</div>
+      <button class="nav-item" onclick="window.CookieConsent?.showBanner?.()">
+        <span class="nav-icon">🔔</span> Revoir le bandeau
+      </button>
+      <button class="nav-item" onclick="refreshAll()">
+        <span class="nav-icon">⟳</span> Rafraîchir
+      </button> 
+    </aside>
+
+    <main class="main">
+
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Gestion des Cookies</h1>
+          <p class="page-sub">Tableau de bord RGPD — inspection en temps réel</p>
+        </div>
+        <div class="flex-gap">
+         <!-- <button class="btn" onclick="refreshAll()">⟳ Rafraîchir</button> -->
+          <button class="btn btn-danger btn-sm" onclick="clearEverything()">✕ Tout effacer</button>
+        </div>
+      </div>
+
+      <div class="cards">
+        <div class="card blue">
+          <div class="card-label">Cookies</div>
+          <div class="card-value" id="stat-cookies">—</div>
+          <div class="card-sub">dans le navigateur</div>
+        </div>
+        <div class="card" id="card-consent">
+          <div class="card-label">Consentement</div>
+          <div class="card-value" id="stat-consent">—</div>
+          <div class="card-sub" id="stat-consent-date">–</div>
+        </div>
+        <div class="card green">
+          <div class="card-label">Pages vues</div>
+          <div class="card-value" id="stat-pageviews">—</div>
+          <div class="card-sub">analytics enregistrées</div>
+        </div>
+        <div class="card amber">
+          <div class="card-label">Temps moyen</div>
+          <div class="card-value" id="stat-avgtime">—</div>
+          <div class="card-sub">secondes / page</div>
+        </div>
+      </div>
+
+      <div class="tabs">
+        <button class="tab active" id="tab-consentement" onclick="switchTab('consentement')">🛡️ Consentement</button>
+        <button class="tab" id="tab-cookies"             onclick="switchTab('cookies')">🍪 Cookies</button>
+       <!-- <button class="tab" id="tab-analytics"           onclick="switchTab('analytics')">📊 Analytics</button>
+        <button class="tab" id="tab-storage"             onclick="switchTab('storage')">💾 Stockage local</button>-->
+      </div>
+
+      <!-- TAB : CONSENTEMENT -->
+      <div class="tab-panel active" id="panel-consentement">
+        <div class="info-block">
+          ℹ️ Ce panneau reflète l'état du consentement enregistré par <code>cookies.js</code>
+          via <code>localStorage["drasi_cookie_consent"]</code>.
+          Le tableau de bord se met à jour <strong>automatiquement</strong> dès que vous acceptez,
+          refusez ou personnalisez les cookies.
+        </div>
+        <div class="consent-box">
+          <div class="section-title">État du consentement actuel</div>
+          <div id="consent-content">
+            <div class="empty-state">
+              <div class="empty-icon">🔍</div>
+              <div class="empty-title">Aucun consentement enregistré</div>
+              <div class="empty-desc">L'utilisateur n'a pas encore répondu au bandeau.</div>
+            </div>
+          </div>
+        </div>
+        <div class="flex-gap">
+          <button class="btn btn-primary" onclick="window.CookieConsent?.acceptAll?.()">✅ Accepter tout</button>
+          <button class="btn"             onclick="window.CookieConsent?.refuseAll?.()">❌ Refuser tout</button>
+         <!-- <button class="btn"             onclick="window.CookieConsent?.openModal?.()">⚙️ Personnaliser</button>-->
+          <button class="btn btn-danger btn-sm" onclick="resetConsent()">Réinitialiser</button>
+        </div>
+      </div>
+
+      <!-- TAB : COOKIES -->
+      <div class="tab-panel" id="panel-cookies">
+        <div class="table-wrap">
+          <div class="table-header">
+            <span class="table-title">Données de stockage
+              <span id="cookie-count-label" style="color:var(--muted);font-weight:400"></span>
+            </span>
+            <input type="text" id="cookie-search" placeholder="Filtrer…" oninput="renderCookies()"
+              style="padding:6px 12px;border:1px solid var(--border);border-radius:4px;
+                     font-size:13px;outline:none;font-family:var(--sans)"/>
+          </div>
+         <table>
+            <thead><tr><th>#</th><th>Nom</th><th>Type</th><th>Valeur</th><th>Action</th></tr></thead>
+            <tbody id="cookie-table-body"></tbody>
+          </table> 
+        </div>
+        <!--  <div class="consent-box">
+          <div class="section-title">Ajouter une entrée</div>
+          <div class="flex-gap" style="align-items:flex-end">
+          <div>
+              <div style="font-size:12px;color:var(--muted);margin-bottom:4px">Nom</div>
+              <input id="new-cookie-name" type="text" placeholder="drasi_test"
+                style="padding:9px 12px;border:1px solid var(--border);border-radius:4px;
+                       font-size:13px;outline:none;font-family:var(--mono);min-width:160px"/>
+            </div>
+            <div>
+              <div style="font-size:12px;color:var(--muted);margin-bottom:4px">Valeur</div>
+              <input id="new-cookie-value" type="text" placeholder="valeur"
+                style="padding:9px 12px;border:1px solid var(--border);border-radius:4px;
+                       font-size:13px;outline:none;font-family:var(--mono);min-width:200px"/>
+            </div>
+            <div>
+              <div style="font-size:12px;color:var(--muted);margin-bottom:4px">Type</div>
+              <select id="new-cookie-type"
+                style="padding:9px 12px;border:1px solid var(--border);border-radius:4px;
+                       font-size:13px;outline:none;font-family:var(--sans)">
+                <option value="local">localStorage</option>
+                <option value="session">sessionStorage</option>
+                <option value="http">Cookie HTTP</option>
+              </select>
+            </div>
+            <div id="new-cookie-days-wrap" style="display:none">
+              <div style="font-size:12px;color:var(--muted);margin-bottom:4px">Durée (jours)</div>
+              <input id="new-cookie-days" type="number" value="7" min="1"
+                style="padding:9px 12px;border:1px solid var(--border);border-radius:4px;
+                       font-size:13px;outline:none;font-family:var(--mono);width:90px"/>
+            </div>
+            <button class="btn btn-primary" onclick="addCookie()">+ Créer</button>
+          </div>-->
+        </div>
+      </div>
+    
+      <!-- TAB : ANALYTICS -->
+      <div class="tab-panel" id="panel-analytics">
+        <div class="consent-box">
+          <div class="section-title">Pages vues enregistrées</div>
+          <div id="analytics-pageviews"></div>
+        </div>
+        <div class="consent-box mt">
+          <div class="section-title">Temps passé par page</div>
+          <div id="analytics-time"></div>
+        </div>
+      </div>
+
+      <!-- TAB : STOCKAGE LOCAL -->
+      <div class="tab-panel" id="panel-storage">
+        <div class="consent-box">
+          <div class="section-title">localStorage — clés DRASI</div>
+          <div id="storage-drasi"></div>
+        </div>
+        <div class="consent-box mt">
+          <div class="section-title">sessionStorage — session active</div>
+          <div id="storage-session"></div>
+        </div>
+      </div>
+
+    </main>
+  </div><!-- /layout -->
+
+  <div id="cookie-banner-mount"></div>
+  <div class="toast" id="toast"></div>
+
+</div><!-- /app-content -->
+
+<!-- ═══════════════════════════════════════
+     SCRIPTS
+     1. cookies.js  — système RGPD du site (existant)
+     2. dashboard.js — logique du tableau de bord
+═══════════════════════════════════════ -->
+<script src="js/cookies.js"></script>
+<script src="js/dashboard.js" defer></script>
+
+</body>
+</html>

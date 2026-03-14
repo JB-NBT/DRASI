@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Footer Compact - Académie de Rennes</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<!-- Contenu de la page ici -->
+
+<!-- FOOTER COMPACT AVEC TOUS LES LIENS -->
+<footer class="footer">
+    <div class="container">
+        <!-- Section compacte : Liens + GAR -->
+        <div class="footer-compact">
+            <!-- Liens utiles en 3 colonnes -->
+            <div class="footer-links-section">
+                <h4>Liens utiles</h4>
+                <div class="footer-links-grid">
+                    <div class="footer-links-col">
+                        <a href="https://www.ac-rennes.fr" target="_blank">> Académie de Rennes</a>
+                        <a href="https://www.bretagne.bzh" target="_blank">> Région Bretagne</a>
+                        <a href="https://cotesdarmor.fr" target="_blank">> Département Côtes d'Armor</a>
+                    </div>
+                    <div class="footer-links-col">
+                        <a href="https://www.finistere.fr" target="_blank">> Département Finistère</a>
+                        <a href="https://www.ille-et-vilaine.fr" target="_blank">> Département Ille-et-Vilaine</a>
+                        <a href="https://www.morbihan.fr" target="_blank">> Département Morbihan</a>
+                    </div>
+                    <div class="footer-links-col">
+                        <a href="https://europe.bzh" target="_blank">> L'Europe s'engage</a>
+                        <a href="https://www.enseignement-catholique.bzh" target="_blank">> Enseignement catholique</a>
+                        <a href="https://www.ecologie.gouv.fr" target="_blank">> Ministère de la Transition écologique</a>
+                        <a href="https://agriculture.gouv.fr" target="_blank">> Ministère de l'Agriculture</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ligne des mentions légales avec GAR -->
+            <div class="footer-legal-row">
+                <div class="footer-legal-links">
+                    <a href="contact.html">Nous contacter</a>
+                    <a href="#mentions-legales">Mentions légales</a>
+                    <a href="#" id="manageCookiesLink">Gérer les cookies</a>
+                </div>
+                
+                <div class="footer-gar">
+                    <img src="images/GAR.png" alt="GAR" class="gar-logo">
+                    <a href="#mentions-rgpd-gar" class="gar-link">Mentions RGPD GAR</a>
+                </div>
+            </div>
+
+            <!-- Copyright -->
+            <div class="footer-copyright">
+                © 2025 Académie de Rennes - Équipe DRASI. Tous droits réservés.
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Bouton retour en haut -->
+<button class="back-to-top" id="backToTop" aria-label="Retour en haut">↑</button>
+
+<script>
+// Script pour le bouton retour en haut
+const backToTopButton = document.getElementById('backToTop');
+
+window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 300) {
+        backToTopButton.classList.add('visible');
+    } else {
+        backToTopButton.classList.remove('visible');
+    }
+});
+
+backToTopButton.addEventListener('click', () => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});
+</script>
+
+</body>
+</html>

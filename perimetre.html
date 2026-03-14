@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Périmètre d'intervention - Équipe académique DRASI">
+    <title>Notre Périmètre - Équipe Académique DRASI</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/perimetre.css">
+    <link rel="stylesheet" href="css/cookies.css">
+    <link rel="icon" type="image/png" href="images/logo-acad.png">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
+</head>
+
+<body>
+    <!-- BANDEAU COOKIES - Chargé dynamiquement -->
+    <div id="cookie-banner-placeholder"></div>
+    <!-- HEADER - Chargé dynamiquement -->
+    <div id="header-placeholder"></div>
+
+    <!-- SECTION INTRODUCTION -->
+    <section class="page-intro">
+        <div class="container">
+            <h2 class="section-title">Notre Périmètre</h2>
+            <p class="section-subtitle">
+                Découvrez notre zone d'intervention dans le Morbihan avec l'ensemble des établissements 
+                et services académiques que nous accompagnons.
+            </p>
+        </div>
+    </section>
+
+    <!-- SECTION CARTE 1 : EPLE -->
+    <section class="map-section">
+        <div class="container">
+            <h3 class="map-title">Établissements Publics Locaux d'Enseignement</h3>
+            <p class="map-description">
+                Lycées, collèges publics et GRETA du Morbihan
+            </p>
+            <div class="map-container">
+                <div id="map-eple" class="leaflet-map"></div>
+            </div>
+            <div class="map-legend">
+                <div class="legend-item">
+                    <span class="legend-marker college"></span>
+                    <span>Collèges publics (41)</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-marker lycee"></span>
+                    <span>Lycées (21)</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-marker greta"></span>
+                    <span>GRETA (3)</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION CARTE 2 : SERVICES ACADÉMIQUES -->
+    <section class="map-section map-section-alt">
+        <div class="container">
+            <h3 class="map-title">Services Académiques du Morbihan</h3>
+            <p class="map-description">
+                SDJES, DSDEN, IEN, CIO, CMS et SMA
+            </p>
+            <div class="map-container">
+                <div id="map-services" class="leaflet-map"></div>
+            </div>
+            <div class="map-legend">
+                <div class="legend-item">
+                    <span class="legend-marker ien"></span>
+                    <span>IEN (11)</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-marker cms"></span>
+                    <span>CMS (8)</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-marker cio"></span>
+                    <span>CIO (4)</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-marker sdjes"></span>
+                    <span>SDJES Vannes</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-marker dsden"></span>
+                    <span>DSDEN</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-marker sma"></span>
+                    <span>SMA</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION STATISTIQUES -->
+    <section class="stats-section">
+        <div class="container">
+            <h3 class="stats-title">Nos chiffres clés</h3>
+            <p class="stats-subtitle">L'ensemble des établissements et services du Morbihan</p>
+            
+            <div class="stats-category">
+                <h4 class="stats-category-title">Établissements d'enseignement</h4>
+                <div class="stats-grid stats-grid-etablissements">
+                    <div class="stat-card">
+                        <div class="stat-number">41</div>
+                        <div class="stat-label">Collèges publics</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">21</div>
+                        <div class="stat-label">Lycées</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">3</div>
+                        <div class="stat-label">GRETA</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-category">
+                <h4 class="stats-category-title">Services académiques et d'accompagnement</h4>
+                <div class="stats-grid stats-grid-services">
+                    <div class="stat-card">
+                        <div class="stat-number">11</div>
+                        <div class="stat-label">IEN</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">8</div>
+                        <div class="stat-label">CMS</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">4</div>
+                        <div class="stat-label">CIO</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">1</div>
+                        <div class="stat-label">DSDEN</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">1</div>
+                        <div class="stat-label">SDJES</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">1</div>
+                        <div class="stat-label">SMA</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER - Chargé dynamiquement -->
+    <div id="footer-placeholder"></div>
+
+    <!-- JAVASCRIPT -->
+    <script src="js/cookies.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/maps.js"></script>
+    
+</body>
+</html>
