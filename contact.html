@@ -103,6 +103,22 @@
                     <textarea id="message" name="message" class="form-textarea" required></textarea>
                 </div>
 
+                <!-- CAPTCHA MATHÉMATIQUE -->
+                <div class="form-group captcha-group">
+                    <label for="captcha" class="form-label">
+                        Vérification anti-spam : Combien font <span id="captchaQuestion"></span> ? *
+                    </label>
+                    <div class="captcha-input-wrapper">
+                        <input type="number" id="captcha" name="captcha" class="form-input captcha-input" 
+                               placeholder="Entrez le résultat" required>
+                        <button type="button" id="refreshCaptcha" class="btn-refresh-captcha" 
+                                aria-label="Générer un nouveau calcul">
+                            🔄
+                        </button>
+                    </div>
+                    <small class="captcha-help">Cette question permet de vérifier que vous n'êtes pas un robot</small>
+                </div>
+
                 <div class="form-group checkbox-group">
                     <input type="checkbox" id="rgpd" name="rgpd" required>
                     <label for="rgpd" class="checkbox-label">
@@ -160,5 +176,6 @@
     <script src="js/cookies.js"></script> 
     <script src="js/main.js"></script>
     <script src="js/contact.js"></script>
+    <script src="js/captcha.js"></script>
 </body>
 </html>
