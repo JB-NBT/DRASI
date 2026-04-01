@@ -1,0 +1,190 @@
+/* ============================================================
+   mentions.css — Styles spécifiques à la page mentions légales
+   Complète common.css, respecte la charte graphique DRASI
+   ============================================================ */
+
+/* ----- Conteneur principal ----- */
+.mentions-container {
+    padding: 2.5rem 0 3rem;
+}
+
+/* ----- Navigation interne ----- */
+.mentions-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2.5rem;
+    padding: 1rem 1.25rem;
+    background: #f0f6fb;
+    border-left: 4px solid var(--bleu-france, #228BCC);
+    border-radius: 0 4px 4px 0;
+}
+
+.mentions-nav a {
+    color: var(--bleu-france, #228BCC);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 0.25rem 0.75rem;
+    border-radius: 3px;
+    transition: background 0.15s, color 0.15s;
+}
+
+.mentions-nav a:hover {
+    background: var(--bleu-france, #228BCC);
+    color: #ffffff;
+}
+
+/* ----- Sections ----- */
+.mentions-section {
+    margin-bottom: 2.5rem;
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.mentions-section:last-of-type {
+    border-bottom: none;
+}
+
+.mentions-section h2 {
+    font-size: 1.375rem;
+    font-weight: 700;
+    color: var(--bleu-france, #228BCC);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--bleu-france, #228BCC);
+}
+
+.mentions-section h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #262626;
+    margin-top: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.mentions-section p,
+.mentions-section li {
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: #3d3d3d;
+}
+
+.mentions-section ul {
+    margin: 0.5rem 0 1rem 1.25rem;
+    padding: 0;
+}
+
+.mentions-section ul li {
+    margin-bottom: 0.3rem;
+}
+
+/* ----- Blocs d'information encadrés ----- */
+.mentions-bloc {
+    background: var(--gris-clair, #f8f9fa);
+    border: 1px solid #d6e4f0;
+    border-left: 4px solid var(--bleu-france, #228BCC);
+    border-radius: 0 4px 4px 0;
+    padding: 1rem 1.25rem;
+    margin: 1rem 0;
+}
+
+.mentions-bloc p {
+    margin: 0.25rem 0;
+    font-size: 0.9375rem;
+    color: #3d3d3d;
+}
+
+.mentions-bloc a {
+    color: var(--bleu-france, #228BCC);
+    text-decoration: underline;
+}
+
+.mentions-bloc a:hover {
+    color: #1a6fa0;
+}
+
+/* ----- Tableaux ----- */
+.mentions-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    margin: 1rem 0;
+}
+
+.mentions-table thead tr {
+    background: var(--bleu-france, #228BCC);
+    color: #ffffff;
+}
+
+.mentions-table th {
+    text-align: left;
+    padding: 0.65rem 0.85rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+.mentions-table td {
+    padding: 0.6rem 0.85rem;
+    border-bottom: 1px solid #dee2e6;
+    color: #3d3d3d;
+    vertical-align: top;
+}
+
+.mentions-table tbody tr:nth-child(even) {
+    background: #f4f8fc;
+}
+
+.mentions-table tbody tr:hover {
+    background: #e8f2fa;
+}
+
+.mentions-table code {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 0.82rem;
+    background: #e9ecef;
+    padding: 0.1rem 0.35rem;
+    border-radius: 3px;
+    color: #c0392b;
+}
+
+/* ----- Mention de mise à jour ----- */
+.mentions-update {
+    text-align: right;
+    font-size: 0.82rem;
+    color: #6c757d;
+    margin-top: 2rem;
+    font-style: italic;
+}
+
+/* ----- Liens généraux dans les sections ----- */
+.mentions-section a {
+    color: var(--bleu-france, #228BCC);
+    text-decoration: underline;
+}
+
+.mentions-section a:hover {
+    color: #1a6fa0;
+}
+
+/* ----- Responsive ----- */
+@media (max-width: 768px) {
+    .mentions-nav {
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .mentions-nav a {
+        display: block;
+    }
+
+    .mentions-table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .mentions-section h2 {
+        font-size: 1.2rem;
+    }
+}

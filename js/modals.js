@@ -4,117 +4,117 @@
 
 // Données détaillées des membres (à personnaliser selon vos besoins)
 const membersData = {
-    'hafid-mokadem': {
-        name: 'Hafid MOKADEM',
+    'marc-dupont': {
+        name: 'Marc Dupont',
         role: 'IGE - Responsable',
-        email: 'hafid.mokadem@ac-rennes.fr',
+        email: 'marc.dupont@ac-rennes.fr',
         location: 'Vannes',
-        photo: 'images/equipe/hafid-mokadem.png',
+        photo: 'https://robohash.org/marc.dupont?set=set4&size=200x200',
         missions: [
             'Coordination générale de l\'équipe académique',
             'Gestion des projets stratégiques',
             'Supervision des activités techniques et pédagogiques',
             'Liaison avec le rectorat et les établissements'
         ],
-        description: 'En tant qu\'Inspecteur Général de l\'Éducation, Hafid coordonne l\'ensemble des missions de l\'équipe de Vannes et assure le lien avec les différents acteurs du système éducatif.'
+        description: 'En tant que responsable de l\'équipe, Marc coordonne l\'ensemble des missions de la DRASI de Vannes et assure le lien avec les différents acteurs du système éducatif.'
     },
-    'vincent-benard': {
-        name: 'Vincent BENARD',
+    'sophie-martin': {
+        name: 'Sophie Martin',
         role: 'ASI - Responsable adjoint',
-        email: 'vincent.benard@ac-rennes.fr',
+        email: 'sophie.martin@ac-rennes.fr',
         location: 'Vannes',
-        photo: 'images/equipe/vincent-benard.png',
+        photo: 'https://robohash.org/sophie.martin?set=set4&size=200x200',
         missions: [
             'Assistance à la direction',
             'Gestion des systèmes d\'information',
             'Coordination des projets numériques',
             'Support technique de niveau expert'
         ],
-        description: 'Vincent assiste le responsable dans la gestion quotidienne et pilote les projets liés aux systèmes d\'information de l\'académie.'
+        description: 'Sophie assiste le responsable dans la gestion quotidienne et pilote les projets liés aux systèmes d\'information de l\'académie.'
     },
-    'guillaume-besson': {
-        name: 'Guillaume BESSON',
+    'lucas-bernard': {
+        name: 'Lucas Bernard',
         role: 'TECH',
-        email: 'guillaume.besson@ac-rennes.fr',
+        email: 'lucas.bernard@ac-rennes.fr',
         location: 'Vannes',
-        photo: 'images/equipe/guillaume-besson.png',
+        photo: 'https://robohash.org/lucas.bernard?set=set4&size=200x200',
         missions: [
             'Support technique aux établissements',
             'Maintenance des infrastructures réseau',
             'Installation et configuration des équipements',
             'Formation des utilisateurs'
         ],
-        description: 'Guillaume assure le support technique de proximité et intervient dans les établissements pour résoudre les problématiques informatiques.'
+        description: 'Lucas assure le support technique de proximité et intervient dans les établissements pour résoudre les problématiques informatiques.'
     },
-    'didier-calcagno': {
-        name: 'Didier CALCAGNO',
+    'emma-leroy': {
+        name: 'Emma Leroy',
         role: 'TECH CS',
-        email: 'didier.calcagno@ac-rennes.fr',
+        email: 'emma.leroy@ac-rennes.fr',
         location: 'Vannes',
-        photo: 'images/equipe/didier-calcagno.png',
+        photo: 'https://robohash.org/emma.leroy?set=set4&size=200x200',
         missions: [
             'Support technique spécialisé',
             'Gestion des serveurs et infrastructures',
             'Cybersécurité',
             'Administration systèmes et réseaux'
         ],
-        description: 'Didier est spécialisé dans l\'administration des systèmes complexes et la sécurité informatique de l\'académie.'
+        description: 'Emma est spécialisée dans l\'administration des systèmes complexes et la sécurité informatique de l\'académie.'
     },
-    'pierre-yves-molgat': {
-        name: 'Pierre-Yves MOLGAT',
+    'pierre-moreau': {
+        name: 'Pierre Moreau',
         role: 'ENS',
-        email: 'pierre-yves.molgat@ac-rennes.fr',
+        email: 'pierre.moreau@ac-rennes.fr',
         location: 'Vannes',
-        photo: 'images/equipe/pierre-yves-molgat.png',
+        photo: 'https://robohash.org/pierre.moreau?set=set4&size=200x200',
         missions: [
             'Accompagnement pédagogique au numérique',
             'Formation des enseignants',
             'Développement de ressources numériques',
             'Conseil en intégration des TICE'
         ],
-        description: 'Pierre-Yves accompagne les enseignants dans l\'intégration du numérique dans leurs pratiques pédagogiques.'
+        description: 'Pierre accompagne les enseignants dans l\'intégration du numérique dans leurs pratiques pédagogiques.'
     },
-    'gildas-samson': {
-        name: 'Gildas SAMSON',
+    'julie-dubois': {
+        name: 'Julie Dubois',
         role: 'TECH',
-        email: 'gildas.samson@ac-rennes.fr',
+        email: 'julie.dubois@ac-rennes.fr',
         location: 'Queven',
-        photo: 'images/equipe/gildas-samson.png',
+        photo: 'https://robohash.org/julie.dubois?set=set4&size=200x200',
         missions: [
             'Support technique secteur Queven',
             'Maintenance préventive et curative',
             'Gestion du parc informatique',
             'Assistance aux utilisateurs'
         ],
-        description: 'Gildas assure le support technique pour le secteur de Queven et les établissements environnants.'
+        description: 'Julie assure le support technique pour le secteur de Queven et les établissements environnants.'
     },
-    'christian-josse': {
-        name: 'Christian JOSSE',
+    'thomas-petit': {
+        name: 'Thomas Petit',
         role: 'ASI',
-        email: 'christian.josse@ac-rennes.fr',
+        email: 'thomas.petit@ac-rennes.fr',
         location: 'Queven',
-        photo: 'images/equipe/christian-josse.png',
+        photo: 'https://robohash.org/thomas.petit?set=set4&size=200x200',
         missions: [
             'Administration des systèmes d\'information',
             'Gestion des bases de données',
             'Développement d\'applications',
             'Optimisation des processus'
         ],
-        description: 'Christian gère les systèmes d\'information et développe des solutions adaptées aux besoins des établissements.'
+        description: 'Thomas gère les systèmes d\'information et développe des solutions adaptées aux besoins des établissements.'
     },
-    'alain-le-thomas': {
-        name: 'Alain Le Thomas',
+    'camille-roux': {
+        name: 'Camille Roux',
         role: 'ENS',
-        email: 'alain.le-thomas@ac-rennes.fr',
+        email: 'camille.roux@ac-rennes.fr',
         location: 'Queven',
-        photo: 'images/equipe/alain-le-thomas.png',
+        photo: 'https://robohash.org/camille.roux?set=set4&size=200x200',
         missions: [
             'Formation au numérique éducatif',
             'Accompagnement des projets pédagogiques',
             'Création de contenus numériques',
             'Animation d\'ateliers pour enseignants'
         ],
-        description: 'Alain forme et accompagne les équipes pédagogiques dans l\'usage des outils numériques en classe.'
+        description: 'Camille forme et accompagne les équipes pédagogiques dans l\'usage des outils numériques en classe.'
     }
 };
 
@@ -216,33 +216,24 @@ function handleEscapeKey(e) {
 // INITIALISATION : Ajouter les événements aux cartes
 // ========================================
 function initMemberCards() {
-    const memberCards = document.querySelectorAll('.member-card');
-    
+    const memberCards = document.querySelectorAll('.member-card[data-member-id]');
+
     memberCards.forEach(card => {
-        // Rendre la carte cliquable
         card.style.cursor = 'pointer';
-        
-        // Extraire l'ID du membre depuis l'image
-        const img = card.querySelector('.member-photo');
-        if (img) {
-            const imgSrc = img.getAttribute('src');
-            const memberId = imgSrc.split('/').pop().replace('.png', '');
-            
-            // Ajouter l'événement click
-            card.addEventListener('click', function(e) {
-                e.preventDefault();
-                createMemberModal(memberId);
-            });
-            
-            // Ajouter un effet visuel pour indiquer que c'est cliquable
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-8px) scale(1.02)';
-            });
-            
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(-8px)';
-            });
-        }
+        const memberId = card.getAttribute('data-member-id');
+
+        card.addEventListener('click', function(e) {
+            e.preventDefault();
+            createMemberModal(memberId);
+        });
+
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-8px) scale(1.02)';
+        });
+
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(-8px)';
+        });
     });
 }
 
@@ -255,9 +246,3 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(initMemberCards, 500);
 });
 
-// Réinitialiser si la page change (pour les SPA)
-if (window.location.pathname.includes('equipe')) {
-    window.addEventListener('load', function() {
-        setTimeout(initMemberCards, 1000);
-    });
-}

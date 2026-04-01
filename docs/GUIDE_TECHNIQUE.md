@@ -1,6 +1,6 @@
 # Guide Technique - Site DRASI
 
-**Documentation technique complète pour développeurs et administrateurs système**
+**Documentation technique à destination des développeurs et administrateurs système**
 
 ---
 
@@ -13,7 +13,7 @@
 5. [JavaScript et interactivité](#javascript)
 6. [Système de cookies RGPD](#cookies)
 7. [Cartes Leaflet](#leaflet)
-8. [Dashboard Analytics](#analytics)
+8. [Tableau de bord RGPD](#dashboard)
 9. [Cas pratiques](#cas-pratiques)
 10. [Performance et optimisation](#performance)
 11. [Sécurité](#securite)
@@ -25,60 +25,56 @@
 
 ### Vue d'ensemble
 
-Le site est une **application web statique** construite avec des technologies natives :
+Le site est une application web statique construite avec des technologies natives :
 - HTML5 sémantique
 - CSS3 avec variables CSS (Custom Properties)
-- JavaScript Vanilla ES6+ (pas de framework)
+- JavaScript Vanilla ES6+ (aucun framework)
 - Leaflet 1.7.1 pour les cartes interactives
 
 ### Principes de conception
 
-**1. Simplicité**
+**Simplicité**
 - Pas de framework lourd (React, Vue, Angular)
-- Pas de build system (Webpack, Vite, Parcel)
+- Pas de système de build (Webpack, Vite, Parcel)
 - Déploiement direct sur n'importe quel serveur web
 
-**2. Modularité**
-- Composants réutilisables (header, footer, cookies)
+**Modularité**
+- Composants réutilisables (header, footer, bandeau cookies)
 - Séparation CSS par fonctionnalité
-- Scripts JavaScript organisés par domaine
+- Scripts JavaScript organisés par domaine métier
 
-**3. Performance**
+**Performance**
 - Chargement asynchrone des composants
-- Pas de dépendances externes (sauf Leaflet)
-- Code minifié en production (optionnel)
+- Pas de dépendances externes hormis Leaflet
+- Code minifiable en production
 
-**4. Maintenabilité**
+**Maintenabilité**
 - Code commenté et structuré
-- Variables CSS pour personnalisation rapide
+- Variables CSS pour personnalisation centralisée
 - Convention de nommage cohérente
 
 ### Diagramme d'architecture
 
 ```
-┌─────────────────────────────────────────┐
-│         Navigateur (Client)             │
-│                                         │
-│  ┌──────────┐  ┌──────────┐  ┌───────┐  │
-│  │   HTML   │  │   CSS    │  │  JS   │  │
-│  └──────────┘  └──────────┘  └───────┘  │
-│                                         │
-│  ┌─────────────────────────────────┐    │
-│  │   localStorage / sessionStorage │    │
-│  │  (cookies, analytics, session)  │    │
-│  └─────────────────────────────────┘    │
-└─────────────────────────────────────────┘
-              ▲
-              │ HTTP/HTTPS
-              ▼
-┌─────────────────────────────────────────┐
-│       Serveur Web (Apache/Nginx)        │
-│                                         │
-│  ┌──────────────────────────────────┐   │
-│  │   Fichiers statiques (.html,     │   │
-│  │   .css, .js, images)             │   │
-│  └──────────────────────────────────┘   │
-└─────────────────────────────────────────┘
++------------------------------------------+
+|          Navigateur (Client)             |
+|                                          |
+|  +----------+  +--------+  +---------+  |
+|  |   HTML   |  |  CSS   |  |   JS    |  |
+|  +----------+  +--------+  +---------+  |
+|                                          |
+|  +--------------------------------------+|
+|  |  localStorage / sessionStorage       ||
+|  |  (consentement, analytics, session)  ||
+|  +--------------------------------------+|
++------------------------------------------+
+              |  HTTP/HTTPS
++------------------------------------------+
+|       Serveur Web (Apache / Nginx)       |
+|                                          |
+|  Fichiers statiques (.html, .css, .js,  |
+|  images)                                 |
++------------------------------------------+
 ```
 
 ---
@@ -87,26 +83,26 @@ Le site est une **application web statique** construite avec des technologies na
 
 ### Frontend
 
-| Technologie       | Version   | Usage                                     |
-|-------------------|-----------|-------------------------------------------|
-| **HTML5**         | -         | Structure sémantique, accessibilité       |
-| **CSS3**          | -         | Styles, animations, responsive design     |
-| **JavaScript**    | ES6+      | Interactivité (Vanilla, pas de framework) |
-| **PHP**           |           | Gestion envoye de mail                    |
-| **Leaflet**       | 1.7.1     | Cartes interactives                       |
+| Technologie    | Version | Usage                                      |
+|----------------|---------|--------------------------------------------|
+| HTML5          | —       | Structure sémantique, accessibilité        |
+| CSS3           | —       | Styles, animations, responsive design      |
+| JavaScript     | ES6+    | Interactivité (Vanilla, sans framework)    |
+| PHP            | —       | Envoi de mail (formulaire de contact)      |
+| Leaflet        | 1.7.1   | Cartes interactives                        |
 
-### APIs Browser
+### APIs navigateur utilisées
 
-| API                       | Usage                         |
-|---------------------------|-------------------------------|
-| **localStorage**          | Stockage cookies, analytics   |
-| **sessionStorage**        | Session utilisateur           |
-| **fetch()**               | Chargement composants         |
-| **IntersectionObserver**  | Animations au scroll          |
+| API                      | Usage                              |
+|--------------------------|------------------------------------|
+| localStorage             | Stockage consentement et analytics |
+| sessionStorage           | Session utilisateur                |
+| fetch()                  | Chargement des composants          |
+| IntersectionObserver     | Animations au défilement           |
 
-### Bibliothèques externes
+### Bibliothèque externe
 
-**Leaflet.js** (Seule dépendance)
+Leaflet.js est la seule dépendance externe du projet :
 ```html
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
@@ -114,115 +110,102 @@ Le site est une **application web statique** construite avec des technologies na
 
 ### Compatibilité navigateurs
 
-| Navigateur | Version minimale | Support         |
-|----------- |------------------|-----------------|
-| Chrome     | 90+              | ✅ Complet      |
-| Firefox    | 88+              | ✅ Complet      |
-| Safari     | 14+              | ✅ Complet      |
-| Edge       | 90+              | ✅ Complet      |
-| IE 11      | -                | ❌ Non supporté |
+| Navigateur | Version minimale | Support      |
+|------------|------------------|--------------|
+| Chrome     | 90+              | Complet      |
+| Firefox    | 88+              | Complet      |
+| Safari     | 14+              | Complet      |
+| Edge       | 90+              | Complet      |
+| IE 11      | —                | Non supporté |
 
 ---
 
 ## Structure des fichiers {#structure}
 
-### Arborescence détaillée
+### Arborescence
 
 ```
 site-drasi/
-│
-├── 📄 Pages HTML (racine)
-│   ├── index.html                    # Page d'accueil
-│   ├── histoire.html                 # Timeline historique
-│   ├── equipes.html                  # Portfolio équipe
-│   ├── missions.html                 # Missions et activités
-│   ├── perimetre.html                # Cartes Leaflet
-│   ├── comitologie.html              # Organisation
-│   ├── services_opérés.html          # Services déployés
-│   ├── contact.html                  # Formulaire contact
-│
-├── 📁 css/
-│   ├── common.css                    # Styles communs (header, footer, base)
-│   ├── index.css                     # Styles page d'accueil
-│   ├── histoire.css                  # Styles timeline
-│   ├── equipe.css                    # Styles portfolio + modals
-│   ├── missions.css                  # Styles page missions
-│   ├── services.css                  # Styles services opérés
-│   ├── comitologie.css               # Styles comitologie
-│   ├── perimetre.css                 # Styles cartes Leaflet
-│   ├── contact.css                   # Styles formulaire
-│   └── cookies.css                   # Styles bandeau cookies RGPD
-│
-├── 📁 js/
-│   ├── main.js                       # Script principal (menu, nav, scroll)
-│   ├── cookies.js                    # Gestion cookies RGPD + analytics
-│   ├── maps.js                       # Cartes Leaflet (90 structures)
-│   └── modals.js                     # Modals membres équipe
-│
-├── 📁 images/
-│   ├── logo-acad.png                 # Logo académie (500x500px)
-│   ├── GAR.png                       # Logo GAR
-│   └── 📁 equipe/
-│       ├── hafid-mokadem.png         # Photos membres (400x400px)
-│       ├── vincent-benard.png
-│       └── ...
-│
-├── 📁 components/
-│   ├── header.html                   # Header réutilisable
-│   ├── footer.html                   # Footer réutilisable
-│   └── cookie-banner.html            # Bandeau cookies RGPD
-│
-└── 📁 docs/
-    ├── README.md                     # Documentation principale
-    ├── GUIDE_MISE_A_JOUR.md          # Guide utilisateur
-    ├── GUIDE_TECHNIQUE.md            # Ce fichier
-    └── Guide_reCAPTCHA.pdf           # Installation anti-spam
+|
+|-- Pages HTML (racine)
+|   |-- index.html                    # Page d'accueil
+|   |-- histoire.html                 # Timeline historique
+|   |-- equipes.html                  # Portfolio équipe
+|   |-- missions.html                 # Missions et activités
+|   |-- perimetre.html                # Cartes Leaflet
+|   |-- comitologie.html              # Organisation et gouvernance
+|   |-- services_opérés.html          # Services déployés
+|   |-- contact.html                  # Formulaire de contact
+|   +-- dashboard-cookies.html        # Tableau de bord RGPD (accès restreint)
+|
+|-- css/
+|   |-- common.css                    # Styles communs (header, footer, variables)
+|   |-- index.css                     # Styles page d'accueil
+|   |-- histoire.css                  # Styles timeline
+|   |-- equipe.css                    # Styles portfolio et modals
+|   |-- missions.css                  # Styles page missions
+|   |-- services.css                  # Styles services opérés
+|   |-- comitologie.css               # Styles comitologie
+|   |-- perimetre.css                 # Styles cartes Leaflet
+|   |-- contact.css                   # Styles formulaire
+|   |-- cookies.css                   # Styles bandeau de consentement RGPD
+|   +-- dashboard-cookies.css         # Styles tableau de bord
+|
+|-- js/
+|   |-- main.js                       # Script principal (menu, nav, scroll)
+|   |-- cookies.js                    # Gestion cookies RGPD et analytics
+|   |-- dashboard.js                  # Logique du tableau de bord
+|   |-- maps.js                       # Cartes Leaflet (90 structures)
+|   +-- modals.js                     # Modals membres équipe
+|
+|-- images/
+|   |-- logo-acad.png                 # Logo académie (500x500px)
+|   |-- GAR.png                       # Logo GAR
+|   +-- equipe/                       # Photos des membres (400x400px)
+|       |-- ****.png
+|       |-- ****.png
+|       +-- ...
+|
+|-- components/
+|   |-- header.html                   # Header réutilisable
+|   |-- footer.html                   # Footer réutilisable
+|   +-- cookie-banner.html            # Bandeau de consentement RGPD
+|
++-- docs/
+    |-- README.md                     # Documentation principale
+    |-- GUIDE_MISE_A_JOUR.md          # Guide utilisateur
+    +-- GUIDE_TECHNIQUE.md            # Ce fichier
 ```
 
 ### Conventions de nommage
 
-**HTML** : `kebab-case`
+HTML et fichiers : `kebab-case`
 ```
 index.html
-services-operes.html
-admin-analytics.html
+dashboard-cookies.html
 ```
 
-**CSS** :
+CSS — classes et variables :
 ```css
-/* Classes */
 .hero-section { }
 .member-card { }
-
-/* IDs */
-#menuToggle { }
-#cookieBanner { }
-
-/* Variables */
 --bleu-france: #228BCC;
 --spacing-lg: 40px;
 ```
 
-**JavaScript** :
+JavaScript — variables, fonctions et classes :
 ```javascript
-/* Variables */
 const memberData = {};
 let isVisible = false;
 
-/* Fonctions */
 function initMenu() { }
 function showBanner() { }
 
-/* Classes */
 class Analytics { }
 class CookieConsent { }
-
-/* Constantes */
-const COOKIE_CONFIG = {};
-const API_URL = '';
 ```
 
-**Fichiers images** : `kebab-case`
+Fichiers images : `kebab-case`, sans accent
 ```
 logo-academie.png
 marie-dupont.png
@@ -234,11 +217,11 @@ marie-dupont.png
 
 ### Variables CSS (Design Tokens)
 
-**Fichier** : `css/common.css`
+Fichier : `css/common.css`
 
 ```css
 :root {
-    /* Couleurs - Charte graphique Académie */
+    /* Couleurs — Charte graphique Académie de Rennes */
     --bleu-france: #228BCC;
     --bleu-france-hover: #1212B8;
     --rouge-marianne: #E1000F;
@@ -247,88 +230,65 @@ marie-dupont.png
     --gris-clair: #f8f9fa;
     --blanc: #FFFFFF;
     --noir: #000000;
-    
+
     /* Espacements */
     --spacing-xs: 8px;
     --spacing-sm: 16px;
     --spacing-md: 24px;
     --spacing-lg: 40px;
     --spacing-xl: 60px;
-    
+
     /* Typographie */
     --font-primary: Arial, Helvetica, sans-serif;
     --font-size-base: 16px;
     --line-height-base: 1.6;
-    
+
     /* Transitions */
     --transition-speed: 0.3s;
 }
 ```
 
-### Organisation CSS
+### Ordre de chargement des CSS
 
-**Ordre de chargement** :
 ```html
-<link rel="stylesheet" href="css/common.css">      <!-- 1. Base -->
-<link rel="stylesheet" href="css/[page].css">      <!-- 2. Page spécifique -->
-<link rel="stylesheet" href="css/cookies.css">     <!-- 3. Modules -->
+<link rel="stylesheet" href="css/common.css">      <!-- 1. Base globale -->
+<link rel="stylesheet" href="css/[page].css">      <!-- 2. Styles spécifiques à la page -->
+<link rel="stylesheet" href="css/cookies.css">     <!-- 3. Modules transversaux -->
 ```
 
-**Structure d'un fichier CSS** :
-```css
-/* 1. Variables spécifiques */
-/* 2. Styles desktop */
-/* 3. Responsive - Tablettes (max 1024px) */
-/* 4. Responsive - Mobiles (max 768px) */
-/* 5. Responsive - Petits mobiles (max 480px) */
+### Structure interne d'un fichier CSS
+
+```
+1. Variables spécifiques à la page
+2. Styles desktop (base)
+3. Responsive — tablettes (max 1024px)
+4. Responsive — mobiles (max 768px)
+5. Responsive — petits mobiles (max 480px)
 ```
 
-### Responsive - Breakpoints
+### Points de rupture responsive
 
 ```css
-/* Desktop (default) : > 1024px */
-/* Pas de media query */
+/* Desktop (par défaut) : > 1024px — pas de media query */
 
-/* Tablettes : max 1024px */
-@media screen and (max-width: 1024px) {
-    /* 2 colonnes */
-}
-
-/* Mobiles : max 768px */
-@media screen and (max-width: 768px) {
-    /* 1 colonne, menu hamburger */
-}
-
-/* Petits mobiles : max 480px */
-@media screen and (max-width: 480px) {
-    /* Optimisations finales */
-}
+@media screen and (max-width: 1024px) { /* Tablettes */ }
+@media screen and (max-width: 768px)  { /* Mobiles */ }
+@media screen and (max-width: 480px)  { /* Petits mobiles */ }
 ```
 
 ### Animations CSS
 
-**Exemples utilisés** :
-
 ```css
-/* Fade in */
 @keyframes fadeIn {
     from { opacity: 0; }
-    to { opacity: 1; }
+    to   { opacity: 1; }
 }
 
-/* Slide up */
 @keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Utilisation */
 .cookie-banner.visible {
     display: flex;
     animation: fadeIn 0.3s ease;
@@ -339,50 +299,26 @@ marie-dupont.png
 
 ## JavaScript et interactivité {#javascript}
 
-### Architecture JavaScript
+### Organisation des scripts
 
-**main.js** - Script principal
-```javascript
-// 1. Chargement composants (header, footer, cookies)
-// 2. Initialisation navigation
-// 3. Menu hamburger
-// 4. Formulaire contact
-// 5. Animations scroll
-// 6. Smooth scroll
-// 7. Bouton retour haut
+**main.js** — Script principal
+```
+1. Chargement dynamique des composants (header, footer, bandeau cookies)
+2. Initialisation de la navigation et lien actif
+3. Menu hamburger (mobile)
+4. Animations au défilement (IntersectionObserver)
+5. Bouton retour en haut de page
 ```
 
-**Chargement des composants**
+**Chargement dynamique des composants**
 
-```javascript
-document.addEventListener('DOMContentLoaded', function() {
-    
-    // Charger bandeau cookies
-    fetch('components/cookie-banner.html')
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById('cookie-banner-placeholder').innerHTML = data;
-            if (window.initCookieSystem) {
-                window.initCookieSystem();
-            }
-        });
-    
-    // Charger header
-    fetch('components/header.html')
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById('header-placeholder').innerHTML = data;
-            setTimeout(() => {
-                initMenuToggle();
-                setActiveNavLink();
-            }, 100);
-        });
-});
-```
+Les composants header, footer et bandeau cookies sont chargés via `fetch()` depuis `main.js`.
+Le placeholder HTML cible est rempli avec le contenu récupéré, puis les scripts dépendants
+(`initMenuToggle`, `initCookieSystem`) sont appelés une fois le DOM mis à jour.
 
-### Menu hamburger
+### Menu hamburger (mobile)
 
-**HTML** :
+HTML du composant :
 ```html
 <button class="menu-toggle" id="menuToggle">
     <span></span>
@@ -392,75 +328,30 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <nav class="nav-menu" id="navMenu">
     <a href="index.html" class="nav-pill">Accueil</a>
-    <!-- ... -->
 </nav>
 ```
 
-**JavaScript** :
-```javascript
-function initMenuToggle() {
-    const menuToggle = document.getElementById('menuToggle');
-    const navMenu = document.getElementById('navMenu');
-    
-    // Toggle menu
-    menuToggle.addEventListener('click', function(e) {
-        e.stopPropagation();
-        this.classList.toggle('active');
-        navMenu.classList.toggle('active');
-        
-        // Bloquer scroll si menu ouvert
-        document.body.style.overflow = navMenu.classList.contains('active') 
-            ? 'hidden' 
-            : '';
-    });
-    
-    // Fermer au clic sur lien
-    navMenu.querySelectorAll('.nav-pill').forEach(link => {
-        link.addEventListener('click', function() {
-            menuToggle.classList.remove('active');
-            navMenu.classList.remove('active');
-            document.body.style.overflow = '';
-        });
-    });
-    
-    // Fermer au clic extérieur
-    document.addEventListener('click', function(event) {
-        if (!navMenu.contains(event.target) && 
-            !menuToggle.contains(event.target) && 
-            navMenu.classList.contains('active')) {
-            menuToggle.classList.remove('active');
-            navMenu.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-    });
-}
-```
+Comportements implémentés dans `initMenuToggle()` :
+- Clic sur le bouton hamburger : bascule des classes `.active` sur le bouton et le menu
+- Clic sur un lien du menu : fermeture automatique du menu
+- Clic en dehors du menu : fermeture automatique
 
-### Animations au scroll
-
-**IntersectionObserver** :
+### Animations au défilement
 
 ```javascript
 function initScrollAnimations() {
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-    
     const observer = new IntersectionObserver(function(entries) {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
+                entry.target.style.opacity   = '1';
                 entry.target.style.transform = 'translateY(0)';
             }
         });
-    }, observerOptions);
-    
-    // Observer les éléments
-    const elements = document.querySelectorAll('.card, .member-card');
-    elements.forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(20px)';
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    document.querySelectorAll('.card, .member-card').forEach(el => {
+        el.style.opacity    = '0';
+        el.style.transform  = 'translateY(20px)';
         el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
         observer.observe(el);
     });
@@ -469,158 +360,61 @@ function initScrollAnimations() {
 
 ---
 
-## 🍪 Système de cookies RGPD {#cookies}
+## Système de cookies RGPD {#cookies}
 
 ### Architecture
 
-**3 fichiers** :
-- `js/cookies.js` - Logique métier
-- `css/cookies.css` - Styles bandeau + modal
-- `components/cookie-banner.html` - Structure HTML
+Trois fichiers constituent le système :
+- `js/cookies.js` — logique métier
+- `css/cookies.css` — styles du bandeau et de la modal
+- `components/cookie-banner.html` — structure HTML du bandeau
 
 ### Configuration
 
 ```javascript
 const COOKIE_CONFIG = {
-    consentName: 'drasi_cookie_consent',    // Nom cookie consentement
-    analyticsName: 'drasi_analytics',       // Nom données analytics
-    consentDuration: 365,                   // 1 an
-    analyticsDuration: 395,                 // 13 mois (CNIL)
-    sessionName: 'drasi_session'            // ID session
+    consentName:       'drasi_cookie_consent',  // Clé localStorage du consentement
+    analyticsName:     'drasi_analytics',       // Clé localStorage des analytics
+    consentDuration:   365,                     // Durée en jours (1 an)
+    analyticsDuration: 395,                     // 13 mois (recommandation CNIL)
+    sessionName:       'drasi_session'          // Clé de session anonyme
 };
 ```
 
-### Classe Analytics
+### Classe Analytics — collecte anonyme
 
-**Collecte anonyme** :
+Méthodes principales :
+- `generateSessionId()` — génère un identifiant de session unique et anonyme
+- `trackPageView()` — enregistre l'URL, le titre et le référent de la page courante
+- `trackTimeOnPage()` — enregistre le temps passé avant de quitter la page
+- `saveToStorage(data, type)` — persiste les données dans localStorage (limite à 100 entrées)
+
+### Classe CookieConsent — gestion du bandeau
+
+Méthodes principales :
+- `init()` — initialise le composant après chargement du DOM
+- `checkConsent()` — vérifie si un consentement existe ; affiche le bandeau si absent
+- `showBanner()` / `hideBanner()` — affiche ou masque le bandeau
+- `saveConsent(preferences)` — enregistre le choix de l'utilisateur dans localStorage
+- `acceptAll()` / `refuseAll()` — raccourcis pour accepter ou refuser tous les cookies
+
+### Données stockées (si consentement accordé)
 
 ```javascript
-class Analytics {
-    constructor() {
-        this.sessionId = this.getOrCreateSession();
-        this.startTime = Date.now();
-        this.enabled = false;
-    }
-    
-    // Génère ID session unique
-    generateSessionId() {
-        return 'sess_' + Date.now() + '_' + 
-               Math.random().toString(36).substr(2, 9);
-    }
-    
-    // Enregistre page vue
-    trackPageView() {
-        if (!this.enabled) return;
-        
-        const pageData = {
-            url: window.location.pathname,
-            title: document.title,
-            timestamp: new Date().toISOString(),
-            sessionId: this.sessionId,
-            referrer: document.referrer || 'direct'
-        };
-        
-        this.saveToStorage(pageData);
-    }
-    
-    // Enregistre temps passé
-    trackTimeOnPage() {
-        if (!this.enabled) return;
-        
-        window.addEventListener('beforeunload', () => {
-            const timeSpent = Math.round((Date.now() - this.startTime) / 1000);
-            
-            const timeData = {
-                url: window.location.pathname,
-                timeSpent: timeSpent,
-                timestamp: new Date().toISOString(),
-                sessionId: this.sessionId
-            };
-            
-            this.saveToStorage(timeData, 'time');
-        });
-    }
-    
-    // Sauvegarde dans localStorage
-    saveToStorage(data, type = 'pageview') {
-        try {
-            let analyticsData = JSON.parse(
-                localStorage.getItem(COOKIE_CONFIG.analyticsName) || 
-                '{"pageviews": [], "time": []}'
-            );
-            
-            if (type === 'time') {
-                analyticsData.time.push(data);
-            } else {
-                analyticsData.pageviews.push(data);
-            }
-            
-            // Garder seulement 100 dernières entrées
-            if (analyticsData.pageviews.length > 100) {
-                analyticsData.pageviews = analyticsData.pageviews.slice(-100);
-            }
-            
-            localStorage.setItem(
-                COOKIE_CONFIG.analyticsName, 
-                JSON.stringify(analyticsData)
-            );
-        } catch (e) {
-            console.error('Erreur sauvegarde analytics:', e);
-        }
-    }
+// Entrée de consentement
+{
+    "analytics":  true,
+    "timestamp":  "2025-12-01T10:00:00.000Z",
+    "expires":    "2026-12-01T10:00:00.000Z"
 }
-```
 
-### Classe CookieConsent
-
-**Gestion du bandeau** :
-
-```javascript
-class CookieConsent {
-    init() {
-        this.waitForElements().then(() => {
-            this.banner = document.getElementById('cookieBanner');
-            this.modal = document.getElementById('cookieModal');
-            
-            this.attachEventListeners();
-            this.checkConsent();
-        });
-    }
-    
-    checkConsent() {
-        const consent = this.getConsent();
-        
-        if (consent === null) {
-            // Pas de consentement → afficher bandeau
-            setTimeout(() => this.showBanner(), 1000);
-        } else {
-            // Consentement existant → appliquer
-            if (consent.analytics) {
-                analytics.enable();
-            }
-        }
-    }
-    
-    saveConsent(preferences) {
-        const consent = {
-            analytics: preferences.analytics,
-            timestamp: new Date().toISOString(),
-            expires: new Date(
-                Date.now() + COOKIE_CONFIG.consentDuration * 24 * 60 * 60 * 1000
-            ).toISOString()
-        };
-        
-        localStorage.setItem(
-            COOKIE_CONFIG.consentName, 
-            JSON.stringify(consent)
-        );
-        
-        if (consent.analytics) {
-            analytics.enable();
-        } else {
-            analytics.disable();
-        }
-    }
+// Entrée de page vue
+{
+    "url":       "/equipes.html",
+    "title":     "Notre équipe - DRASI",
+    "timestamp": "2025-12-01T10:05:00.000Z",
+    "sessionId": "sess_1733046300000_abc123",
+    "referrer":  "direct"
 }
 ```
 
@@ -628,77 +422,52 @@ class CookieConsent {
 
 ## Cartes Leaflet {#leaflet}
 
-### Installation
+### Intégration CDN
 
-**CDN** :
 ```html
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
 ```
 
-### Structure des données
-
-**Fichier** : `js/maps.js`
+### Structure des données (maps.js)
 
 ```javascript
-// Collèges (41)
+// Collèges (41 établissements)
 const colleges = [
     {nom: "Jules-Simon", commune: "Vannes", lat: 47.65880, lng: -2.76106},
     // ...
 ];
 
-// Lycées (21)
+// Lycées (21 établissements)
 const lycees = [
     {nom: "Charles de Gaulle", commune: "Vannes", lat: 47.67633, lng: -2.77259},
     // ...
 ];
 
-// GRETA (3)
+// GRETA (3 établissements)
 const gretas = [
     {nom: "GRETA-CFA Bretagne Sud", commune: "Lorient", lat: 47.74590, lng: -3.38103},
     // ...
 ];
 ```
 
-### Initialisation carte EPLE
+### Initialisation d'une carte
 
 ```javascript
 function initMapEPLE() {
-    // Créer carte centrée sur Morbihan
     const map = L.map('map-eple').setView([47.85, -2.85], 9);
 
-    // Fond de carte OpenStreetMap
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors',
+        attribution: '(c) OpenStreetMap contributors',
         maxZoom: 18
     }).addTo(map);
 
-    // Légende
-    const legend = L.control({position: 'topright'});
-    legend.onAdd = function(map) {
-        const div = L.DomUtil.create('div', 'legend');
-        div.innerHTML = `
-            <div class="legend-title">Établissements du Morbihan</div>
-            <div class="legend-item">
-                <div class="legend-color lycee"></div>
-                <span>Lycées (${lycees.length})</span>
-            </div>
-            <!-- ... -->
-        `;
-        return div;
-    };
-    legend.addTo(map);
-
-    // Ajouter les collèges
     colleges.forEach(college => {
         L.circleMarker([college.lat, college.lng], {
-            color: '#000080',
-            fillColor: '#000091',
-            fillOpacity: 0.8,
-            radius: 7,
-            weight: 2
+            color: '#000080', fillColor: '#000091',
+            fillOpacity: 0.8, radius: 7, weight: 2
         })
-        .bindPopup(`<b>Collège ${college.nom}</b><br>${college.commune}`)
+        .bindPopup('<b>Collège ' + college.nom + '</b><br>' + college.commune)
         .addTo(map);
     });
 }
@@ -706,282 +475,32 @@ function initMapEPLE() {
 
 ---
 
-## Dashboard Analytics {#analytics}
+## Tableau de bord RGPD {#dashboard}
 
-### Fichier : `admin-analytics.html`
+### Fichier : `dashboard-cookies.html`
 
 ### Fonctionnalités
 
-**1. Statistiques principales**
-```javascript
-// Récupérer données
-const data = JSON.parse(localStorage.getItem('drasi_analytics'));
+Le tableau de bord permet l'inspection en temps réel des données RGPD stockées localement :
+- État du consentement (`localStorage["drasi_cookie_consent"]`)
+- Liste des cookies HTTP du domaine (`document.cookie`)
+- Entrées du localStorage et du sessionStorage liées à DRASI
+- Statistiques agrégées : nombre de cookies, pages vues, temps moyen par page
 
-// Calculer stats
-const stats = {
-    totalPageviews: data.pageviews.length,
-    totalSessions: new Set(data.pageviews.map(p => p.sessionId)).size,
-    averageTime: calculateAverageTime(data.time),
-    mostVisitedPages: getMostVisitedPages(data.pageviews)
-};
+### Sécurisation de l'accès
+
+Le tableau de bord est protégé par mot de passe côté client (session mémorisée 8 heures).
+Pour une sécurisation renforcée côté serveur, trois méthodes sont disponibles.
+
+**Méthode 1 — Renommer le fichier**
+```
+Remplacer dashboard-cookies.html par un nom non prévisible.
+Exemple : dashboard-x8k2m9p3.html
 ```
 
-**2. Export CSV**
-```javascript
-function exportCSV() {
-    const data = Analytics.getStats();
-    let csv = 'Type,Date,Page,SessionID,Referrer,TimeSpent\n';
-    
-    data.data.pageviews.forEach(pv => {
-        csv += `pageview,${pv.timestamp},${pv.url},${pv.sessionId},${pv.referrer},-\n`;
-    });
-    
-    data.data.time.forEach(t => {
-        csv += `time,${t.timestamp},${t.url},${t.sessionId},-,${t.timeSpent}\n`;
-    });
-    
-    // Télécharger
-    const blob = new Blob([csv], { type: 'text/csv' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `analytics-${new Date().toISOString().split('T')[0]}.csv`;
-    a.click();
-}
-```
-
-**3. Export JSON**
-```javascript
-function exportJSON() {
-    const stats = Analytics.getStats();
-    const json = JSON.stringify(stats, null, 2);
-    
-    const blob = new Blob([json], { type: 'application/json' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `analytics-${new Date().toISOString().split('T')[0]}.json`;
-    a.click();
-}
-```
-
----
-
-## Cas pratiques {#cas-pratiques}
-
-### CAS PRATIQUE 1 : Installation du système de cookies
-
-[Voir guide détaillé sur l'installation complète]
-
-**Fichiers concernés** :
-- `components/cookie-banner.html`
-- `js/cookies.js`
-- `css/cookies.css`
-
-**Étapes** :
-1. Créer le fichier HTML du bandeau
-2. Intégrer le script JavaScript
-3. Ajouter les styles CSS
-4. Initialiser dans main.js
-5. Tester le consentement
-
----
-
-### CAS PRATIQUE 2 : Ajouter une nouvelle carte Leaflet
-
-**Objectif** : Créer une carte des services de restauration scolaire
-
-**Étape 1 : Créer les données**
-
-```javascript
-// Fichier: js/maps.js
-const restaurants = [
-    {nom: "Restaurant Collège Jules-Simon", commune: "Vannes", lat: 47.65880, lng: -2.76106},
-    {nom: "Restaurant Lycée Charles de Gaulle", commune: "Vannes", lat: 47.67633, lng: -2.77259},
-    // ... autres restaurants
-];
-```
-
-**Étape 2 : Créer la fonction d'initialisation**
-
-```javascript
-function initMapRestaurants() {
-    // Créer la carte
-    const map = L.map('map-restaurants').setView([47.85, -2.85], 9);
-
-    // Ajouter fond de carte
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap',
-        maxZoom: 18
-    }).addTo(map);
-
-    // Ajouter les restaurants
-    restaurants.forEach(resto => {
-        L.circleMarker([resto.lat, resto.lng], {
-            color: '#FF8C00',
-            fillColor: '#FFA500',
-            fillOpacity: 0.8,
-            radius: 8,
-            weight: 2
-        })
-        .bindPopup(`<b>${resto.nom}</b><br>${resto.commune}`)
-        .addTo(map);
-    });
-}
-```
-
-**Étape 3 : Créer la page HTML**
-
-```html
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <title>Restauration Scolaire - DRASI</title>
-    <link rel="stylesheet" href="css/common.css">
-    <link rel="stylesheet" href="css/perimetre.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
-</head>
-<body>
-    <div id="header-placeholder"></div>
-    
-    <section class="page-intro">
-        <div class="container">
-            <h2 class="section-title">Restauration Scolaire</h2>
-        </div>
-    </section>
-
-    <section class="map-section">
-        <div class="container">
-            <h3 class="map-title">Services de Restauration</h3>
-            <div class="map-container">
-                <div id="map-restaurants" class="leaflet-map"></div>
-            </div>
-        </div>
-    </section>
-
-    <div id="footer-placeholder"></div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/maps.js"></script>
-</body>
-</html>
-```
-
-**Étape 4 : Initialiser au chargement**
-
-```javascript
-// Dans maps.js
-window.addEventListener('load', function() {
-    if (document.getElementById('map-restaurants')) {
-        initMapRestaurants();
-    }
-});
-```
-
----
-
-### CAS PRATIQUE 3 : Personnaliser le dashboard analytics
-
-**Objectif** : Ajouter un graphique des visites par jour
-
-**Étape 1 : Installer Chart.js**
-
-```html
-<!-- Dans admin-analytics.html -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-```
-
-**Étape 2 : Créer l'élément canvas**
-
-```html
-<section class="chart-section">
-    <div class="container">
-        <h3>Visites par jour</h3>
-        <canvas id="visitsChart"></canvas>
-    </div>
-</section>
-```
-
-**Étape 3 : Préparer les données**
-
-```javascript
-function getVisitsByDay() {
-    const data = JSON.parse(localStorage.getItem('drasi_analytics'));
-    const visitsByDay = {};
-    
-    data.pageviews.forEach(pv => {
-        const date = pv.timestamp.split('T')[0]; // Format: YYYY-MM-DD
-        visitsByDay[date] = (visitsByDay[date] || 0) + 1;
-    });
-    
-    // Convertir en tableau
-    const labels = Object.keys(visitsByDay).sort();
-    const values = labels.map(date => visitsByDay[date]);
-    
-    return { labels, values };
-}
-```
-
-**Étape 4 : Créer le graphique**
-
-```javascript
-function createVisitsChart() {
-    const { labels, values } = getVisitsByDay();
-    
-    const ctx = document.getElementById('visitsChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'Visites',
-                data: values,
-                borderColor: '#228BCC',
-                backgroundColor: 'rgba(34, 139, 204, 0.1)',
-                tension: 0.4
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Évolution des visites'
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: {
-                        stepSize: 1
-                    }
-                }
-            }
-        }
-    });
-}
-
-// Appeler au chargement
-window.addEventListener('load', createVisitsChart);
-```
-
----
-
-### CAS PRATIQUE 4 : Sécuriser le dashboard analytics
-
-**Méthode 1 : Renommer le fichier**
-
-```bash
-# Au lieu de admin-analytics.html
-admin-stats-x8k2m9p3.html
-```
-
-**Méthode 2 : Protection .htaccess (Apache)**
-
+**Méthode 2 — Protection .htaccess (Apache)**
 ```apache
-# Créer un fichier .htaccess dans le dossier racine
-<Files "admin-analytics.html">
+<Files "dashboard-cookies.html">
     AuthType Basic
     AuthName "Zone réservée"
     AuthUserFile /chemin/absolu/.htpasswd
@@ -989,18 +508,15 @@ admin-stats-x8k2m9p3.html
 </Files>
 ```
 
-**Créer le fichier .htpasswd** :
+Générer le fichier `.htpasswd` :
 ```bash
-# Ligne de commande
 htpasswd -c .htpasswd admin
-
-# Ou en ligne sur : https://htpasswdgenerator.net/
+# Ou via un générateur en ligne : https://htpasswdgenerator.net/
 ```
 
-**Méthode 3 : Restriction par IP**
-
+**Méthode 3 — Restriction par adresse IP**
 ```apache
-<Files "admin-analytics.html">
+<Files "dashboard-cookies.html">
     Order Deny,Allow
     Deny from all
     Allow from 192.168.1.100
@@ -1010,140 +526,112 @@ htpasswd -c .htpasswd admin
 
 ---
 
-### CAS PRATIQUE 5 : Migration vers HTTPS
+## Cas pratiques {#cas-pratiques}
 
-**Prérequis** :
-- Nom de domaine configuré
-- Accès au serveur
+### Cas pratique 1 — Ajouter une carte Leaflet supplémentaire
 
-**Étape 1 : Obtenir un certificat SSL**
+Étape 1 : Définir les données dans `js/maps.js`
+```javascript
+const nouveauxPoints = [
+    {nom: "Point A", commune: "Vannes", lat: 47.65880, lng: -2.76106},
+];
+```
 
-**Option A - Let's Encrypt (Gratuit)** :
+Étape 2 : Créer la fonction d'initialisation (voir modèle `initMapEPLE` ci-dessus).
+
+Étape 3 : Conditionner l'appel au chargement
+```javascript
+window.addEventListener('load', function() {
+    if (document.getElementById('map-nouveaux-points')) {
+        initMapNouveauxPoints();
+    }
+});
+```
+
+Étape 4 : Créer la page HTML en suivant la structure des pages existantes du site.
+
+### Cas pratique 2 — Migration vers HTTPS
+
+Étape 1 : Obtenir un certificat SSL (Let's Encrypt recommandé)
 ```bash
-# Installer Certbot
 sudo apt-get install certbot python3-certbot-apache
-
-# Obtenir certificat
 sudo certbot --apache -d drasi.ac-rennes.fr
 ```
 
-**Option B - Certificat payant** :
-- Acheter auprès d'un fournisseur
-- Suivre instructions d'installation
-
-**Étape 2 : Configurer Apache**
-
+Étape 2 : Configurer le virtualhost SSL dans Apache
 ```apache
-# /etc/apache2/sites-available/drasi-ssl.conf
 <VirtualHost *:443>
     ServerName drasi.ac-rennes.fr
     DocumentRoot /var/www/drasi
 
     SSLEngine on
-    SSLCertificateFile /etc/letsencrypt/live/drasi.ac-rennes.fr/cert.pem
-    SSLCertificateKeyFile /etc/letsencrypt/live/drasi.ac-rennes.fr/privkey.pem
+    SSLCertificateFile      /etc/letsencrypt/live/drasi.ac-rennes.fr/cert.pem
+    SSLCertificateKeyFile   /etc/letsencrypt/live/drasi.ac-rennes.fr/privkey.pem
     SSLCertificateChainFile /etc/letsencrypt/live/drasi.ac-rennes.fr/chain.pem
 
-    # Headers de sécurité
     Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
     Header always set X-Content-Type-Options "nosniff"
     Header always set X-Frame-Options "SAMEORIGIN"
-    Header always set X-XSS-Protection "1; mode=block"
 </VirtualHost>
 ```
 
-**Étape 3 : Rediriger HTTP vers HTTPS**
-
+Étape 3 : Rediriger HTTP vers HTTPS
 ```apache
-# /etc/apache2/sites-available/drasi.conf
 <VirtualHost *:80>
     ServerName drasi.ac-rennes.fr
     Redirect permanent / https://drasi.ac-rennes.fr/
 </VirtualHost>
 ```
 
-**Étape 4 : Activer et redémarrer**
-
+Étape 4 : Activer et redémarrer Apache
 ```bash
-# Activer les modules
-sudo a2enmod ssl
-sudo a2enmod headers
-
-# Activer les sites
-sudo a2ensite drasi-ssl
-sudo a2ensite drasi
-
-# Redémarrer Apache
+sudo a2enmod ssl headers
+sudo a2ensite drasi-ssl drasi
 sudo systemctl restart apache2
 ```
-
-**Étape 5 : Tester**
-
-- Accéder à http://drasi.ac-rennes.fr → doit rediriger vers HTTPS
-- Vérifier le cadenas dans le navigateur
-- Tester sur : https://www.ssllabs.com/ssltest/
 
 ---
 
 ## Performance et optimisation {#performance}
 
-### Analyse des performances
+### Outils de mesure
 
-**1. Google PageSpeed Insights**
-- URL : https://pagespeed.web.dev/
-- Objectif : Score > 90
-
-**2. GTmetrix**
-- URL : https://gtmetrix.com/
-- Analyser temps de chargement
+- Google PageSpeed Insights : https://pagespeed.web.dev/ (objectif : score > 90)
+- GTmetrix : https://gtmetrix.com/
 
 ### Optimisations recommandées
 
-**1. Images**
-```bash
-# Compresser avec TinyPNG
-# Avant : 2 Mo → Après : 200 Ko
+**Images**
+- Compresser avec TinyPNG avant upload (objectif : < 200 Ko par image)
+- Utiliser le format WebP avec fallback JPG/PNG pour les navigateurs anciens
 
-# Utiliser WebP avec fallback
-<picture>
-    <source srcset="image.webp" type="image/webp">
-    <img src="image.jpg" alt="Description">
-</picture>
-```
-
-**2. CSS**
+**CSS et JavaScript**
 ```bash
-# Minifier en production
+# Minifier le CSS
 cssnano style.css -o style.min.css
 
-# Purger CSS inutilisé
+# Purger le CSS inutilisé
 purgecss --css style.css --content *.html --output style-purged.css
-```
 
-**3. JavaScript**
-```bash
-# Minifier avec Terser
+# Minifier le JavaScript
 terser main.js -o main.min.js -c -m
 ```
 
-**4. Cache navigateur**
+**Cache navigateur (.htaccess)**
 ```apache
-# .htaccess
 <IfModule mod_expires.c>
     ExpiresActive On
-    ExpiresByType image/jpg "access plus 1 year"
+    ExpiresByType image/png  "access plus 1 year"
     ExpiresByType image/jpeg "access plus 1 year"
-    ExpiresByType image/png "access plus 1 year"
-    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType text/css   "access plus 1 month"
     ExpiresByType application/javascript "access plus 1 month"
 </IfModule>
 ```
 
-**5. Compression Gzip**
+**Compression Gzip (.htaccess)**
 ```apache
-# .htaccess
 <IfModule mod_deflate.c>
-    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript
+    AddOutputFilterByType DEFLATE text/html text/plain text/css text/javascript application/javascript
 </IfModule>
 ```
 
@@ -1151,9 +639,8 @@ terser main.js -o main.min.js -c -m
 
 ## Sécurité {#securite}
 
-### En-têtes de sécurité
+### En-têtes de sécurité (.htaccess Apache)
 
-**.htaccess (Apache)** :
 ```apache
 # Bloquer l'accès aux fichiers sensibles
 <FilesMatch "\.(htaccess|htpasswd|ini|log|sh|inc|bak)$">
@@ -1161,58 +648,41 @@ terser main.js -o main.min.js -c -m
     Deny from all
 </FilesMatch>
 
-# Headers de sécurité
+# En-têtes HTTP de sécurité
 Header set X-Content-Type-Options "nosniff"
 Header set X-Frame-Options "SAMEORIGIN"
 Header set X-XSS-Protection "1; mode=block"
 Header set Referrer-Policy "strict-origin-when-cross-origin"
 Header set Permissions-Policy "geolocation=(), microphone=(), camera=()"
 
-# HTTPS strict (après migration SSL)
+# HSTS (après activation HTTPS)
 Header set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
 ```
 
-### Protection formulaire
+### Validation du formulaire de contact
 
-**1. Validation côté client**
-```javascript
-// Déjà implémenté dans main.js
-if (!formData.nom || !formData.email) {
-    alert('Veuillez remplir tous les champs obligatoires.');
-    return;
-}
+La validation côté client est implémentée dans `main.js` :
+- Vérification des champs obligatoires (nom, email, message)
+- Vérification du format de l'adresse email par expression régulière
+- Affichage d'un message d'erreur contextuel en cas d'invalidité
 
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-if (!emailRegex.test(formData.email)) {
-    alert('Email invalide');
-    return;
-}
-```
+Pour la protection anti-spam : voir `docs/Guide_reCAPTCHA.pdf`
 
-**2. reCAPTCHA (optionnel)**
-- Voir : `docs/Guide_reCAPTCHA.pdf`
+### Script de sauvegarde automatique
 
-### Sauvegardes
-
-**Script de sauvegarde** :
 ```bash
 #!/bin/bash
-# backup-site.sh
-
 DATE=$(date +%Y%m%d_%H%M%S)
 BACKUP_DIR="/backups/drasi"
 SITE_DIR="/var/www/drasi"
 
-# Créer archive
 tar -czf $BACKUP_DIR/site_$DATE.tar.gz $SITE_DIR
-
-# Garder seulement 30 derniers jours
 find $BACKUP_DIR -name "site_*.tar.gz" -mtime +30 -delete
 
 echo "Sauvegarde créée : site_$DATE.tar.gz"
 ```
 
-**Cron job (quotidien à 2h)** :
+Planification via cron (sauvegarde quotidienne à 2h) :
 ```bash
 crontab -e
 # Ajouter :
@@ -1226,87 +696,70 @@ crontab -e
 ### Checklist pré-déploiement
 
 ```
-□ Toutes les images optimisées (< 200 Ko)
-□ Liens testés (aucun lien mort)
-□ Formulaires testés
-□ Cartes Leaflet fonctionnelles
-□ Analytics initialisés
-□ Bandeau cookies opérationnel
-□ Tests responsive (mobile, tablette, desktop)
-□ Tests multi-navigateurs (Chrome, Firefox, Safari)
-□ Validation HTML (validator.w3.org)
-□ Validation CSS (jigsaw.w3.org/css-validator)
-□ Vérification accessibilité
-□ Certificat SSL installé (si HTTPS)
-□ Headers de sécurité configurés
-□ Sauvegardes configurées
+[ ] Images optimisées (< 200 Ko par fichier)
+[ ] Liens vérifiés (aucun lien mort)
+[ ] Formulaires testés
+[ ] Cartes Leaflet fonctionnelles
+[ ] Bandeau cookies opérationnel
+[ ] Tests responsive (mobile, tablette, desktop)
+[ ] Tests multi-navigateurs (Chrome, Firefox, Safari, Edge)
+[ ] Validation HTML : https://validator.w3.org/
+[ ] Validation CSS : https://jigsaw.w3.org/css-validator/
+[ ] Certificat SSL installé
+[ ] En-têtes de sécurité configurés
+[ ] Sauvegardes planifiées
 ```
 
 ### Déploiement via FTP
 
-**1. Préparer les fichiers**
-```bash
-# Structure à uploader
+Structure à uploader :
+```
 site-drasi/
-├── *.html
-├── css/
-├── js/
-├── images/
-├── components/
-└── .htaccess (si Apache)
+|-- *.html
+|-- css/
+|-- js/
+|-- images/
+|-- components/
++-- .htaccess
 ```
 
-**2. Connexion FTP**
+Paramètres de connexion :
 ```
-Hôte : ftp.votre-serveur.fr
-Port : 21 (ou 990 pour FTPS)
-Utilisateur : votre_login
-Mot de passe : ********
-```
-
-**3. Upload**
-- Transférer tous les fichiers
-- Conserver l'arborescence
-- Mode : Binaire pour images, Auto pour le reste
-
-**4. Permissions**
-```
-Dossiers : 755
-Fichiers : 644
+Hôte         : ftp.votre-serveur.fr
+Port         : 21 (ou 990 pour FTPS)
+Identifiant  : votre_login
+Permissions dossiers : 755
+Permissions fichiers : 644
 ```
 
-### Déploiement via SSH/SFTP
+### Déploiement via SSH / SFTP
 
 ```bash
-# Connexion SSH
 ssh user@server.fr
-
-# Naviguer vers dossier web
 cd /var/www/html
 
-# Cloner depuis dépôt Git (si applicable)
+# Via Git
 git clone https://github.com/votre-repo/site-drasi.git
 
-# Ou copier via SCP
+# Via SCP
 scp -r /local/site-drasi/* user@server.fr:/var/www/html/
 ```
 
 ### Vérifications post-déploiement
 
 ```bash
-# 1. Vérifier URL principale
+# Vérifier la réponse HTTP
 curl -I https://drasi.ac-rennes.fr
 
-# 2. Tester redirection HTTP → HTTPS
+# Vérifier la redirection HTTP vers HTTPS
 curl -I http://drasi.ac-rennes.fr
 
-# 3. Vérifier headers de sécurité
+# Vérifier les en-têtes de sécurité
 curl -I https://drasi.ac-rennes.fr | grep -E "X-|Strict"
 
-# 4. Tester chargement pages
+# Tester les pages principales
 for page in index.html equipes.html contact.html; do
-    echo "Test $page..."
-    curl -s -o /dev/null -w "%{http_code}" https://drasi.ac-rennes.fr/$page
+    echo "Test $page : $(curl -s -o /dev/null -w "%{http_code}" https://drasi.ac-rennes.fr/$page)"
 done
 ```
 
@@ -1316,40 +769,18 @@ done
 
 ### Contacts techniques
 
-**Responsable technique** :
-- Hafid MOKADEM - hafid.mokadem@ac-rennes.fr
+- DSI : ****@ac-rennes.fr
+- Adjoint DSI : ****@ac-rennes.fr
 
-**Adjoint technique** :
-- Vincent BENARD - vincent.benard@ac-rennes.fr
+### Ressources de référence
 
-### Ressources
-
-**Documentation** :
 - MDN Web Docs : https://developer.mozilla.org/fr/
-- Leaflet Docs : https://leafletjs.com/reference.html
-- CNIL Cookies : https://www.cnil.fr/fr/cookies-et-autres-traceurs
-
-**Outils** :
+- Documentation Leaflet : https://leafletjs.com/reference.html
+- Recommandations CNIL (cookies) : https://www.cnil.fr/fr/cookies-et-autres-traceurs
 - W3C Validator : https://validator.w3.org/
-- PageSpeed : https://pagespeed.web.dev/
-- SSL Test : https://www.ssllabs.com/ssltest/
+- PageSpeed Insights : https://pagespeed.web.dev/
+- SSL Labs Test : https://www.ssllabs.com/ssltest/
 
 ---
 
-## 📝 Changelog
-
-**Version 2.0** (Décembre 2025)
-- ✨ Système cookies RGPD complet
-- 📊 Dashboard analytics
-- 💾 Export CSV/JSON
-- 🔒 Headers sécurité
-- 📱 Responsive optimisé
-
-**Version 2.0** (Décembre 2025/Janvier 2026)
-- Lancement initial
-
----
-
-**Questions techniques ? Contactez l'équipe DRASI**
-
-*Version 2.0 - Décembre 2025*
+*Version 2.0 — Décembre 2025*

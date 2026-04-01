@@ -1,289 +1,132 @@
-# Site Web DRASI - Académie de Rennes
-
-**Site web institutionnel de la Direction Régionale Académique des Systèmes d'Information (DRASI) de proximité du Morbihan**
+# Guide d'installation - Site DRASI
 
 ---
 
-## Présentation
+## Prérequis
 
-Site vitrine moderne présentant l'équipe DRASI, ses missions, son périmètre d'intervention et ses services dans le Morbihan.
-
-### Caractéristiques principales
-
-- **100% statique** - Aucune base de données requise
-- **Responsive** - Optimisé mobile, tablette, desktop
-- **RGPD compliant** - Bandeau cookies et analytics anonymes
-- **Accessible** - Conforme aux standards d'accessibilité
-- **Performant** - Chargement rapide, optimisé SEO
+- Git
+- Un serveur web local avec support PHP 7.4 ou supérieur (Apache ou Nginx)
+- Le module PHP `mail` activé pour le formulaire de contact
 
 ---
 
-## Installation rapide
+## Cloner le dépôt
 
-### Prérequis
-- Serveur web (Apache/Nginx)
-- Accès FTP ou gestionnaire de fichiers
-- Pas de base de données nécessaire
-
-### Étapes
-1. **Télécharger** les fichiers du projet
-2. **Configurer** les images (logo, photos équipe)
-3. **Uploader** via FTP en conservant l'arborescence
-4. **Tester** sur votre domaine
-
-**Guide complet** : Voir `docs/GUIDE_MISE_A_JOUR.md`
-
----
-
-## Structure du projet
-
-```
-site-drasi/
-├── index.html                    # Accueil
-├── histoire.html                 # Timeline historique
-├── equipes.html                  # Portfolio équipe avec modals
-├── missions.html                 # Missions et activités
-├── perimetre.html                # Cartes Leaflet interactives
-├── comitologie.html              # Organisation et gouvernance
-├── services_opérés.html          # Services déployés
-├── contact.html                  # Formulaire de contact
-├── admin-analytics.html          # Dashboard statistiques 📊
-│
-├── css/                          # Feuilles de style
-│   ├── common.css               # Styles communs (header, footer)
-│   ├── [page].css               # Styles spécifiques par page
-│   └── cookies.css              # Bandeau cookies RGPD
-│
-├── js/                          # Scripts JavaScript
-│   ├── main.js                  # Script principal
-│   ├── cookies.js               # Gestion cookies & analytics
-│   ├── maps.js                  # Cartes Leaflet (90 structures)
-│   └── modals.js                # Modals membres équipe
-│
-├── images/
-│   ├── logo-acad.png            # Logo académie
-│   └── equipe/                  # Photos membres (400x400px)
-│
-├── components/                   # Composants réutilisables
-│   ├── header.html              # Header chargé dynamiquement
-│   ├── footer.html              # Footer chargé dynamiquement
-│   └── cookie-banner.html       # Bandeau cookies
-│
-└── docs/                        # Documentation
-    ├── GUIDE_MISE_A_JOUR.md     # Guide utilisateur
-    └── GUIDE_TECHNIQUE.md       # Documentation technique
+```bash
+git clone https://github.com/JB-NBT/DRASI.git
+cd DRASI
 ```
 
 ---
 
-## Fonctionnalités
+## Mise en place du serveur local
 
-### 1. Système de cookies RGPD
-- Bandeau de consentement au premier chargement
-- Analytics anonymes (pas d'IP, pas de tracking)
-- Modal de personnalisation des préférences
-- Dashboard admin avec export CSV/JSON
+### Option A — MAMP (Windows / macOS)
 
-### 2. Cartes interactives Leaflet
-- **Carte EPLE** : 65 établissements (collèges, lycées, GRETA)
-- **Carte Services** : 26 services académiques (IEN, CIO, CMS, etc.)
-- Markers personnalisés par type
-- Popups informatives
+MAMP est l'environnement utilisé lors du développement initial du projet.
 
-### 3. Portfolio équipe
-- 8 membres avec fiches détaillées
-- Modals interactives au clic
-- Photos professionnelles
-- Missions et coordonnées
+1. Ouvrir MAMP et aller dans Préférences > Serveur Web
+2. Définir la racine du serveur (Document Root) vers le dossier cloné
+3. Démarrer les serveurs Apache et PHP
+4. Accéder au site via `http://localhost:8888` (port par défaut MAMP) ou `http://localhost` selon la configuration
 
-### 4. Timeline historique
-- Évolution 2018-2025
-- Animation au scroll
-- Design moderne et engageant
+### Option B — XAMPP (Windows / macOS / Linux)
 
-### 5. Formulaire de contact
-- Validation côté client
-- Protection anti-spam (reCAPTCHA - optionnel)
-- Champs RGPD obligatoires
+1. Copier ou déplacer le dossier cloné dans `C:\xampp\htdocs\DRASI\` (Windows) ou `/opt/lampp/htdocs/DRASI/` (Linux)
+2. Démarrer Apache depuis le panneau de contrôle XAMPP
+3. Accéder au site via `http://localhost/DRASI`
+
+### Option C — Laragon (Windows)
+
+1. Copier le dossier cloné dans `C:\laragon\www\DRASI\`
+2. Démarrer Laragon
+3. Accéder au site via `http://drasi.test` (virtual host automatique) ou `http://localhost/DRASI`
+
+### Option D — WAMP (Windows)
+
+1. Copier le dossier cloné dans `C:\wamp64\www\DRASI\`
+2. Démarrer WAMP
+3. Accéder au site via `http://localhost/DRASI`
+
+### Option E — Apache natif (Linux / macOS)
+
+Copier le projet dans le répertoire web :
+
+```bash
+sudo cp -r DRASI /var/www/html/DRASI
+sudo systemctl restart apache2
+```
+
+Ou configurer un VirtualHost dédié dans `/etc/apache2/sites-available/drasi.conf` :
+
+```apache
+<VirtualHost *:80>
+    ServerName drasi.local
+    DocumentRoot /var/www/html/DRASI
+    <Directory /var/www/html/DRASI>
+        AllowOverride All
+        Require all granted
+    </Directory>
+</VirtualHost>
+```
+
+Puis activer le site :
+
+```bash
+sudo a2ensite drasi.conf
+sudo systemctl restart apache2
+```
+
+Ajouter `127.0.0.1 drasi.local` dans `/etc/hosts` pour résoudre le domaine local.
+
+### Option F — Serveur de développement PHP intégré
+
+Pour un test rapide sans configuration de serveur :
+
+```bash
+cd chemin/vers/DRASI
+php -S localhost:8000
+```
+
+Accéder au site via `http://localhost:8000`.
+
+Note : le formulaire de contact nécessite une vraie configuration SMTP. Cette option est adaptée uniquement pour tester les pages statiques.
 
 ---
 
-### Technologies utilisées
+## Configuration du formulaire de contact
 
-| Technologie          | Usage                            |
-|----------------------|----------------------------------|
-| **HTML5**            | Structure sémantique             |
-| **CSS3**             | Styles, animations, responsive   |
-| **JavaScript ES6+**  | Interactivité (Vanilla JS)       |
-| **PHP**              | Envoye de mail                   |
-| **Leaflet 1.7.1**    | Cartes interactives              |
-| **localStorage**     | Stockage local cookies/analytics |
+Ouvrir le fichier `php/traitement_contact.php` et modifier les constantes suivantes :
 
-**Pas de framework** - Site léger et performant
+```php
+define('EMAIL_DESTINATAIRE', 'votre-email@ac-rennes.fr');
+define('RECAPTCHA_SECRET_KEY', 'votre-cle-secrete-recaptcha');
+```
 
----
+La clé secrète reCAPTCHA s'obtient sur : https://www.google.com/recaptcha/admin
 
-## Dashboard Analytics
+Ouvrir ensuite `contact.html` et remplacer la valeur de `data-sitekey` par votre clé publique reCAPTCHA :
 
-**URL** : `admin-analytics.html`
-
-### Fonctionnalités
-- Statistiques de fréquentation
-- Pages les plus visitées
-- Temps moyen par page
-- Export CSV/JSON
-- Gestion des données
-
-### Sécurisation
-Par défaut, le dashboard est public. Pour le protéger :
-- Renommer le fichier
-- Ajouter authentification .htaccess
-- Restreindre par IP
-
-**Documentation** : Voir `docs/GUIDE_TECHNIQUE.md#analytics`
-
----
-
-## Modifications courantes
-
-### Changer les statistiques (page d'accueil)
-**Fichier** : `index.html`
 ```html
-<div class="stat-number">8</div>
-<div class="stat-label">Membres de l'équipe</div>
+<div class="g-recaptcha" data-sitekey="votre-cle-publique"></div>
 ```
 
-### Ajouter un membre d'équipe
-1. Photo 400x400px → `images/equipe/prenom-nom.png`
-2. Ajouter dans `equipes.html` (copier un bloc existant)
-3. Ajouter données dans `js/modals.js`
+---
 
-### Modifier les contacts
-**Fichier** : `contact.html`
-```html
-<p class="card-text">
-    Standard : 02 XX XX XX XX
-</p>
-```
+## Vérification de l'installation
 
-**Guide complet** : `docs/GUIDE_MISE_A_JOUR.md`
+Ouvrir le navigateur et accéder à l'URL du serveur. Les points suivants doivent fonctionner :
+
+- Page d'accueil (`index.html`) — affichage immédiat, aucune dépendance
+- Cartes interactives (`perimetre.html`) — nécessite une connexion internet (Leaflet chargé via CDN)
+- Formulaire de contact (`contact.html`) — nécessite PHP actif et reCAPTCHA configuré
+- Tableau de bord RGPD (`dashboard-cookies.html`) — protégé par mot de passe, aucune dépendance serveur
 
 ---
 
-## 🍪 Conformité RGPD
+## Notes
 
-### Données collectées (si accepté)
-- Pages visitées (URL)
-- Temps passé sur chaque page
-- Provenance (site référent anonyme)
-- Session (ID anonymisé)
-
-### Ce qui N'EST PAS collecté
-- ❌ Adresse IP
-- ❌ Nom ou email
-- ❌ Cookies tiers
-- ❌ Tracking cross-site
-
-### Durée de conservation
-- Consentement : 365 jours
-- Analytics : 395 jours (13 mois CNIL)
-
----
-
-## Sécurité
-
-### Bonnes pratiques appliquées
-- ✅ Pas de base de données (pas d'injection SQL)
-- ✅ Pas de code serveur (pas de faille PHP)
-- ✅ Cookies sécurisés
-- ✅ Validation formulaires côté client
-
-### À faire côté serveur
-- Utiliser HTTPS (certificat SSL)
-- Configurer en-têtes de sécurité
-- Sauvegardes régulières
-
----
-
-## 📱 Responsive Design
-
-### Points de rupture
-- 🖥️ **Desktop** : > 1024px
-- 📱 **Tablette** : 768px - 1024px
-- 📱 **Mobile** : < 768px
-- 📱 **Petit mobile** : < 480px
-
-Testé sur Chrome, Firefox, Safari, Edge
-
----
-
-## Support
-
-### Problèmes fréquents
-
-**Les images ne s'affichent pas**
-- Vérifier le chemin exact
-- Vérifier majuscules/minuscules
-- Vider le cache (Ctrl+F5)
-
-**Menu mobile ne fonctionne pas**
-- Vérifier que `js/main.js` est chargé
-- Vider le cache navigateur
-
-**Modifications invisibles**
-- Forcer rechargement : Ctrl+Shift+R
-- Attendre propagation cache serveur
-
-### Contacts
-- **Responsable** : Hafid MOKADEM - hafid.mokadem@ac-rennes.fr
-- **Adjoint** : Vincent BENARD - vincent.benard@ac-rennes.fr
-
----
-
-## Documentation
-
-| Document                    | Description                                |
-|-----------------------------|--------------------------------------------|
-| **GUIDE_MISE_A_JOUR.md**    | Guide utilisateur pour modifier le contenu |
-| **GUIDE_TECHNIQUE.md**      | Documentation technique pour développeurs  |
-| **Guide reCAPTCHA**         | Installation du système anti-spam          |
-
----
-
-## Changelog
-
-### Version 2.0 (Décembre 2025)
-- ✨ Système cookies RGPD complet
-- 📊 Dashboard analytics
-- 💾 Export CSV/JSON
-- 🍪 Bandeau consentement moderne
-- 📱 Responsive optimisé
-- 🗺️ Cartes Leaflet (90 structures)
-- 👥 Portfolio équipe avec modals
-- 📖 Timeline historique
-
----
-
-## Licence
-
-© 2025 Académie de Rennes - Direction Régionale Académique des Systèmes d'Information
-
-**Usage interne Éducation Nationale**
-
----
-
-## Roadmap
-
-### Prochaines fonctionnalités
-- [ ] Mode sombre
-- [ ] Agenda événements
-
----
-
-**Questions ? Contactez l'équipe DRASI Vannes**
-
-**Site** : [À compléter avec votre URL]
-
----
-
-*Dernière mise à jour : Décembre 2025 | Version 2.0*
+- Le site est entièrement statique, à l'exception du formulaire de contact qui requiert PHP
+- Aucune base de données n'est nécessaire
+- Les cartes Leaflet nécessitent une connexion internet (dépendance CDN externe)
+- Le tableau de bord RGPD stocke et lit les données exclusivement via `localStorage` du navigateur
