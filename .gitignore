@@ -1,0 +1,17 @@
+# ─── Identifiants générés ─────────────────────────────────────────────────────
+credentials.txt
+
+# ─── Uploads utilisateurs ─────────────────────────────────────────────────────
+images/news/*
+!images/news/.gitkeep
+
+# ─── Fichiers système ─────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ─── IDE ──────────────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
