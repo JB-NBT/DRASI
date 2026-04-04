@@ -90,7 +90,7 @@ class Analytics {
     saveToStorage(data, type = 'pageview') {
         try {
             let analyticsData = JSON.parse(localStorage.getItem(COOKIE_CONFIG.analyticsName) || '{"pageviews": [], "time": []}');
-            
+
             if (type === 'time') {
                 analyticsData.time = analyticsData.time || [];
                 analyticsData.time.push(data);
@@ -98,16 +98,23 @@ class Analytics {
                 analyticsData.pageviews = analyticsData.pageviews || [];
                 analyticsData.pageviews.push(data);
             }
-            
+
             if (analyticsData.pageviews.length > 100) {
                 analyticsData.pageviews = analyticsData.pageviews.slice(-100);
             }
             if (analyticsData.time && analyticsData.time.length > 100) {
                 analyticsData.time = analyticsData.time.slice(-100);
             }
-            
+
             localStorage.setItem(COOKIE_CONFIG.analyticsName, JSON.stringify(analyticsData));
-            
+
+            // Envoi en base de données
+            fetch('/drasi/php/api/analytics.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ type: type === 'time' ? 'time' : 'pageview', data })
+            }).catch(() => {});
+
         } catch (e) {
             console.error('Erreur sauvegarde analytics:', e);
         }
@@ -252,15 +259,23 @@ class CookieConsent {
             timestamp: new Date().toISOString(),
             expires: new Date(Date.now() + COOKIE_CONFIG.consentDuration * 24 * 60 * 60 * 1000).toISOString()
         };
-        
+
         localStorage.setItem(COOKIE_CONFIG.consentName, JSON.stringify(consent));
-        
+
         if (consent.analytics) {
             analytics.enable();
         } else {
             analytics.disable();
         }
-        
+
+        // Envoi en base de données
+        const action = preferences.analytics === true ? 'accept' : preferences.analytics === false ? 'refuse' : 'custom';
+        fetch('/drasi/php/api/consent.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ analytics: preferences.analytics, action, session_id: analytics.sessionId })
+        }).catch(() => {});
+
         console.log('💾 Consentement sauvegardé:', consent);
     }
     
