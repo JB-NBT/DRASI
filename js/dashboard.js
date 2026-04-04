@@ -66,8 +66,8 @@ function toggleEye() {
   input.type  = input.type === 'password' ? 'text' : 'password';
 }
 
-// Vérification immédiate : session déjà valide ou pas ?
-if (isAuthenticated()) {
+// Vérification immédiate : auth serveur (dashboard.php) ou session JS
+if (window.DRASI_SERVER_AUTH || isAuthenticated()) {
   document.addEventListener('DOMContentLoaded', unlock);
 } else {
   document.addEventListener('DOMContentLoaded', () => {
@@ -505,7 +505,7 @@ function toast(msg, type = 'green') {
   el.textContent = msg;
   el.style.borderLeftColor = type === 'amber' ? 'var(--amber)' : '#f0c040';
   el.classList.add('show');
-  setTimeout(() => el.classList.remove('show'), 2500);
+  setTimeout(() => el.classList.remove('show'), 3500);
 }
 
 
