@@ -37,14 +37,13 @@ Le site est accompagné d'un tableau de bord d'administration protégé par auth
    ```
    powershell -ExecutionPolicy Bypass -File .\install.ps1
    ```
-   > Si tu veux autoriser les scripts une fois pour toutes (PowerShell en admin) :
-   > `Set-ExecutionPolicy RemoteSigned -Scope CurrentUser`
 
 Le script :
 - détecte automatiquement WampServer et PHP
 - crée la base de données `drasi_db` et toutes les tables
 - insère le compte administrateur et une actualité de démonstration
 - crée le dossier `images/news/`
+- télécharge et extrait GLPI dans `www/glpi/`
 - génère le fichier **`credentials.txt`** avec tous les identifiants
 
 ---
@@ -65,11 +64,6 @@ Options disponibles :
 --pass=            Mot de passe MySQL (défaut : vide)
 ```
 
-Exemple avec mot de passe :
-```bash
-php setup/setup.php --user=root --pass=monmotdepasse
-```
-
 ---
 
 ## Accès après installation
@@ -79,7 +73,7 @@ php setup/setup.php --user=root --pass=monmotdepasse
 | Site public     | http://localhost/DRASI/                 |
 | Dashboard admin | http://localhost/DRASI/login.php        |
 | phpMyAdmin      | http://localhost/phpmyadmin5.2.3/       |
-| GLPI            | http://localhost/DRASI/glpi/            |
+| GLPI            | http://localhost/glpi/public/           |
 
 Identifiants administrateur par défaut (projet BTS — à changer en production) :
 
@@ -95,14 +89,22 @@ Identifiants administrateur par défaut (projet BTS — à changer en production
 ```
 DRASI/
 ├── index.html                  # Page d'accueil publique
+├── histoire.html               # Page histoire
+├── equipes.html                # Page équipe
+├── missions.html               # Page missions
+├── perimetre.html              # Page périmètre (carte Leaflet)
+├── comitologie.html            # Page comitologie
+├── services_operes.html        # Page services opérés
+├── contact.html                # Page contact
+├── mentions-legales.html       # Mentions légales
 ├── login.php                   # Page de connexion admin
 ├── dashboard.php               # Tableau de bord (accès restreint)
 ├── logout.php                  # Déconnexion
-├── dashboard-cookies.html      # (redirige vers login.php)
 │
 ├── php/
-│   ├── db.php                  # Connexion PDO MySQL
+│   ├── db.php                  # Connexion PDO MySQL (ignoré par git)
 │   ├── auth.php                # Gestion de session / requireAuth()
+│   ├── traitement_contact.php  # Traitement formulaire contact
 │   └── api/
 │       ├── consent.php         # Enregistrement des consentements cookies
 │       ├── analytics.php       # Enregistrement des pages vues / temps passé
@@ -112,15 +114,28 @@ DRASI/
 │       └── upload.php          # Upload d'images (auth requise)
 │
 ├── js/
+│   ├── main.js                 # Chargement des composants, nav active
 │   ├── cookies.js              # Bandeau consentement RGPD
 │   ├── dashboard.js            # Logique du tableau de bord
-│   ├── main.js                 # Chargement des composants, nav active
-│   └── news.js                 # Carrousel actualités (max 6, affiche 3)
+│   ├── news.js                 # Carrousel actualités (max 6, affiche 3)
+│   ├── maps.js                 # Carte Leaflet (périmètre)
+│   ├── contact.js              # Formulaire contact
+│   ├── captcha.js              # Gestion reCAPTCHA
+│   └── modals.js               # Modals génériques
 │
 ├── css/
 │   ├── common.css              # Variables, reset, header, footer
-│   ├── index.css               # Styles page d'accueil + actualités + carrousel
-│   └── dashboard-cookies.css   # Styles dashboard et page login
+│   ├── index.css               # Page d'accueil + actualités + carrousel
+│   ├── dashboard-cookies.css   # Dashboard et page login
+│   ├── cookies.css             # Bandeau RGPD
+│   ├── equipe.css              # Page équipe
+│   ├── histoire.css            # Page histoire
+│   ├── missions.css            # Page missions
+│   ├── perimetre.css           # Page périmètre
+│   ├── comitologie.css         # Page comitologie
+│   ├── services.css            # Page services opérés
+│   ├── contact.css             # Page contact
+│   └── mentions.css            # Mentions légales
 │
 ├── components/
 │   ├── header.html             # Header dynamique
@@ -128,13 +143,14 @@ DRASI/
 │   └── cookie-banner.html      # Bandeau RGPD
 │
 ├── images/
+│   ├── logo-acad.png           # Logo Académie de Rennes
+│   ├── GAR.png                 # Logo GAR
 │   └── news/                   # Images uploadées (ignoré par git)
 │
 ├── setup/
 │   └── setup.php               # Script d'installation CLI
 │
-├── install.ps1                 # Installateur PowerShell (recommandé)
-├── install.bat                 # Installateur alternatif (double-clic)
+├── install.ps1                 # Installateur PowerShell
 ├── credentials.txt             # Identifiants générés (ignoré par git)
 └── .gitignore
 ```
@@ -174,6 +190,7 @@ Base : `drasi_db`
 - Le carrousel affiche 3 actualités à la fois avec navigation précédent/suivant
 - Les consentements expirés sont purgés automatiquement à chaque nouvel enregistrement
 - `php/db.php` est exclu du dépôt git (`.gitignore`) pour éviter d'exposer les identifiants MySQL
+- GLPI nécessite une configuration Apache (alias ou AllowOverride All) pour servir depuis `/public/`
 
 ---
 
