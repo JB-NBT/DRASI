@@ -279,6 +279,42 @@
     letter-spacing: .02em;
 }
 
+/* ── Carrousel navigation ── */
+.news-carousel-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-top: var(--spacing-md);
+}
+
+.news-carousel-btn {
+    background: var(--bleu-france);
+    color: var(--blanc);
+    border: none;
+    border-radius: 20px;
+    padding: 8px 20px;
+    font-size: 0.9em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background var(--transition-speed), opacity var(--transition-speed);
+}
+
+.news-carousel-btn:hover:not(:disabled) {
+    background: var(--bleu-france-hover);
+}
+
+.news-carousel-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+.news-carousel-count {
+    font-size: 0.9em;
+    color: var(--gris-50);
+    font-weight: 500;
+}
+
 /* ── Modal ── */
 .news-modal {
     display: none;

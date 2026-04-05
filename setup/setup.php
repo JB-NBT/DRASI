@@ -136,30 +136,12 @@ info("Insertion des actualités de démonstration ...");
 
 $newsItems = [
     [
-        'titre'            => 'Bienvenue sur DRASI',
+        'titre'            => 'test',
         'date_publication' => date('Y-m-d'),
-        'extrait'          => 'Découvrez le nouveau portail de la Direction Régionale Académique des Systèmes d\'Information.',
-        'contenu'          => '<p>DRASI accompagne les établissements dans la transformation numérique de l\'éducation. Ce portail vous permet de retrouver toutes les ressources, actualités et services mis à votre disposition.</p>',
+        'extrait'          => 'Actualité de test.',
+        'contenu'          => 'Ceci est une actualité de test.',
         'image'            => null,
-        'ordre'            => 1,
-        'actif'            => 1,
-    ],
-    [
-        'titre'            => 'Formation numérique 2025-2026',
-        'date_publication' => date('Y-m-d', strtotime('-7 days')),
-        'extrait'          => 'Le calendrier des formations aux outils numériques pour l\'année scolaire 2025-2026 est disponible.',
-        'contenu'          => '<p>Les formations couvrent les thématiques suivantes : sécurité informatique, outils collaboratifs, accessibilité numérique et protection des données personnelles (RGPD).</p>',
-        'image'            => null,
-        'ordre'            => 2,
-        'actif'            => 1,
-    ],
-    [
-        'titre'            => 'Mise à jour de la charte informatique',
-        'date_publication' => date('Y-m-d', strtotime('-14 days')),
-        'extrait'          => 'La charte d\'utilisation des systèmes d\'information a été mise à jour. Tous les personnels sont invités à en prendre connaissance.',
-        'contenu'          => '<p>La nouvelle version de la charte intègre les recommandations de la CNIL relatives au RGPD ainsi que les nouvelles dispositions concernant l\'usage des outils d\'intelligence artificielle en milieu scolaire.</p>',
-        'image'            => null,
-        'ordre'            => 3,
+        'ordre'            => 0,
         'actif'            => 1,
     ],
 ];
@@ -191,29 +173,23 @@ if (!is_dir($uploadDir)) {
 // ─── Génération de credentials.txt ───────────────────────────────────────────
 info("Génération de credentials.txt ...");
 $credPath = __DIR__ . '/../credentials.txt';
-$credContent = <<<TXT
-╔══════════════════════════════════════════════════════╗
-║           DRASI — Identifiants de test               ║
-║        ⚠  NE PAS VERSIONNER CE FICHIER  ⚠           ║
-╚══════════════════════════════════════════════════════╝
-
-  URL du site     : http://localhost/drasi/
-  Dashboard admin : http://localhost/drasi/login.php
-
-  ─── Compte administrateur ──────────────────────────
-  Email    : $adminEmail
-  Mot de passe : $adminPass
-
-  ─── Base de données ────────────────────────────────
-  Hôte     : $host:$port
-  Base     : $dbName
-  User     : $user
-  Mot de passe : (celui de votre MySQL, souvent vide sur WampServer)
-
-  ─── phpMyAdmin ─────────────────────────────────────
-  URL      : http://localhost/phpmyadmin/
-
-  Généré le : TXT . date('d/m/Y à H:i:s') . "\n";
+$credContent =
+"╔══════════════════════════════════════════════════════╗\n" .
+"║           DRASI — Identifiants de test               ║\n" .
+"║        ⚠  NE PAS VERSIONNER CE FICHIER  ⚠           ║\n" .
+"╚══════════════════════════════════════════════════════╝\n\n" .
+"  URL du site     : http://localhost/drasi/\n" .
+"  Dashboard admin : http://localhost/drasi/login.php\n\n" .
+"  --- Compte administrateur ---\n" .
+"  Email        : $adminEmail\n" .
+"  Mot de passe : $adminPass\n\n" .
+"  --- Base de donnees ---\n" .
+"  Hote         : $host:$port\n" .
+"  Base         : $dbName\n" .
+"  User         : $user\n\n" .
+"  --- phpMyAdmin ---\n" .
+"  URL          : http://localhost/phpmyadmin5.2.3/\n\n" .
+"  Genere le    : " . date('d/m/Y a H:i:s') . "\n";
 
 file_put_contents($credPath, $credContent);
 ok("credentials.txt généré");

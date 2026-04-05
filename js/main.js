@@ -28,11 +28,8 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(data => {
             document.getElementById('header-placeholder').innerHTML = data;
             console.log('✅ Header chargé');
-            // Attendre un peu que le DOM soit bien inséré
-            setTimeout(() => {
-                initMenuToggle();
-                setActiveNavLink();
-            }, 100);
+            initMenuToggle();
+            setActiveNavLink();
         })
         .catch(error => console.error('❌ Erreur chargement header:', error));
     

@@ -7,11 +7,11 @@ Le site est accompagné d'un tableau de bord d'administration protégé par auth
 
 ## Fonctionnalités
 
-- **Site public** : présentation des services, actualités dynamiques, conformité RGPD (bandeau cookies)
-- **Tableau de bord admin** : statistiques de visites, gestion des consentements, gestion des actualités
+- **Site public** : présentation des services, actualités dynamiques (carrousel), conformité RGPD (bandeau cookies)
+- **Tableau de bord admin** : statistiques de visites, gestion des consentements, gestion des actualités, accès rapide GLPI et phpMyAdmin
 - **Authentification** : login sécurisé avec hachage bcrypt, logs des tentatives, session avec timeout 30 min
 - **RGPD** : consentements conservés 3 ans, données analytiques 13 mois (recommandations CNIL)
-- **Actualités** : CRUD complet depuis le dashboard, support des images, affichage en modal sur le site public
+- **Actualités** : CRUD complet depuis le dashboard, carrousel (max 6, affiche 3), tri par date décroissante
 
 ---
 
@@ -28,17 +28,22 @@ Le site est accompagné d'un tableau de bord d'administration protégé par auth
 1. Cloner le dépôt dans le dossier `www` de WampServer :
    ```
    cd C:\wamp64\www
-   git clone https://github.com/JB-NBT/DRASI drasi
+   git clone https://github.com/JB-NBT/DRASI DRASI
    ```
 
 2. Démarrer WampServer (icône verte dans la barre des tâches)
 
-3. Double-cliquer sur **`install.bat`** à la racine du projet
+3. Lancer l'installation depuis PowerShell :
+   ```
+   powershell -ExecutionPolicy Bypass -File .\install.ps1
+   ```
+   > Si tu veux autoriser les scripts une fois pour toutes (PowerShell en admin) :
+   > `Set-ExecutionPolicy RemoteSigned -Scope CurrentUser`
 
 Le script :
 - détecte automatiquement WampServer et PHP
 - crée la base de données `drasi_db` et toutes les tables
-- insère le compte administrateur et 3 actualités de démonstration
+- insère le compte administrateur et une actualité de démonstration
 - crée le dossier `images/news/`
 - génère le fichier **`credentials.txt`** avec tous les identifiants
 
@@ -46,7 +51,7 @@ Le script :
 
 ## Installation manuelle
 
-Si `install.bat` ne peut pas être utilisé, exécuter directement depuis la ligne de commande :
+Si `install.ps1` ne peut pas être utilisé, exécuter directement depuis la ligne de commande :
 
 ```bash
 "C:\wamp64\bin\php\phpX.X.X\php.exe" setup/setup.php
@@ -71,9 +76,10 @@ php setup/setup.php --user=root --pass=monmotdepasse
 
 | Ressource       | URL                                     |
 |-----------------|-----------------------------------------|
-| Site public     | http://localhost/drasi/                 |
-| Dashboard admin | http://localhost/drasi/login.php        |
-| phpMyAdmin      | http://localhost/phpmyadmin/            |
+| Site public     | http://localhost/DRASI/                 |
+| Dashboard admin | http://localhost/DRASI/login.php        |
+| phpMyAdmin      | http://localhost/phpmyadmin5.2.3/       |
+| GLPI            | http://localhost/DRASI/glpi/            |
 
 Identifiants administrateur par défaut (projet BTS — à changer en production) :
 
@@ -87,7 +93,7 @@ Identifiants administrateur par défaut (projet BTS — à changer en production
 ## Structure du projet
 
 ```
-drasi/
+DRASI/
 ├── index.html                  # Page d'accueil publique
 ├── login.php                   # Page de connexion admin
 ├── dashboard.php               # Tableau de bord (accès restreint)
@@ -101,19 +107,25 @@ drasi/
 │       ├── consent.php         # Enregistrement des consentements cookies
 │       ├── analytics.php       # Enregistrement des pages vues / temps passé
 │       ├── stats.php           # API stats dashboard (auth requise)
-│       ├── news.php            # API publique des actualités
+│       ├── news.php            # API publique des actualités (max 6, tri date DESC)
 │       ├── news-admin.php      # API CRUD actualités (auth requise)
 │       └── upload.php          # Upload d'images (auth requise)
 │
 ├── js/
 │   ├── cookies.js              # Bandeau consentement RGPD
 │   ├── dashboard.js            # Logique du tableau de bord
-│   └── news.js                 # Affichage des actualités (site public)
+│   ├── main.js                 # Chargement des composants, nav active
+│   └── news.js                 # Carrousel actualités (max 6, affiche 3)
 │
 ├── css/
 │   ├── common.css              # Variables, reset, header, footer
-│   ├── index.css               # Styles page d'accueil + actualités
+│   ├── index.css               # Styles page d'accueil + actualités + carrousel
 │   └── dashboard-cookies.css   # Styles dashboard et page login
+│
+├── components/
+│   ├── header.html             # Header dynamique
+│   ├── footer.html             # Footer dynamique
+│   └── cookie-banner.html      # Bandeau RGPD
 │
 ├── images/
 │   └── news/                   # Images uploadées (ignoré par git)
@@ -121,7 +133,8 @@ drasi/
 ├── setup/
 │   └── setup.php               # Script d'installation CLI
 │
-├── install.bat                 # Lanceur Windows (double-clic)
+├── install.ps1                 # Installateur PowerShell (recommandé)
+├── install.bat                 # Installateur alternatif (double-clic)
 ├── credentials.txt             # Identifiants générés (ignoré par git)
 └── .gitignore
 ```
@@ -157,7 +170,8 @@ Base : `drasi_db`
 ## Notes de développement
 
 - `session_write_close()` est appelé après chaque vérification d'auth pour libérer le verrou de session PHP et permettre les requêtes `fetch` parallèles depuis le dashboard
-- Les actualités sont triées par `ordre ASC, date_publication DESC`
+- Les actualités sont triées par `date_publication DESC` (plus récente en premier), max 6 retournées par l'API
+- Le carrousel affiche 3 actualités à la fois avec navigation précédent/suivant
 - Les consentements expirés sont purgés automatiquement à chaque nouvel enregistrement
 - `php/db.php` est exclu du dépôt git (`.gitignore`) pour éviter d'exposer les identifiants MySQL
 

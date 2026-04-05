@@ -183,6 +183,10 @@ $userEmail = htmlspecialchars($_SESSION['user_email'] ?? '');
       <div class="sidebar-section">Contenu du site</div>
       <button class="nav-item"        onclick="switchTab('news'); newsLoad();">Actualités</button>
 
+      <div class="sidebar-section">Outils</div>
+      <a class="nav-item" href="http://localhost/phpmyadmin5.2.3/" target="_blank" style="display:block;text-decoration:none">&#128451; phpMyAdmin</a>
+      <a class="nav-item" href="http://localhost/glpi/public/" target="_blank" style="display:block;text-decoration:none">&#128295; GLPI</a>
+
       <div class="sidebar-section">Actions</div>
       <button class="nav-item" onclick="window.CookieConsent?.showBanner?.()">Revoir le bandeau</button>
       <button class="nav-item" onclick="refreshAll()">Rafraîchir</button>

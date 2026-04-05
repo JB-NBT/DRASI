@@ -1,5 +1,6 @@
 # ─── Identifiants générés ─────────────────────────────────────────────────────
 credentials.txt
+php/db.php
 
 # ─── Uploads utilisateurs ─────────────────────────────────────────────────────
 images/news/*

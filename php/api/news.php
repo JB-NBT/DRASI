@@ -10,7 +10,8 @@ $news = $db->query("
     SELECT id, titre, date_publication, extrait, contenu, image
     FROM news
     WHERE actif = 1
-    ORDER BY ordre ASC, date_publication DESC
+    ORDER BY date_publication DESC
+    LIMIT 6
 ")->fetchAll();
 
 echo json_encode($news);
